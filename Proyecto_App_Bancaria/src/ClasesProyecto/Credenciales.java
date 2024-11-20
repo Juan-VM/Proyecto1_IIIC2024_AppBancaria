@@ -1,6 +1,7 @@
 
 package ClasesProyecto;
 
+import Personas.Usuarios;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -44,7 +45,7 @@ public class Credenciales {
 
     //ESTA FUNCION SE ENCARGA DE REESTABLECER LA CLAVE NUMERICA Y RETORNARLA.
     //EN CASO DE QUE LA VALIDACION PARA EL REESTABLECIMIENTO SEA ERRONEA, RETORNA LA CLAVE ORIGINAL.
-    public static void restoreClaveNumerica(ArrayList<Persona> lista, ArrayList<Integer> clavesRegistradas){
+    public static void restoreClaveNumerica(ArrayList<Usuarios> lista, ArrayList<Integer> clavesRegistradas){
         
         Scanner leer = new Scanner(System.in);
         
@@ -57,7 +58,7 @@ public class Credenciales {
             String password = Credenciales.leerPassword();
             int claveAnterior = Credenciales.leerClaveNumerica();
         
-            int indice = Persona.obtenerIndicePersona(lista, claveAnterior);
+            int indice = Personas.obtenerIndicePersona(lista, claveAnterior);
             
             
             if(indice != -1){
@@ -78,7 +79,7 @@ public class Credenciales {
  
         }     
     }
-    public static void restoreClaveNumerica(Persona persona, ArrayList<Integer> clavesRegistradas){
+    public static void restoreClaveNumerica(Usuarios persona, ArrayList<Integer> clavesRegistradas){
         Scanner leer = new Scanner(System.in);
         
         int clave;
@@ -109,10 +110,10 @@ public class Credenciales {
     //ESTA FUNCION VALIDA SI HAY CREDENCIALES REGISTRADAS Y SI HAY 
     //CREDENCIALES REGISTRADAS PIDE INGRESAR USUARIO Y CONTRASENA PARA
     //COMPARARLOS, SI SON IGUALES RETORNA TRUE, SI NO RETORNA FALSE.
-    public static boolean validarCredenciales(ArrayList<Persona> lista,String user,String password,int claveNum){
+    public static boolean validarCredenciales(ArrayList<Usuarios> lista,String user,String password,int claveNum){
         boolean validacion = false;
         
-        for(Persona i : lista){
+        for(Personas i : lista){
             if (i.getUsuario().equals(user) && i.getPassword().equals(password) && i.getClaveNumerica() == claveNum){
                 validacion = true;
             }
@@ -121,7 +122,7 @@ public class Credenciales {
         return validacion;
     }
     
-    public static boolean validarCredenciales(Persona persona){
+    public static boolean validarCredenciales(Usuarios persona){
         boolean validacion = false;
 
         String user = Credenciales.leerUsuario();
@@ -155,9 +156,22 @@ public class Credenciales {
         return clave;     
     }
     
+    public static int generarClaveNumerica(ArrayList<Integer> clavesRegistradas){
+        Random random = new Random();
+        int clave;
+        while (true){
+            clave = 999 + random.nextInt(9000);
+            
+            if(!clavesRegistradas.contains(clave)){
+                break;
+            }     
+        }
+        return clave;     
+    }
+    
     
     //MUESTRA LAS CREDENCIALES DEL USUARIO.
-    public static void muestraCredenciales(Persona persona){
+    public static void muestraCredenciales(Personas persona){
         Scanner leer = new Scanner(System.in);
         
         String user = persona.getUsuario();
@@ -171,7 +185,7 @@ public class Credenciales {
         leer.nextLine();
     }
     
-    public static void reestablecerCredenciales(Persona persona, ArrayList<Integer> clavesRegistradas){
+    public static void reestablecerCredenciales(Usuarios persona, ArrayList<Integer> clavesRegistradas){
         Scanner leer = new Scanner(System.in); 
         
         boolean vali = true;
