@@ -1,5 +1,6 @@
 package ClasesProyecto;
 
+import Personas.Usuarios;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -8,13 +9,13 @@ import java.util.Scanner;
 public class Cuenta {
 
     //Lee un valor ingresado por el usuario lo valida y luego lo retorna.
-    public static double ingresarMontoRetiro(Persona persona, String cuentaElejida) {
+    public static double ingresarMontoRetiro(Usuarios persona, String cuentaElejida) {
 
         Scanner leer = new Scanner(System.in);
         double saldoCuenta;
         
         if(cuentaElejida.equals("1")){
-            saldoCuenta = persona.getSaldoCuenta();
+            saldoCuenta = persona.getSaldoDeLaCuenta();
         }else if(cuentaElejida.equals("2")){
             saldoCuenta = persona.getSaldoCuentaAhorro();
         }else{
@@ -102,12 +103,12 @@ public class Cuenta {
     }
 
     //Muetra el valor de la variable de instancia saldoDeLaCuenta.
-    public static void verSaldoCuenta(Persona persona, String cuentaElejida) {
+    public static void verSaldoCuenta(Usuarios persona, String cuentaElejida) {
         Scanner leer = new Scanner(System.in);
 
         System.out.println("\n--- VER SALDO ---\n");
         if(cuentaElejida.equals("1")){
-            System.out.printf("El saldo de su cuenta es: %.3f\n", persona.getSaldoCuenta());
+            System.out.printf("El saldo de su cuenta es: %.3f\n", persona.getSaldoDeLaCuenta());
         }else if (cuentaElejida.equals("2")){
             System.out.printf("El saldo de su cuenta es: %.3f\n", persona.getSaldoCuentaAhorro());
         }else if (cuentaElejida.equals("3")){
@@ -162,7 +163,7 @@ public class Cuenta {
         }
     }
 
-    public static void crearNuevaCuentaSimpe(ArrayList<Integer> numerosRegistrados,HashMap<String,Integer> cuentasSimpe, Persona persona) {
+    public static void crearNuevaCuentaSimpe(ArrayList<Integer> numerosRegistrados,HashMap<String,Integer> cuentasSimpe, Usuarios persona) {
         Scanner leer = new Scanner(System.in);
         int numeroTelefono = 0;
 
@@ -180,10 +181,10 @@ public class Cuenta {
                 boolean decision = Herramientas.decisionGuardadoDatos();
                 if(decision == true){
                     System.out.println("Cuenta registrada existosamente...");
-                    persona.setUsuarioSimpe(nombreUsuario);
+                    persona.setUsuario(nombreUsuario);
                     persona.setEstadoCuentaSimpe(true);
                     cuentasSimpe.put(nombreUsuario, numeroTelefono);
-                    persona.setNumeroSimpe(numeroTelefono);
+                    persona.setTelefono(String.valueOf(numeroTelefono));
                     System.out.print("\nPresiona enter para continuar: >>> ");
                     leer.nextLine();
                     centinela = 0;
@@ -195,7 +196,7 @@ public class Cuenta {
         
     }
     
-    public static void crearCuentaAhorro(Persona persona){
+    public static void crearCuentaAhorro(Usuarios persona){
         
         System.out.println("\n--- CREAR CUENTA AHORROS ---\n");
         System.out.println("Desea habilitar una cuenta de ahorro?:\n");

@@ -1,6 +1,7 @@
 
 package ClasesProyecto;
 
+import Personas.Usuarios;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -35,15 +36,15 @@ public class SimpeMovil {
     }
    
     
-    public static void aumentarSaldoCuentaDestino(ArrayList<Persona> personasRegistradas, int numeroDestino, double montoSimpe){
-        for(Persona i: personasRegistradas){
-            if(i.getNumeroSimpe() == numeroDestino){
+    public static void aumentarSaldoCuentaDestino(ArrayList<Usuarios> personasRegistradas, int numeroDestino, double montoSimpe){
+        for(Usuarios i: personasRegistradas){
+            if(Integer.valueOf(i.getTelefono())== numeroDestino){
                 i.setSaldoCuentaSimpe(i.getSaldoCuentaSimpe() + montoSimpe);
             }
         }
     }
     
-    public static String realizarSimpe(ArrayList<Integer> numerosRegistrados,HashMap<String,Integer> simpesRegistrados,Persona persona, ArrayList<Persona> personasRegistradas){
+    public static String realizarSimpe(ArrayList<Integer> numerosRegistrados,HashMap<String,Integer> simpesRegistrados,Usuarios persona, ArrayList<Usuarios> personasRegistradas){
         String comprobanteTransaccion = "Ninguno";
         
         boolean salir = false;
@@ -66,22 +67,22 @@ public class SimpeMovil {
                 
                 String nombreEnvio = "";
                 for (String i : simpesRegistrados.keySet()){
-                    if(simpesRegistrados.get(i) == persona.getNumeroSimpe()){
+                    if(simpesRegistrados.get(i) == Integer.valueOf(persona.getTelefono())){
                         nombreEnvio = i;
                     }
                 }
                 
                 switch(cuentaADebitar){
                     case "1" -> {
-                        if (persona.getSaldoCuenta() < montoSimpe){
+                        if (persona.getSaldoDeLaCuenta() < montoSimpe){
                             System.out.println("El monto del simpe debe ser menor o igual al saldo de la cuenta");  
                             Herramientas.enterParaContinuar();
                         }else{
-                            double saldoCuenta = persona.getSaldoCuenta();
+                            double saldoCuenta = persona.getSaldoDeLaCuenta();
                             boolean confirmarSimpe = validarSimpe(numerosRegistrados, saldoCuenta, numeroDestino, montoSimpe);
 
                             if(confirmarSimpe == true){
-                                persona.setSaldoCuenta( persona.getSaldoCuenta() - montoSimpe);
+                                persona.setSaldoDeLaCuenta( persona.getSaldoDeLaCuenta() - montoSimpe);
                                 aumentarSaldoCuentaDestino(personasRegistradas, numeroDestino, montoSimpe);
                                 mostarSimpe(nombreDestino, montoSimpe);
                                 comprobanteTransaccion = "Simpe por un monto de "+montoSimpe+" colones. Destinatario: "+nombreDestino+","+
@@ -157,7 +158,7 @@ public class SimpeMovil {
         return comprobanteTransaccion;
     } 
     
-    public static void asignarComprobantesTransaccionACuentas(ArrayList<Persona> listaPersonas, String comprobante, Persona persona){
+    public static void asignarComprobantesTransaccionACuentas(ArrayList<Usuarios> listaPersonas, String comprobante, Usuarios persona){
         if(!comprobante.equals("Ninguno")){
             String[] comprobantesSeparados = comprobante.split(",");
             String comprobanteTrnsEnviada = comprobantesSeparados[0];
@@ -166,8 +167,8 @@ public class SimpeMovil {
 
             persona.addComprobantesSimpe(comprobanteTrnsEnviada);
 
-            for(Persona i: listaPersonas){
-                if(i.getNumeroSimpe()== Integer.parseInt(numeroQueEnvia)){
+            for(Usuarios i: listaPersonas){
+                if(Integer.valueOf(i.getTelefono()) == Integer.parseInt(numeroQueEnvia)){
                     i.addComprobantesSimpe(comprobanteTrnsRecibida);
                 }
             }
@@ -175,7 +176,7 @@ public class SimpeMovil {
         }
     }
     
-    public static void cambiarDatosCuentaSimpe(ArrayList<Integer> numerosRegistrados,HashMap<String, Integer> cuentasSimpeMovil,Persona persona){
+    public static void cambiarDatosCuentaSimpe(ArrayList<Integer> numerosRegistrados,HashMap<String, Integer> cuentasSimpeMovil,Usuarios persona){
         Scanner leer = new Scanner(System.in);
         boolean centinela = true;
         while(centinela == true){
@@ -189,16 +190,16 @@ public class SimpeMovil {
                     System.out.print("Ingrse su usuario anterior: >>> ");
                     String usuarioAnterior = leer.nextLine();
 
-                    if(usuarioAnterior.equals(persona.getUsuarioSimpe())){
+                    if(usuarioAnterior.equals(persona.getUsuario())){
                         System.out.print("Ingrse su usuario nuevo: >>> ");
                         String usuarioNuevo = leer.nextLine();  
 
                         System.out.println("\nDesea guardar el cambio?\n");
                         boolean desicion = Herramientas.decisionGuardadoDatos();
                         if(desicion == true){
-                            persona.setUsuarioSimpe(usuarioNuevo);
+                            persona.setUsuario(usuarioNuevo);
                             cuentasSimpeMovil.remove(usuarioAnterior);
-                            cuentasSimpeMovil.put(usuarioNuevo, persona.getNumeroSimpe());
+                            cuentasSimpeMovil.put(usuarioNuevo, Integer.valueOf(persona.getTelefono()));
                             System.out.println("Cambio realizado con exito");
                             Herramientas.enterParaContinuar();
                         }
@@ -211,15 +212,15 @@ public class SimpeMovil {
                     System.out.println("\n--- CAMBIAR TELEFONO SIMPE ---\n");
                     int numeroAnterior = Herramientas.validarEntradaInteger("Ingrse su numero de telefono anterior: >>> ");
 
-                    if(numeroAnterior == persona.getNumeroSimpe()){
+                    if(numeroAnterior == Integer.valueOf(persona.getTelefono())){
                         int numeroNuevo = Herramientas.validarEntradaInteger("Ingrse su numero de telefono nuevo: >>> ");
                         System.out.println("\nDesea guardar el cambio?\n");
                         boolean decision = Herramientas.decisionGuardadoDatos();
                         if(decision == true){
-                            persona.setNumeroSimpe(numeroNuevo);
+                            persona.setTelefono(String.valueOf(numeroNuevo));
                             numerosRegistrados.remove(Integer.valueOf(numeroAnterior));
                             numerosRegistrados.add(numeroNuevo);
-                            cuentasSimpeMovil.put(persona.getUsuarioSimpe(), numeroNuevo);
+                            cuentasSimpeMovil.put(persona.getUsuario(), numeroNuevo);
                             System.out.println("Cambio realizado con exito");
                             Herramientas.enterParaContinuar();
                         }

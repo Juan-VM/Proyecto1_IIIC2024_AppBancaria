@@ -5,8 +5,9 @@ import ClasesProyecto.Comentarios;
 import ClasesProyecto.Credenciales;
 import ClasesProyecto.Cuenta;
 import ClasesProyecto.Herramientas;
-import ClasesProyecto.Persona;
+import ClasesProyecto.Personas;
 import ClasesProyecto.SimpeMovil;
+import Personas.Usuarios;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -24,7 +25,7 @@ public class ProyectoMainClass {
         HashMap<String, Integer> cuentasSimpeMovil = new HashMap<>();
         ArrayList<Integer> numerosRegistrados = new ArrayList<>();
         ArrayList<Integer> clavesRegistradas = new ArrayList<>();
-        ArrayList<Persona> listaPersonas = new ArrayList<>(); // Almacena todos los usuarios y sus datos.
+        ArrayList<Usuarios> listaPersonas = new ArrayList<>(); // Almacena todos los usuarios y sus datos.
         
         
         boolean bandera = false; // Controla la repeticion del programa completo.
@@ -54,7 +55,7 @@ public class ProyectoMainClass {
 
                         if (vali == true){  //Se ejecuta solo si los datos ingresados fueron guardados.
                             claveNumerica = Credenciales.crearClaveNumerica(clavesRegistradas);
-                            listaPersonas.add(new Persona(usuario, password, claveNumerica, 0, 0,"", false, false));
+                            listaPersonas.add(new Usuarios(usuario,"",password,"","",claveNumerica,0,"",0,0,0));
                             Credenciales.muestraCredenciales( listaPersonas.get(listaPersonas.size()-1) );
                             
                         }
@@ -75,7 +76,7 @@ public class ProyectoMainClass {
                                 System.out.println("\nCredenciales correctas");
                                 
                                 // Retorna el indice de la persona a la que correspondan los datos ingresados. Para usar ese indice en todo el programa.
-                                indice = Persona.obtenerIndicePersona(listaPersonas, claveNum);
+                                indice = Personas.obtenerIndicePersona(listaPersonas, claveNum);
                                 
                                 listaPersonas.get(indice).setUsuario(user);
                                 listaPersonas.get(indice).setPassword(pswd);
@@ -276,7 +277,7 @@ public class ProyectoMainClass {
                             Scanner entrada = new Scanner(System.in);
                             Comentarios n = new Comentarios();
                             int op = 0;
-                            ArrayList<Persona> persona = new ArrayList<>();
+                            ArrayList<Personas> persona = new ArrayList<>();
                             do {
                                 System.out.println("Digite la opcion que desea \n1- Agregar comentario " + " \n2- ver \n3- Salir");
                                 op = entrada.nextInt();
@@ -286,7 +287,7 @@ public class ProyectoMainClass {
                                         break;
                                     case 2:
                                         n.leer(persona);
-                                        for (Persona list : persona) {
+                                        for (Personas list : persona) {
                                             System.out.println(list.getUsuario() + " " + list.getComentario());
                                         }
                                         break;
