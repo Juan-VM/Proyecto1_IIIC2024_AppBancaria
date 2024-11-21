@@ -1,15 +1,71 @@
-
 package gui;
 
+import Personas.Usuarios;
+import Sedes.SedeCiudadColon;
+import Sedes.SedePuriscal;
+import Sedes.SedeSanPedro;
 import java.awt.Color;
 
 public class PrincipalUsers extends javax.swing.JFrame {
-    int indiceUsuario;
-    
-    public PrincipalUsers(int indice) {
+
+    int indice;
+    int sede;
+    String cedula;
+
+    public PrincipalUsers(String cedula, int sede) {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.indiceUsuario = indice;
+        this.cedula = cedula;
+        this.sede = sede;
+        asignarIndicePersonaEnSede(this.cedula);
+
+        switch (this.sede) {
+            case 0 -> {
+                jblNombrePerfil.setText(SedePuriscal.getListaUsers().get(indice).getUsuario() + " " + SedePuriscal.getListaUsers().get(indice).getApellidos());
+                jblVentanaActual.setText("Sede Puriscal");
+            }
+            case 1 -> {
+                jblNombrePerfil.setText(SedeSanPedro.getListaUsers().get(indice).getUsuario() + " " + SedeSanPedro.getListaUsers().get(indice).getApellidos());
+                jblVentanaActual.setText("Sede San Pedro");
+            }
+            case 2 -> {
+                jblNombrePerfil.setText(SedePuriscal.getListaUsers().get(indice).getUsuario() + " " + SedePuriscal.getListaUsers().get(indice).getApellidos());
+                jblVentanaActual.setText("Sede Ciudad Colon");
+            }
+        }
+    }
+
+    public PrincipalUsers() {
+
+    }
+
+    public void asignarIndicePersonaEnSede(String cedula) {
+        switch (sede) {
+            case 0 -> {
+
+                for (Usuarios u : SedePuriscal.getListaUsers()) {
+                    if (u.getCedula().equals(cedula)) {
+                        this.indice = SedePuriscal.getListaUsers().indexOf(u);
+                    }
+                }
+            }
+            case 1 -> {
+
+                for (Usuarios u : SedeSanPedro.getListaUsers()) {
+                    if (u.getCedula().equals(cedula)) {
+                        this.indice = SedeSanPedro.getListaUsers().indexOf(u);
+                    }
+                }
+            }
+            case 2 -> {
+
+                for (Usuarios u : SedeCiudadColon.getListaUsers()) {
+                    if (u.getCedula().equals(cedula)) {
+                        this.indice = SedeCiudadColon.getListaUsers().indexOf(u);
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -501,7 +557,7 @@ public class PrincipalUsers extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
+                new PrincipalUsers().setVisible(true);
             }
         });
     }

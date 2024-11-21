@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class Cuentas {
     private double saldo;
     private boolean estado;
-    private ArrayList<String> comprobantesTransacciones = new ArrayList<>();
 
     public Cuentas(){
         
@@ -38,14 +37,4 @@ public class Cuentas {
 
         this.saldo += cantidadDeposito;
     }
-
-    public ArrayList<String> getComprobantesTransacciones() {
-        return comprobantesTransacciones;
-    }
-
-    public void setComprobantesTransacciones(ArrayList<String> comprobantesTransacciones) {
-        this.comprobantesTransacciones = comprobantesTransacciones;
-    }
-    
-    
 }
