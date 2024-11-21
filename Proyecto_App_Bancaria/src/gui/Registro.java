@@ -427,9 +427,9 @@ public class Registro extends javax.swing.JFrame {
                 jblGenerarClaveMouseExited(evt);
             }
         });
-        panelGenerarClave.add(jblGenerarClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 130, 50));
+        panelGenerarClave.add(jblGenerarClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 140, 50));
 
-        panelRegistro.add(panelGenerarClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 490, 130, 40));
+        panelRegistro.add(panelGenerarClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 480, 140, 50));
 
         sep6.setForeground(new java.awt.Color(102, 102, 102));
         panelRegistro.add(sep6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 620, 10));
