@@ -1,16 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package gui;
 
 import java.awt.Color;
 
 public class PrincipalUsers extends javax.swing.JFrame {
-
-    public PrincipalUsers() {
+    int indiceUsuario;
+    
+    public PrincipalUsers(int indice) {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.indiceUsuario = indice;
     }
 
     /**
@@ -502,7 +501,7 @@ public class PrincipalUsers extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PrincipalUsers().setVisible(true);
+                
             }
         });
     }

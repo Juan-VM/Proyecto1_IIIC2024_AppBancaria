@@ -25,7 +25,7 @@ public class ProyectoMainClass {
         HashMap<String, Integer> cuentasSimpeMovil = new HashMap<>();
         ArrayList<Integer> numerosRegistrados = new ArrayList<>();
         ArrayList<Integer> clavesRegistradas = new ArrayList<>();
-        ArrayList<Usuarios> listaPersonas = new ArrayList<>(); // Almacena todos los usuarios y sus datos.
+        ArrayList<Personas> listaPersonas = new ArrayList<Personas>(); // Almacena todos los usuarios y sus datos.
         
         
         boolean bandera = false; // Controla la repeticion del programa completo.
@@ -55,7 +55,7 @@ public class ProyectoMainClass {
 
                         if (vali == true){  //Se ejecuta solo si los datos ingresados fueron guardados.
                             claveNumerica = Credenciales.crearClaveNumerica(clavesRegistradas);
-                            listaPersonas.add(new Usuarios(usuario,"",password,"","",claveNumerica,0,"",0,0,0));
+                            listaPersonas.add(new Personas(usuario,"",password,"","",claveNumerica,0,""));
                             Credenciales.muestraCredenciales( listaPersonas.get(listaPersonas.size()-1) );
                             
                         }

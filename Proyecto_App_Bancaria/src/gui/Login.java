@@ -1,7 +1,5 @@
 package gui;
 
-import ClasesProyecto.Datos;
-import ClasesProyecto.Personas;
 import Personas.Administradores;
 import Personas.Usuarios;
 import java.awt.Color;
@@ -11,7 +9,8 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
 
     boolean verPassword = false;
-    int index;
+    int indice;
+    int rol = 0;
 
     public Login() {
         initComponents();
@@ -20,23 +19,22 @@ public class Login extends javax.swing.JFrame {
     }
 
     public void txtsPorDefecto() {
-        txtUsuario.setText("Ingrese su usuario");
+        txtCedula.setText("Ingrese su cedula");
         psdPassword.setText("Ingrese su password");
-        cbRol.setSelectedIndex(0);
     }
 
-    public void validarDatosUsuarios(int listaUsuarios) {
+    public boolean validarDatosUsuarios(ArrayList<Usuarios> lista) {
         boolean CredencialesIguales = false;
-        String usuario = txtUsuario.getText();
+        String cedula = txtCedula.getText();
         String password = String.valueOf(psdPassword.getPassword());
-        
-        try {
-            if (listaUsuarios > 0) {
 
-                for (Usuarios p : Datos.listaUsuarios) {
-                    if (p.getUsuario().equals(usuario) && p.getPassword().equals(password)) {
+        try {
+            if (lista.size() > 0) {
+
+                for (Usuarios p : lista) {
+                    if (p.getCedula().equals(cedula) && p.getPassword().equals(password)) {
                         CredencialesIguales = true;
-                        index = Datos.listaUsuarios.indexOf(p);
+                        indice = lista.indexOf(p);
                     }
                 }
             } else {
@@ -50,32 +48,30 @@ public class Login extends javax.swing.JFrame {
 
         if (CredencialesIguales == true) {
             JOptionPane.showMessageDialog(null, "Datos correctos");
-            Datos.setIndiceLogin(index);
-            PrincipalUsers users = new PrincipalUsers();
-            users.setVisible(true);
-            this.dispose();
 
-        } else if (listaUsuarios > 0 && CredencialesIguales == false) {
+        } else if (lista.size() > 0 && CredencialesIguales == false) {
             JOptionPane.showMessageDialog(null, "Datos incorrectos");
             txtsPorDefecto();
         }
+        return CredencialesIguales;
     }
-    public void validarDatosAdmins(int listaAdmins) {
-        boolean CredencialesIguales = false;
-        String usuario = txtUsuario.getText();
-        String password = String.valueOf(psdPassword.getPassword());
-        
-        try {
-            if (listaAdmins > 0) {
 
-                for (Administradores p : Datos.listaAdmins) {
-                    if (p.getUsuario().equals(usuario) && p.getPassword().equals(password)) {
+    public boolean validarDatosAdmins(ArrayList<Administradores> lista) {
+        boolean CredencialesIguales = false;
+        String cedula = txtCedula.getText();
+        String password = String.valueOf(psdPassword.getPassword());
+
+        try {
+            if (lista.size() > 0) {
+
+                for (Administradores p : lista) {
+                    if (p.getCedula().equals(cedula) && p.getPassword().equals(password)) {
                         CredencialesIguales = true;
-                        index = Datos.listaAdmins.indexOf(p);
+                        indice = lista.indexOf(p);
                     }
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "No hay administradores registrados");
+                JOptionPane.showMessageDialog(null, "No hay admins registrados");
                 txtsPorDefecto();
             }
         } catch (Exception e) {
@@ -85,15 +81,25 @@ public class Login extends javax.swing.JFrame {
 
         if (CredencialesIguales == true) {
             JOptionPane.showMessageDialog(null, "Datos correctos");
-            Datos.setIndiceLogin(index);
-            PrincipalAdmins admins = new PrincipalAdmins();
-            admins.setVisible(true);
-            this.dispose();
 
-        } else if (listaAdmins > 0 && CredencialesIguales == false) {
+        } else if (lista.size() > 0 && CredencialesIguales == false) {
             JOptionPane.showMessageDialog(null, "Datos incorrectos");
             txtsPorDefecto();
         }
+        return CredencialesIguales;
+    }
+
+    public void getRol(ArrayList<Administradores> listaAd, ArrayList<Usuarios> listaUs) {
+        for (Administradores a : listaAd) {
+            if (a.getCedula().equals(txtCedula.getText()) && a.getPassword().equals(String.valueOf(psdPassword.getPassword()))) {
+                rol = rol = a.getRol();
+            }
+        }
+        for (Usuarios u : listaUs) {
+            if (u.getCedula().equals(txtCedula.getText()) && u.getPassword().equals(String.valueOf(psdPassword.getPassword()))) {
+                rol = rol = u.getRol();
+            }
+        } 
     }
 
     /**
@@ -109,8 +115,6 @@ public class Login extends javax.swing.JFrame {
         backgroundLogin = new javax.swing.JPanel();
         panelAtras = new javax.swing.JPanel();
         jblAtras = new javax.swing.JLabel();
-        cbRol = new javax.swing.JComboBox<>();
-        jblRolOF = new javax.swing.JLabel();
         jblBarraArriba = new javax.swing.JLabel();
         jblLogo = new javax.swing.JLabel();
         jblNombreBanco = new javax.swing.JLabel();
@@ -118,8 +122,8 @@ public class Login extends javax.swing.JFrame {
         jblFondoPanel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jblPassword = new javax.swing.JLabel();
-        txtUsuario = new javax.swing.JTextField();
-        jblUsuario = new javax.swing.JLabel();
+        txtCedula = new javax.swing.JTextField();
+        jblCedula = new javax.swing.JLabel();
         psdPassword = new javax.swing.JPasswordField();
         jSeparator1 = new javax.swing.JSeparator();
         panelEntrar = new javax.swing.JPanel();
@@ -160,23 +164,6 @@ public class Login extends javax.swing.JFrame {
 
         backgroundLogin.add(panelAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 50));
 
-        cbRol.setBackground(new java.awt.Color(255, 255, 255));
-        cbRol.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        cbRol.setForeground(new java.awt.Color(153, 153, 153));
-        cbRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Usuario", "Admin" }));
-        cbRol.setBorder(null);
-        cbRol.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                cbRolMousePressed(evt);
-            }
-        });
-        backgroundLogin.add(cbRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 520, 140, 30));
-
-        jblRolOF.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
-        jblRolOF.setForeground(new java.awt.Color(51, 51, 51));
-        jblRolOF.setText("ROL");
-        backgroundLogin.add(jblRolOF, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 520, 90, 30));
-
         jblBarraArriba.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/BarraInicio.png"))); // NOI18N
         backgroundLogin.add(jblBarraArriba, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1060, 50));
 
@@ -208,24 +195,24 @@ public class Login extends javax.swing.JFrame {
         jblPassword.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
         jblPassword.setForeground(new java.awt.Color(51, 51, 51));
         jblPassword.setText("PASSWORD");
-        backgroundLogin.add(jblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, -1, -1));
+        backgroundLogin.add(jblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, -1, -1));
 
-        txtUsuario.setBackground(new java.awt.Color(255, 255, 255));
-        txtUsuario.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        txtUsuario.setForeground(new java.awt.Color(204, 204, 204));
-        txtUsuario.setText("Ingrese su usuario");
-        txtUsuario.setBorder(null);
-        txtUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+        txtCedula.setBackground(new java.awt.Color(255, 255, 255));
+        txtCedula.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txtCedula.setForeground(new java.awt.Color(204, 204, 204));
+        txtCedula.setText("Ingrese su cedula");
+        txtCedula.setBorder(null);
+        txtCedula.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                txtUsuarioMousePressed(evt);
+                txtCedulaMousePressed(evt);
             }
         });
-        backgroundLogin.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 420, 50));
+        backgroundLogin.add(txtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, 420, 50));
 
-        jblUsuario.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
-        jblUsuario.setForeground(new java.awt.Color(51, 51, 51));
-        jblUsuario.setText("USUARIO");
-        backgroundLogin.add(jblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, -1, -1));
+        jblCedula.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
+        jblCedula.setForeground(new java.awt.Color(51, 51, 51));
+        jblCedula.setText("CEDULA");
+        backgroundLogin.add(jblCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, -1, -1));
 
         psdPassword.setBackground(new java.awt.Color(255, 255, 255));
         psdPassword.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -237,10 +224,10 @@ public class Login extends javax.swing.JFrame {
                 psdPasswordMousePressed(evt);
             }
         });
-        backgroundLogin.add(psdPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 420, 380, 60));
+        backgroundLogin.add(psdPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 450, 380, 60));
 
         jSeparator1.setForeground(new java.awt.Color(51, 51, 51));
-        backgroundLogin.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, 530, 10));
+        backgroundLogin.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 520, 530, 10));
 
         panelEntrar.setBackground(new java.awt.Color(92, 88, 29));
         panelEntrar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -264,10 +251,10 @@ public class Login extends javax.swing.JFrame {
         });
         panelEntrar.add(jblEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 70));
 
-        backgroundLogin.add(panelEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 560, 170, 70));
+        backgroundLogin.add(panelEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 570, 170, 70));
 
         jSeparator2.setForeground(new java.awt.Color(51, 51, 51));
-        backgroundLogin.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 530, 10));
+        backgroundLogin.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, 530, 10));
 
         jblIniciarSesion.setFont(new java.awt.Font("Segoe UI", 1, 40)); // NOI18N
         jblIniciarSesion.setForeground(new java.awt.Color(51, 51, 51));
@@ -308,7 +295,7 @@ public class Login extends javax.swing.JFrame {
         });
         panelVerPassword.add(jblVerPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 40, 40));
 
-        backgroundLogin.add(panelVerPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 430, 40, 40));
+        backgroundLogin.add(panelVerPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 460, 40, 40));
 
         panelLogin.add(backgroundLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -2, -1, 690));
 
@@ -330,48 +317,61 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUsuarioMousePressed
+    private void txtCedulaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCedulaMousePressed
 
         String psd = String.valueOf(psdPassword.getPassword());
-        if (txtUsuario.getText().equals("Ingrese su usuario")) {
-            txtUsuario.setText("");
+        if (txtCedula.getText().equals("Ingrese su cedula")) {
+            txtCedula.setText("");
         }
-        txtUsuario.setForeground(Color.black);
+        txtCedula.setForeground(Color.black);
         if (psd.equals("")) {
             psdPassword.setText("Ingrese su password");
         } else {
             psdPassword.setText(psd);
         }
         psdPassword.setForeground(new Color(155, 155, 155));
-    }//GEN-LAST:event_txtUsuarioMousePressed
+    }//GEN-LAST:event_txtCedulaMousePressed
 
     private void psdPasswordMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_psdPasswordMousePressed
 
-        String user = txtUsuario.getText();
+        String user = txtCedula.getText();
         if (String.valueOf(psdPassword.getPassword()).equals("Ingrese su password")) {
             psdPassword.setText("");
         }
         psdPassword.setForeground(Color.black);
         if (user.equals("")) {
-            txtUsuario.setText("Ingrese su usuario");
+            txtCedula.setText("Ingrese su cedula");
         } else {
-            txtUsuario.setText(user);
+            txtCedula.setText(user);
         }
-        txtUsuario.setForeground(new Color(155, 155, 155));
+        txtCedula.setForeground(new Color(155, 155, 155));
     }//GEN-LAST:event_psdPasswordMousePressed
 
     private void jblEntrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblEntrarMouseClicked
+
+        ArrayList<Usuarios> listaUsers = Sedes.Sedes.getListaUsers();
+        ArrayList<Administradores> listaAdmins = Sedes.Sedes.getListaAdmins();
+        boolean datosIguales;
+        getRol(listaAdmins,listaUsers);
         
-        int rol = cbRol.getSelectedIndex();
-        int personasRegistradas;
-        
-        if (rol == 0) {
-            personasRegistradas = Datos.listaUsuarios.size();
-            validarDatosUsuarios(personasRegistradas);
-        } else {
-            personasRegistradas = Datos.listaAdmins.size();
-            validarDatosAdmins(personasRegistradas);
-        }  
+        switch (rol) {
+            case 0 -> {
+                datosIguales = validarDatosUsuarios(listaUsers);
+                if (datosIguales == true) {
+                    PrincipalUsers users = new PrincipalUsers(indice);
+                    users.setVisible(true);
+                    this.dispose();
+                }
+            }
+            case 1 -> {
+                datosIguales = validarDatosAdmins(listaAdmins);
+                if (datosIguales == true) {
+                    PrincipalAdmins admins = new PrincipalAdmins(indice);
+                    admins.setVisible(true);
+                    this.dispose();
+                }
+            }
+        }
     }//GEN-LAST:event_jblEntrarMouseClicked
 
     private void jblEntrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblEntrarMouseEntered
@@ -419,11 +419,6 @@ public class Login extends javax.swing.JFrame {
         panelAtras.setBackground(new Color(252, 247, 215));
     }//GEN-LAST:event_jblAtrasMouseExited
 
-    private void cbRolMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbRolMousePressed
-
-        cbRol.setForeground(new Color(102, 102, 102));
-    }//GEN-LAST:event_cbRolMousePressed
-
     /**
      * @param args the command line arguments
      */
@@ -454,19 +449,19 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundLogin;
-    private javax.swing.JComboBox<String> cbRol;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel jblAtras;
     private javax.swing.JLabel jblBarraArriba;
+    private javax.swing.JLabel jblCedula;
     private javax.swing.JLabel jblEntrar;
     private javax.swing.JLabel jblFondoPanel;
     private javax.swing.JLabel jblFrase;
@@ -474,8 +469,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jblLogo;
     private javax.swing.JLabel jblNombreBanco;
     private javax.swing.JLabel jblPassword;
-    private javax.swing.JLabel jblRolOF;
-    private javax.swing.JLabel jblUsuario;
     private javax.swing.JLabel jblVerPassword;
     private javax.swing.JPanel panelAtras;
     private javax.swing.JPanel panelEntrar;
@@ -483,6 +476,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel panelVerPassword;
     private javax.swing.JPanel panelnAtras;
     private javax.swing.JPasswordField psdPassword;
-    private javax.swing.JTextField txtUsuario;
+    private javax.swing.JTextField txtCedula;
     // End of variables declaration//GEN-END:variables
 }

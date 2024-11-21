@@ -45,7 +45,7 @@ public class Credenciales {
 
     //ESTA FUNCION SE ENCARGA DE REESTABLECER LA CLAVE NUMERICA Y RETORNARLA.
     //EN CASO DE QUE LA VALIDACION PARA EL REESTABLECIMIENTO SEA ERRONEA, RETORNA LA CLAVE ORIGINAL.
-    public static void restoreClaveNumerica(ArrayList<Usuarios> lista, ArrayList<Integer> clavesRegistradas){
+    public static void restoreClaveNumerica(ArrayList<Personas> lista, ArrayList<Integer> clavesRegistradas){
         
         Scanner leer = new Scanner(System.in);
         
@@ -79,7 +79,7 @@ public class Credenciales {
  
         }     
     }
-    public static void restoreClaveNumerica(Usuarios persona, ArrayList<Integer> clavesRegistradas){
+    public static void restoreClaveNumerica(Personas persona, ArrayList<Integer> clavesRegistradas){
         Scanner leer = new Scanner(System.in);
         
         int clave;
@@ -110,7 +110,7 @@ public class Credenciales {
     //ESTA FUNCION VALIDA SI HAY CREDENCIALES REGISTRADAS Y SI HAY 
     //CREDENCIALES REGISTRADAS PIDE INGRESAR USUARIO Y CONTRASENA PARA
     //COMPARARLOS, SI SON IGUALES RETORNA TRUE, SI NO RETORNA FALSE.
-    public static boolean validarCredenciales(ArrayList<Usuarios> lista,String user,String password,int claveNum){
+    public static boolean validarCredenciales(ArrayList<Personas> lista,String user,String password,int claveNum){
         boolean validacion = false;
         
         for(Personas i : lista){
@@ -122,7 +122,7 @@ public class Credenciales {
         return validacion;
     }
     
-    public static boolean validarCredenciales(Usuarios persona){
+    public static boolean validarCredenciales(Personas persona){
         boolean validacion = false;
 
         String user = Credenciales.leerUsuario();
@@ -185,7 +185,7 @@ public class Credenciales {
         leer.nextLine();
     }
     
-    public static void reestablecerCredenciales(Usuarios persona, ArrayList<Integer> clavesRegistradas){
+    public static void reestablecerCredenciales(Personas persona, ArrayList<Integer> clavesRegistradas){
         Scanner leer = new Scanner(System.in); 
         
         boolean vali = true;

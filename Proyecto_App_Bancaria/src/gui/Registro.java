@@ -1,13 +1,12 @@
 package gui;
 
-import ClasesProyecto.Credenciales;
-import ClasesProyecto.Datos;
-import ClasesProyecto.Personas;
 import Personas.Administradores;
 import Personas.Usuarios;
+import RegistroDatos.DatosRegistrados;
 import java.awt.Color;
-import javax.swing.JOptionPane;
+import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.JOptionPane;
 
 public class Registro extends javax.swing.JFrame {
 
@@ -22,6 +21,7 @@ public class Registro extends javax.swing.JFrame {
         lblVerRegistro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ojoCerrado.png")));
         psdPasswordOF.setEchoChar('*');
         txtsRegistroPorDefecto();
+        alertasPorDefecto();
     }
 
     public void txtsRegistroPorDefecto() {
@@ -83,6 +83,39 @@ public class Registro extends javax.swing.JFrame {
             cbRol.setForeground(new Color(153, 153, 153));
         }
     }
+    
+    public void alertasPorDefecto(){
+        alertaCedula.setVisible(false);
+        alertaTelefono.setVisible(false);
+    }
+        
+    public boolean validarRepetidos() {
+        boolean existen = false;
+        if (DatosRegistrados.getListaCedulas().contains(txtCedulaOF.getText()) || DatosRegistrados.getListaTelefonos().contains(txtTelefonoOF.getText())) {
+            existen = true;
+            if (DatosRegistrados.getListaCedulas().contains(txtCedulaOF.getText())) {
+                alertaCedula.setVisible(true);
+            }
+
+            if (DatosRegistrados.getListaTelefonos().contains(txtTelefonoOF.getText())) {
+                alertaTelefono.setVisible(true);
+            }
+        }
+        return existen;
+    }
+    
+    public int generarClaveNumerica(ArrayList<Integer> clavesRegistradas){
+        Random random = new Random();
+        int clave;
+        while (true){
+            clave = 999 + random.nextInt(9000);
+            
+            if(!clavesRegistradas.contains(clave)){
+                break;
+            }     
+        }
+        return clave;     
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -131,7 +164,9 @@ public class Registro extends javax.swing.JFrame {
         sep6 = new javax.swing.JSeparator();
         sep7 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbSede = new javax.swing.JComboBox<>();
+        alertaCedula = new javax.swing.JLabel();
+        alertaTelefono = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -403,12 +438,20 @@ public class Registro extends javax.swing.JFrame {
         jLabel1.setText("SEDE");
         panelRegistro.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 560, -1, -1));
 
-        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jComboBox1.setForeground(new java.awt.Color(153, 153, 153));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Puriscal", "San Pedro", "Ciudad Colon" }));
-        jComboBox1.setBorder(null);
-        panelRegistro.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 560, 160, 30));
+        cbSede.setBackground(new java.awt.Color(255, 255, 255));
+        cbSede.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        cbSede.setForeground(new java.awt.Color(153, 153, 153));
+        cbSede.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Puriscal", "San Pedro", "Ciudad Colon" }));
+        cbSede.setBorder(null);
+        panelRegistro.add(cbSede, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 560, 160, 30));
+
+        alertaCedula.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        alertaCedula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/advertencia.png"))); // NOI18N
+        panelRegistro.add(alertaCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 280, 40, 40));
+
+        alertaTelefono.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        alertaTelefono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/advertencia.png"))); // NOI18N
+        panelRegistro.add(alertaTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 350, 40, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -446,6 +489,7 @@ public class Registro extends javax.swing.JFrame {
 
     private void txtCedulaOFMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCedulaOFMousePressed
         txtsSetPredeterminatedText("cedula");
+        alertaCedula.setVisible(false);
         if (txtCedulaOF.getText().equals("Ingrese su cedula")) {
             txtCedulaOF.setText("");
         }
@@ -454,6 +498,7 @@ public class Registro extends javax.swing.JFrame {
 
     private void txtTelefonoOFMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTelefonoOFMousePressed
         txtsSetPredeterminatedText("telefono");
+        alertaTelefono.setVisible(false);
         if (txtTelefonoOF.getText().equals("Ingrese su telefono")) {
             txtTelefonoOF.setText("");
         }
@@ -481,41 +526,69 @@ public class Registro extends javax.swing.JFrame {
             String cedula = txtCedulaOF.getText();
             String password = String.valueOf(psdPasswordOF.getPassword());
             int claveNumerica;
+            int rol = cbRol.getSelectedIndex();
+            int sede = cbSede.getSelectedIndex();
             try {
                 claveNumerica = Integer.parseInt(txtClaveNumerica.getText());
             } catch (Exception e) {
                 claveNumerica = 0;
             }
-            
-            
-            int rol = cbRol.getSelectedIndex();
 
             if (usuario.trim().equals("") || apellido.trim().equals("") || telefono.trim().equals("") || cedula.trim().equals("") || password.trim().equals("")) {
                 JOptionPane.showMessageDialog(null, "Error, espacios sin llenar");
-                
             } else {
                 if (usuario.equals("Ingrese su usuario") || apellido.equals("Ingrese sus apellidos") || telefono.equals("Ingrese su telefono")
                         || cedula.equals("Ingrese su cedula") || password.equals("Ingrese su password") || claveNumerica == 0) {
 
                     JOptionPane.showMessageDialog(null, "Error, debes rellenar todos los espacios");
-                    
                 } else {
-                    
-                    switch (rol) {
-                        case 0 ->{
-                            Usuarios user = new Usuarios(usuario,apellido,password,cedula,telefono,claveNumerica,rol,"",0,0,0);
-                            Datos.listaUsuarios.add(user);
-                        }
-                        case 1 ->{
-                            Administradores admin = new Administradores("", usuario, apellido, password, cedula, telefono, claveNumerica, rol, cedula);
-                            Datos.listaAdmins.add(admin);
-                        }
-                    }
 
-                    JOptionPane.showMessageDialog(null, "Datos guardados");
-                    Inicio inicio = new Inicio();
-                    inicio.setVisible(true);
-                    this.dispose();
+                    boolean repetidos = validarRepetidos();
+                    if (repetidos == false) {
+                        switch (rol) {
+                            case 0 -> {
+                                Usuarios user = new Usuarios(usuario, apellido, password, cedula, telefono, claveNumerica, rol, sede, 0, 0, 0);
+                                Sedes.Sedes.ListaUsers.add(user);
+                                DatosRegistrados.addCedula(cedula);
+                                DatosRegistrados.addTelefono(telefono);
+                                switch (sede) {
+                                    case 0 -> {
+                                        Sedes.SedePuriscal.ListaUsers.add(user);
+                                    }
+                                    case 1 -> {
+                                        Sedes.SedeSanPedro.ListaUsers.add(user);
+                                    }
+                                    case 2 -> {
+                                        Sedes.SedeCiudadColon.ListaUsers.add(user);
+                                    }
+                                }
+                            }
+                            case 1 -> {
+                                Administradores admin = new Administradores(usuario, apellido, password, cedula, telefono, claveNumerica, rol, sede);
+                                Sedes.Sedes.ListaAdmins.add(admin);
+                                DatosRegistrados.addCedula(cedula);
+                                DatosRegistrados.addTelefono(telefono);
+                                switch (sede) {
+                                    case 0 -> {
+                                        Sedes.SedePuriscal.ListaAdmins.add(admin);
+                                    }
+                                    case 1 -> {
+                                        Sedes.SedeSanPedro.ListaAdmins.add(admin);
+                                    }
+                                    case 2 -> {
+                                        Sedes.SedeCiudadColon.ListaAdmins.add(admin);
+                                    }
+                                }
+                            }
+                        }
+                        JOptionPane.showMessageDialog(null, "Datos guardados");
+                        Inicio inicio = new Inicio();
+                        inicio.setVisible(true);
+                        this.dispose();
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error, datos en uso");
+                    }
                 }
             }
 
@@ -586,9 +659,10 @@ public class Registro extends javax.swing.JFrame {
         if (jblGenerarClaveIsClicked == false) {
 
             jblGenerarClaveIsClicked = true;
-            int claveNumerica = Credenciales.generarClaveNumerica(Datos.clavesRegistradas);
+            int claveNumerica = generarClaveNumerica(DatosRegistrados.getListaClaves());
+            DatosRegistrados.addClave(claveNumerica);
             txtClaveNumerica.setText(String.valueOf(claveNumerica));
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Ya existe una clave numerica");
         }
@@ -631,8 +705,10 @@ public class Registro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel alertaCedula;
+    private javax.swing.JLabel alertaTelefono;
     private javax.swing.JComboBox<String> cbRol;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cbSede;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jblApellidoOF;
     private javax.swing.JLabel jblAtras;

@@ -1,5 +1,5 @@
 
-package ClasesProyecto;
+package Personas;
 
 import Personas.Usuarios;
 import java.util.ArrayList;
@@ -12,16 +12,11 @@ public class Personas {
     private String telefono;
     private String apellidos;
     private int rol;
-    private String sede;
+    private int sede;
     public  String comentario;
-    private double saldoDeLaCuenta;
-    private double saldoCuentaAhorro;
-    private double saldoCuentaSimpe;
-    private boolean estadoCuentaSimpe;
-    private boolean estadoCuentaAhorro;
-    ArrayList<String> comprobantes = new ArrayList<>();
+
     
-    public Personas(String usuario, String apellidos, String password, String cedula, String telefono, int claveNumerica, int rol, String sede){
+    public Personas(String usuario, String apellidos, String password, String cedula, String telefono, int claveNumerica, int rol, int sede){
         this.usuario = usuario;
         this.password = password;
         this.apellidos = apellidos;
@@ -38,7 +33,6 @@ public class Personas {
     public Personas(String usuario, String comentario){
         
     }
-    
     
     public String getUsuario(){ //Retorna el valor de usuario.
         return usuario;
@@ -64,7 +58,6 @@ public class Personas {
     public void setClaveNumerica(int claveNumerica){  //Establece el valor de claveNumerica.
         this.claveNumerica = claveNumerica;
     }
-    
 
     public String getCedula() {
         return cedula;
@@ -98,11 +91,11 @@ public class Personas {
         this.rol = rol;
     }
 
-    public String getSede() {
+    public int getSede() {
         return sede;
     }
 
-    public void setSede(String sede) {
+    public void setSede(int sede) {
         this.sede = sede;
     }
 
@@ -114,62 +107,16 @@ public class Personas {
         this.comentario = comentario;
     }
 
-    public double getSaldoDeLaCuenta() {
-        return saldoDeLaCuenta;
-    }
-
-    public void setSaldoDeLaCuenta(double saldoDeLaCuenta) {
-        this.saldoDeLaCuenta = saldoDeLaCuenta;
-    }
-
-    public double getSaldoCuentaAhorro() {
-        return saldoCuentaAhorro;
-    }
-
-    public void setSaldoCuentaAhorro(double saldoCuentaAhorro) {
-        this.saldoCuentaAhorro = saldoCuentaAhorro;
-    }
-
-    public double getSaldoCuentaSimpe() {
-        return saldoCuentaSimpe;
-    }
-
-    public void setSaldoCuentaSimpe(double saldoCuentaSimpe) {
-        this.saldoCuentaSimpe = saldoCuentaSimpe;
-    }
-
-    public boolean getEstadoCuentaSimpe() {
-        return estadoCuentaSimpe;
-    }
-
-    public void setEstadoCuentaSimpe(boolean estadoCuentaSimpe) {
-        this.estadoCuentaSimpe = estadoCuentaSimpe;
-    }
-
-    public boolean getEstadoCuentaAhorro() {
-        return estadoCuentaAhorro;
-    }
-
-    public void setEstadoCuentaAhorro(boolean estadoCuentaAhorro) {
-        this.estadoCuentaAhorro = estadoCuentaAhorro;
-    }
     
-    public static void depositarDinero(double cantidad, String cuentaDestino){
-        
-    }
-    public static void retirarDinero (double cantidad, String cuentaDestino){
-        
-    }
-    
-    public static int obtenerIndicePersona(ArrayList<Personas> lista, int claveNumerica){
+    public static int obtenerIndicePersona(ArrayList<Usuarios> lista, int claveNumerica){
         
         int indiceDelObjeto = -1;
         
-        for( Personas i : lista){
-            if( i.getClaveNumerica() == claveNumerica){
-                indiceDelObjeto = lista.indexOf(i);
-            }
-        }
+        //for( Personas i : lista){
+        //    if( i.getClaveNumerica() == claveNumerica){
+          //      indiceDelObjeto = lista.indexOf(i);
+          //  }
+        //}
         return indiceDelObjeto;
     }
     
@@ -178,13 +125,5 @@ public class Personas {
        // private String 
     }
     
-    public  void addComprobantesSimpe(String comprobante){
-        this.comprobantes.add(comprobante);
-    }
     
-    public  void mostarHistorial(){
-        for(String i : comprobantes){
-            System.out.println(i);
-        }
-    }
 } //Fin clase persona
