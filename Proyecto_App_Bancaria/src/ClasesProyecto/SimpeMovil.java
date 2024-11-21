@@ -36,15 +36,15 @@ public class SimpeMovil {
     }
    
     
-    public static void aumentarSaldoCuentaDestino(ArrayList<Usuarios> personasRegistradas, int numeroDestino, double montoSimpe){
-        for(Usuarios i: personasRegistradas){
+    public static void aumentarSaldoCuentaDestino(ArrayList<Personas> personasRegistradas, int numeroDestino, double montoSimpe){
+        for(Personas i: personasRegistradas){
             if(Integer.valueOf(i.getTelefono())== numeroDestino){
                 i.setSaldoCuentaSimpe(i.getSaldoCuentaSimpe() + montoSimpe);
             }
         }
     }
     
-    public static String realizarSimpe(ArrayList<Integer> numerosRegistrados,HashMap<String,Integer> simpesRegistrados,Usuarios persona, ArrayList<Usuarios> personasRegistradas){
+    public static String realizarSimpe(ArrayList<Integer> numerosRegistrados,HashMap<String,Integer> simpesRegistrados,Personas persona, ArrayList<Personas> personasRegistradas){
         String comprobanteTransaccion = "Ninguno";
         
         boolean salir = false;
@@ -158,7 +158,7 @@ public class SimpeMovil {
         return comprobanteTransaccion;
     } 
     
-    public static void asignarComprobantesTransaccionACuentas(ArrayList<Usuarios> listaPersonas, String comprobante, Usuarios persona){
+    public static void asignarComprobantesTransaccionACuentas(ArrayList<Personas> listaPersonas, String comprobante, Personas persona){
         if(!comprobante.equals("Ninguno")){
             String[] comprobantesSeparados = comprobante.split(",");
             String comprobanteTrnsEnviada = comprobantesSeparados[0];
@@ -167,7 +167,7 @@ public class SimpeMovil {
 
             persona.addComprobantesSimpe(comprobanteTrnsEnviada);
 
-            for(Usuarios i: listaPersonas){
+            for(Personas i: listaPersonas){
                 if(Integer.valueOf(i.getTelefono()) == Integer.parseInt(numeroQueEnvia)){
                     i.addComprobantesSimpe(comprobanteTrnsRecibida);
                 }
@@ -176,7 +176,7 @@ public class SimpeMovil {
         }
     }
     
-    public static void cambiarDatosCuentaSimpe(ArrayList<Integer> numerosRegistrados,HashMap<String, Integer> cuentasSimpeMovil,Usuarios persona){
+    public static void cambiarDatosCuentaSimpe(ArrayList<Integer> numerosRegistrados,HashMap<String, Integer> cuentasSimpeMovil,Personas persona){
         Scanner leer = new Scanner(System.in);
         boolean centinela = true;
         while(centinela == true){

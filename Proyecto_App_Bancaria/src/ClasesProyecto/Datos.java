@@ -31,7 +31,7 @@ public class Datos {
         Datos.indiceLogin = indiceLogin;
     }
     
-    public static int getLoginIndexUsuarios(ArrayList<Usuarios> lista, String user, String psd) {
+    public static int getLoginIndexUsuarios(ArrayList<Personas> lista, String user, String psd) {
         int index = -1;
         for (Personas i : lista) {
             if (i.getPassword().equals(psd) && i.getUsuario().equals(user)) {

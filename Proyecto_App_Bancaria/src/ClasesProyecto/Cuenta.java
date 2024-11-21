@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Cuenta {
 
     //Lee un valor ingresado por el usuario lo valida y luego lo retorna.
-    public static double ingresarMontoRetiro(Usuarios persona, String cuentaElejida) {
+    public static double ingresarMontoRetiro(Personas persona, String cuentaElejida) {
 
         Scanner leer = new Scanner(System.in);
         double saldoCuenta;
@@ -103,7 +103,7 @@ public class Cuenta {
     }
 
     //Muetra el valor de la variable de instancia saldoDeLaCuenta.
-    public static void verSaldoCuenta(Usuarios persona, String cuentaElejida) {
+    public static void verSaldoCuenta(Personas persona, String cuentaElejida) {
         Scanner leer = new Scanner(System.in);
 
         System.out.println("\n--- VER SALDO ---\n");
@@ -163,7 +163,7 @@ public class Cuenta {
         }
     }
 
-    public static void crearNuevaCuentaSimpe(ArrayList<Integer> numerosRegistrados,HashMap<String,Integer> cuentasSimpe, Usuarios persona) {
+    public static void crearNuevaCuentaSimpe(ArrayList<Integer> numerosRegistrados,HashMap<String,Integer> cuentasSimpe, Personas persona) {
         Scanner leer = new Scanner(System.in);
         int numeroTelefono = 0;
 
@@ -196,7 +196,7 @@ public class Cuenta {
         
     }
     
-    public static void crearCuentaAhorro(Usuarios persona){
+    public static void crearCuentaAhorro(Personas persona){
         
         System.out.println("\n--- CREAR CUENTA AHORROS ---\n");
         System.out.println("Desea habilitar una cuenta de ahorro?:\n");

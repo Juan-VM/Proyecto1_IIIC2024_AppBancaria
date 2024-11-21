@@ -1,20 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package gui;
 
-/**
- *
- * @author Charly Cimino
- */
+
 public class PrincipalAdmins extends javax.swing.JFrame {
 
-    /**
-     * Creates new form PrincipalAdmins
-     */
-    public PrincipalAdmins() {
+    int indiceAdmin;
+    public PrincipalAdmins(int indice) {
         initComponents();
+        this.indiceAdmin = indice;
     }
 
     /**
@@ -83,7 +76,7 @@ public class PrincipalAdmins extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PrincipalAdmins().setVisible(true);
+               
             }
         });
     }
