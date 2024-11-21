@@ -9,8 +9,9 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
 
     boolean verPassword = false;
-    int indice;
-    int rol = 0;
+    String cedula;
+    int rol;
+    int sede;
 
     public Login() {
         initComponents();
@@ -23,23 +24,35 @@ public class Login extends javax.swing.JFrame {
         psdPassword.setText("Ingrese su password");
     }
 
-    public boolean validarDatosUsuarios(ArrayList<Usuarios> lista) {
+    public boolean validarDatos(String listaRol) {
+
+        ArrayList<Usuarios> listaUsers = Sedes.Sedes.getListaUsers();
+        ArrayList<Administradores> listaAdmins = Sedes.Sedes.getListaAdmins();
+
         boolean CredencialesIguales = false;
         String cedula = txtCedula.getText();
         String password = String.valueOf(psdPassword.getPassword());
 
         try {
-            if (lista.size() > 0) {
-
-                for (Usuarios p : lista) {
-                    if (p.getCedula().equals(cedula) && p.getPassword().equals(password)) {
-                        CredencialesIguales = true;
-                        indice = lista.indexOf(p);
+            switch (listaRol) {
+                case "usuarios" -> {
+                    for (Usuarios p : listaUsers) {
+                        if (p.getCedula().equals(cedula) && p.getPassword().equals(password)) {
+                            CredencialesIguales = true;
+                            this.cedula = p.getCedula();
+                            sede = p.getSede();
+                        }
                     }
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "No hay usuarios registrados");
-                txtsPorDefecto();
+                case "administradores" -> {
+                    for (Administradores p : listaAdmins) {
+                        if (p.getCedula().equals(cedula) && p.getPassword().equals(password)) {
+                            CredencialesIguales = true;
+                            this.cedula = p.getCedula();
+                            sede = p.getSede();
+                        }
+                    }
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error, intentalo de nuevo");
@@ -48,41 +61,8 @@ public class Login extends javax.swing.JFrame {
 
         if (CredencialesIguales == true) {
             JOptionPane.showMessageDialog(null, "Datos correctos");
-
-        } else if (lista.size() > 0 && CredencialesIguales == false) {
-            JOptionPane.showMessageDialog(null, "Datos incorrectos");
-            txtsPorDefecto();
-        }
-        return CredencialesIguales;
-    }
-
-    public boolean validarDatosAdmins(ArrayList<Administradores> lista) {
-        boolean CredencialesIguales = false;
-        String cedula = txtCedula.getText();
-        String password = String.valueOf(psdPassword.getPassword());
-
-        try {
-            if (lista.size() > 0) {
-
-                for (Administradores p : lista) {
-                    if (p.getCedula().equals(cedula) && p.getPassword().equals(password)) {
-                        CredencialesIguales = true;
-                        indice = lista.indexOf(p);
-                    }
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "No hay admins registrados");
-                txtsPorDefecto();
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error, intentalo de nuevo");
-            txtsPorDefecto();
-        }
-
-        if (CredencialesIguales == true) {
-            JOptionPane.showMessageDialog(null, "Datos correctos");
-
-        } else if (lista.size() > 0 && CredencialesIguales == false) {
+        
+        } else if (CredencialesIguales == false) {
             JOptionPane.showMessageDialog(null, "Datos incorrectos");
             txtsPorDefecto();
         }
@@ -92,16 +72,17 @@ public class Login extends javax.swing.JFrame {
     public void getRol(ArrayList<Administradores> listaAd, ArrayList<Usuarios> listaUs) {
         for (Administradores a : listaAd) {
             if (a.getCedula().equals(txtCedula.getText()) && a.getPassword().equals(String.valueOf(psdPassword.getPassword()))) {
-                rol = rol = a.getRol();
+                rol = a.getRol();
             }
         }
         for (Usuarios u : listaUs) {
             if (u.getCedula().equals(txtCedula.getText()) && u.getPassword().equals(String.valueOf(psdPassword.getPassword()))) {
-                rol = rol = u.getRol();
+                rol = u.getRol();
             }
-        } 
+        }
     }
-
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -352,21 +333,21 @@ public class Login extends javax.swing.JFrame {
         ArrayList<Usuarios> listaUsers = Sedes.Sedes.getListaUsers();
         ArrayList<Administradores> listaAdmins = Sedes.Sedes.getListaAdmins();
         boolean datosIguales;
-        getRol(listaAdmins,listaUsers);
-        
+        getRol(listaAdmins, listaUsers);
+
         switch (rol) {
             case 0 -> {
-                datosIguales = validarDatosUsuarios(listaUsers);
+                datosIguales = validarDatos("usuarios");
                 if (datosIguales == true) {
-                    PrincipalUsers users = new PrincipalUsers(indice);
+                    PrincipalUsers users = new PrincipalUsers(cedula, sede);
                     users.setVisible(true);
                     this.dispose();
                 }
             }
             case 1 -> {
-                datosIguales = validarDatosAdmins(listaAdmins);
+                datosIguales = validarDatos("administradores");
                 if (datosIguales == true) {
-                    PrincipalAdmins admins = new PrincipalAdmins(indice);
+                    PrincipalAdmins admins = new PrincipalAdmins(cedula);
                     admins.setVisible(true);
                     this.dispose();
                 }

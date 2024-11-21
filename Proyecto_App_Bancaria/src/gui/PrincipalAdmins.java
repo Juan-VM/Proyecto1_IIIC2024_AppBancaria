@@ -4,12 +4,14 @@ package gui;
 
 public class PrincipalAdmins extends javax.swing.JFrame {
 
-    int indiceAdmin;
-    public PrincipalAdmins(int indice) {
+    String cedula;
+    public PrincipalAdmins(String cedula) {
         initComponents();
-        this.indiceAdmin = indice;
+        this.cedula = cedula;
     }
-
+    public PrincipalAdmins(){
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -76,7 +78,7 @@ public class PrincipalAdmins extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               
+               new PrincipalAdmins().setVisible(true);
             }
         });
     }

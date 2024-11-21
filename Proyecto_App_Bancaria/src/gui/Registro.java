@@ -3,6 +3,10 @@ package gui;
 import Personas.Administradores;
 import Personas.Usuarios;
 import RegistroDatos.DatosRegistrados;
+import Sedes.SedeCiudadColon;
+import Sedes.SedePuriscal;
+import Sedes.SedeSanPedro;
+import Sedes.Sedes;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
@@ -423,9 +427,9 @@ public class Registro extends javax.swing.JFrame {
                 jblGenerarClaveMouseExited(evt);
             }
         });
-        panelGenerarClave.add(jblGenerarClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 50));
+        panelGenerarClave.add(jblGenerarClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 130, 50));
 
-        panelRegistro.add(panelGenerarClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 480, 150, 50));
+        panelRegistro.add(panelGenerarClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 490, 130, 40));
 
         sep6.setForeground(new java.awt.Color(102, 102, 102));
         panelRegistro.add(sep6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 620, 10));
@@ -538,7 +542,7 @@ public class Registro extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Error, espacios sin llenar");
             } else {
                 if (usuario.equals("Ingrese su usuario") || apellido.equals("Ingrese sus apellidos") || telefono.equals("Ingrese su telefono")
-                        || cedula.equals("Ingrese su cedula") || password.equals("Ingrese su password") || claveNumerica == 0) {
+                            || cedula.equals("Ingrese su cedula") || password.equals("Ingrese su password") || claveNumerica == 0) {
 
                     JOptionPane.showMessageDialog(null, "Error, debes rellenar todos los espacios");
                 } else {
@@ -548,35 +552,35 @@ public class Registro extends javax.swing.JFrame {
                         switch (rol) {
                             case 0 -> {
                                 Usuarios user = new Usuarios(usuario, apellido, password, cedula, telefono, claveNumerica, rol, sede, 0, 0, 0);
-                                Sedes.Sedes.ListaUsers.add(user);
+                                Sedes.ListaUsers.add(user);
                                 DatosRegistrados.addCedula(cedula);
                                 DatosRegistrados.addTelefono(telefono);
                                 switch (sede) {
                                     case 0 -> {
-                                        Sedes.SedePuriscal.ListaUsers.add(user);
+                                        SedePuriscal.getListaUsers().add(user);
                                     }
                                     case 1 -> {
-                                        Sedes.SedeSanPedro.ListaUsers.add(user);
+                                        SedeSanPedro.getListaUsers().add(user);
                                     }
                                     case 2 -> {
-                                        Sedes.SedeCiudadColon.ListaUsers.add(user);
+                                        SedeCiudadColon.getListaUsers().add(user);
                                     }
                                 }
                             }
                             case 1 -> {
                                 Administradores admin = new Administradores(usuario, apellido, password, cedula, telefono, claveNumerica, rol, sede);
-                                Sedes.Sedes.ListaAdmins.add(admin);
+                                Sedes.ListaAdmins.add(admin);
                                 DatosRegistrados.addCedula(cedula);
                                 DatosRegistrados.addTelefono(telefono);
                                 switch (sede) {
                                     case 0 -> {
-                                        Sedes.SedePuriscal.ListaAdmins.add(admin);
+                                        SedePuriscal.getListaAdmins().add(admin);
                                     }
                                     case 1 -> {
-                                        Sedes.SedeSanPedro.ListaAdmins.add(admin);
+                                        SedeSanPedro.getListaAdmins().add(admin);
                                     }
                                     case 2 -> {
-                                        Sedes.SedeCiudadColon.ListaAdmins.add(admin);
+                                        SedeCiudadColon.getListaAdmins().add(admin);
                                     }
                                 }
                             }
