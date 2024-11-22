@@ -104,19 +104,6 @@ public class PrincipalUsers extends javax.swing.JFrame {
         jblHabilitarCuentas = new javax.swing.JLabel();
         panelComentariosBarra = new javax.swing.JPanel();
         jblComentarios = new javax.swing.JLabel();
-        pizarra = new javax.swing.JTabbedPane();
-        panelDepositar = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        panelVerSaldo = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        panelRetirar = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        panelHabilitarCuentas = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        panelComentarios = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        panelDashboard = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -155,6 +142,9 @@ public class PrincipalUsers extends javax.swing.JFrame {
         jblAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/atras.png"))); // NOI18N
         jblAtras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jblAtras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jblAtrasMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jblAtrasMouseEntered(evt);
             }
@@ -176,6 +166,9 @@ public class PrincipalUsers extends javax.swing.JFrame {
         jblSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salida32px.png"))); // NOI18N
         jblSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jblSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jblSalirMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jblSalirMouseEntered(evt);
             }
@@ -194,6 +187,9 @@ public class PrincipalUsers extends javax.swing.JFrame {
         jblConfig.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/config32px.png"))); // NOI18N
         jblConfig.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jblConfig.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jblConfigMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jblConfigMouseEntered(evt);
             }
@@ -353,66 +349,6 @@ public class PrincipalUsers extends javax.swing.JFrame {
 
         background.add(panelOpciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 720));
 
-        pizarra.setBackground(new java.awt.Color(255, 255, 255));
-        pizarra.setForeground(new java.awt.Color(153, 153, 153));
-        pizarra.setEnabled(false);
-
-        panelDepositar.setBackground(new java.awt.Color(255, 255, 255));
-        panelDepositar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel1.setText("DEPOS");
-        panelDepositar.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 150, 140, 120));
-
-        pizarra.addTab("Depositar", panelDepositar);
-
-        panelVerSaldo.setBackground(new java.awt.Color(255, 255, 255));
-        panelVerSaldo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
-        jLabel2.setText("VERSALDO");
-        panelVerSaldo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 220, -1, -1));
-
-        pizarra.addTab("Ver saldo", panelVerSaldo);
-
-        panelRetirar.setBackground(new java.awt.Color(255, 255, 255));
-        panelRetirar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
-        jLabel3.setText("RETIRAR");
-        panelRetirar.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 300, 280, 100));
-
-        pizarra.addTab("Retirar", panelRetirar);
-
-        panelHabilitarCuentas.setBackground(new java.awt.Color(255, 255, 255));
-        panelHabilitarCuentas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
-        jLabel5.setText("Habilitar");
-        panelHabilitarCuentas.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, 180, 90));
-
-        pizarra.addTab("Habilitar", panelHabilitarCuentas);
-
-        panelComentarios.setBackground(new java.awt.Color(255, 255, 255));
-        panelComentarios.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel6.setText("comentarios");
-        panelComentarios.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 260, 300, 100));
-
-        pizarra.addTab("Comentarios", panelComentarios);
-
-        panelDashboard.setBackground(new java.awt.Color(255, 255, 255));
-        panelDashboard.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
-        jLabel4.setText("BIENVENIDA");
-        panelDashboard.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, 340, 100));
-
-        pizarra.addTab("Dashboard", panelDashboard);
-
-        background.add(pizarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, 790, 690));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -469,11 +405,11 @@ public class PrincipalUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_jblDepositarMouseExited
 
     private void jblDepositarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDepositarMouseClicked
-        pizarra.setSelectedIndex(1);
+        
     }//GEN-LAST:event_jblDepositarMouseClicked
 
     private void jblRetirarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRetirarMouseClicked
-        pizarra.setSelectedIndex(3);
+        
     }//GEN-LAST:event_jblRetirarMouseClicked
 
     private void jblVerSaldoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseEntered
@@ -485,7 +421,7 @@ public class PrincipalUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_jblVerSaldoMouseExited
 
     private void jblVerSaldoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseClicked
-        pizarra.setSelectedIndex(2);
+        
     }//GEN-LAST:event_jblVerSaldoMouseClicked
 
     private void jblDashboardMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDashboardMouseEntered
@@ -497,7 +433,7 @@ public class PrincipalUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_jblDashboardMouseExited
 
     private void jblDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDashboardMouseClicked
-        pizarra.setSelectedIndex(0);
+        
     }//GEN-LAST:event_jblDashboardMouseClicked
 
     private void jblHabilitarCuentasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseEntered
@@ -509,7 +445,7 @@ public class PrincipalUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_jblHabilitarCuentasMouseExited
 
     private void jblHabilitarCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseClicked
-        pizarra.setSelectedIndex(4);
+        
     }//GEN-LAST:event_jblHabilitarCuentasMouseClicked
 
     private void jblComentariosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblComentariosMouseEntered
@@ -521,8 +457,26 @@ public class PrincipalUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_jblComentariosMouseExited
 
     private void jblComentariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblComentariosMouseClicked
-        pizarra.setSelectedIndex(5);
+        
     }//GEN-LAST:event_jblComentariosMouseClicked
+
+    private void jblConfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblConfigMouseClicked
+        ConfigurarPerfil config = new ConfigurarPerfil(this.cedula, this.sede);
+        config.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jblConfigMouseClicked
+
+    private void jblSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSalirMouseClicked
+        Inicio ini = new Inicio();
+        ini.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jblSalirMouseClicked
+
+    private void jblAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblAtrasMouseClicked
+        Inicio ini = new Inicio();
+        ini.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jblAtrasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -565,12 +519,6 @@ public class PrincipalUsers extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
     private javax.swing.JLabel iconBarra;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jblAtras;
     private javax.swing.JLabel jblBarra;
     private javax.swing.JLabel jblComentarios;
@@ -586,21 +534,14 @@ public class PrincipalUsers extends javax.swing.JFrame {
     private javax.swing.JLabel jblSalir;
     private javax.swing.JLabel jblVentanaActual;
     private javax.swing.JPanel panelAtras;
-    private javax.swing.JPanel panelComentarios;
     private javax.swing.JPanel panelComentariosBarra;
     private javax.swing.JPanel panelConfig;
-    private javax.swing.JPanel panelDashboard;
     private javax.swing.JPanel panelDashboardBarra;
-    private javax.swing.JPanel panelDepositar;
     private javax.swing.JPanel panelDepositarBarra;
-    private javax.swing.JPanel panelHabilitarCuentas;
     private javax.swing.JPanel panelHabilitarCuentasBarra;
     private javax.swing.JPanel panelOpciones;
-    private javax.swing.JPanel panelRetirar;
     private javax.swing.JPanel panelRetirarBarra;
     private javax.swing.JPanel panelSalir;
-    private javax.swing.JPanel panelVerSaldo;
     private javax.swing.JPanel panelVerSaldoBarra;
-    private javax.swing.JTabbedPane pizarra;
     // End of variables declaration//GEN-END:variables
 }
