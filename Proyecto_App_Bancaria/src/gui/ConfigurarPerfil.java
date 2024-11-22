@@ -1,26 +1,117 @@
-
 package gui;
 
 import Personas.Usuarios;
+import RegistroDatos.DatosRegistrados;
+import Sedes.SedeCiudadColon;
 import Sedes.SedePuriscal;
+import Sedes.SedeSanPedro;
 import Sedes.Sedes;
 import java.awt.Color;
-
+import javax.swing.JOptionPane;
 
 public class ConfigurarPerfil extends javax.swing.JFrame {
-    
+
     boolean verPassword = false;
     int sede;
-    int indice;
-   
-    public ConfigurarPerfil(int indice, int sede) {
+    String cedula;
+    String telefono;
+    boolean BotonGuardarActivo;
+
+    public ConfigurarPerfil(String cedula, int sede) {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.indice = indice;
+        this.cedula = cedula;
         this.sede = sede;
+        panelConfig.setBackground(new Color(255, 255, 218));
+        alertaCedula.setVisible(false);
+        alertaTelefono.setVisible(false);
+        this.BotonGuardarActivo = false;
+
+        for (Usuarios i : Sedes.getListaUsers()) {
+            if (i.getSede() == this.sede && i.getCedula().equals(this.cedula)) {
+                txtName.setText(i.getUsuario());
+                txtApellido.setText(i.getApellidos());
+                txtCedula.setText(i.getCedula());
+                txtTelefono.setText(i.getTelefono());
+                this.telefono = i.getTelefono();
+                psdPassword.setText(String.valueOf(i.getPassword()));
+                jblNombrePerfil.setText(i.getUsuario() + " " + i.getApellidos());
+                switch (this.sede) {
+                    case 0 -> {
+                        jblVentanaActual.setText("Sede Puriscal");
+                    }
+                    case 1 -> {
+                        jblVentanaActual.setText("Sede San Pedro");
+                    }
+                    case 2 -> {
+                        jblVentanaActual.setText("Sede Ciudad Colon");
+                    }
+                }
+            }
+        }
     }
-    public ConfigurarPerfil(){
+
+    public ConfigurarPerfil() {
+
+    }
+
+    public void actualizarDatosEnLaSede(int sede, String cedula, Usuarios user) {
+        switch (sede) {
+            case 0 -> {
+                for (Usuarios i : SedePuriscal.ListaUsers) {
+                    if (i.getCedula().equals(cedula)) {
+                        i = user;
+                    }
+                }
+            }
+            case 1 -> {
+                for (Usuarios i : SedeSanPedro.ListaUsers) {
+                    if (i.getCedula().equals(cedula)) {
+                        i = user;
+                    }
+                }
+            }
+            case 2 -> {
+                for (Usuarios i : SedeCiudadColon.ListaUsers) {
+                    if (i.getCedula().equals(cedula)) {
+                        i = user;
+                    }
+                }
+            }
+        }
+    }
+
+    public boolean validarRepetidos() {
+        boolean existen = false;
+        if (DatosRegistrados.getListaCedulas().contains(txtCedula.getText()) || DatosRegistrados.getListaTelefonos().contains(txtTelefono.getText())) {
+       
+            if (DatosRegistrados.getListaCedulas().contains(txtCedula.getText())) {
+                if(!txtCedula.getText().equals(this.cedula) || txtCedula.getText().trim().equals("")){
+                    alertaCedula.setVisible(true);
+                    existen = true;
+                } 
+            }
+
+            if (DatosRegistrados.getListaTelefonos().contains(txtTelefono.getText())) {
+                if(!txtTelefono.getText().equals(this.telefono) || txtTelefono.getText().trim().equals("")){
+                    alertaTelefono.setVisible(true);
+                    existen = true;
+                }
+            }
+        }
+        return existen;
+    }
+    
+    public void actualizarDatosRegistrados(String ced, String tel){
+        if(!ced.equals(this.cedula)){
+            DatosRegistrados.getListaCedulas().remove(this.cedula);
+            DatosRegistrados.getListaCedulas().add(ced);
+        }
         
+        if(!tel.equals(this.telefono)){
+            DatosRegistrados.getListaTelefonos().remove(this.telefono);
+            DatosRegistrados.getListaTelefonos().add(tel);
+        }
     }
 
     /**
@@ -66,12 +157,14 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         jblName = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
+        alertaCedula = new javax.swing.JLabel();
         jblApellido = new javax.swing.JLabel();
         txtApellido = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         jblCedula = new javax.swing.JLabel();
         txtCedula = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
+        alertaTelefono = new javax.swing.JLabel();
         jblTelefono = new javax.swing.JLabel();
         psdPassword = new javax.swing.JPasswordField();
         txtTelefono = new javax.swing.JTextField();
@@ -119,6 +212,9 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         jblAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/atras.png"))); // NOI18N
         jblAtras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jblAtras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jblAtrasMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jblAtrasMouseEntered(evt);
             }
@@ -140,6 +236,9 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         jblSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salida32px.png"))); // NOI18N
         jblSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jblSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jblSalirMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jblSalirMouseEntered(evt);
             }
@@ -157,14 +256,6 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         jblConfig.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jblConfig.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/config32px.png"))); // NOI18N
         jblConfig.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jblConfig.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jblConfigMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jblConfigMouseExited(evt);
-            }
-        });
         panelConfig.add(jblConfig, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 50));
 
         background.add(panelConfig, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 50, 50));
@@ -347,6 +438,10 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         jSeparator2.setForeground(new java.awt.Color(51, 51, 51));
         panelEditDatos.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 750, 10));
 
+        alertaCedula.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        alertaCedula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/advertencia.png"))); // NOI18N
+        panelEditDatos.add(alertaCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 270, 40, 40));
+
         jblApellido.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jblApellido.setForeground(new java.awt.Color(51, 51, 51));
         jblApellido.setText("APELLIDO");
@@ -372,10 +467,19 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         txtCedula.setForeground(new java.awt.Color(204, 204, 204));
         txtCedula.setText("Cedula");
         txtCedula.setBorder(null);
+        txtCedula.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtCedulaMousePressed(evt);
+            }
+        });
         panelEditDatos.add(txtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 580, 40));
 
         jSeparator4.setForeground(new java.awt.Color(51, 51, 51));
         panelEditDatos.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 750, 10));
+
+        alertaTelefono.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        alertaTelefono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/advertencia.png"))); // NOI18N
+        panelEditDatos.add(alertaTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 380, 40, 40));
 
         jblTelefono.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jblTelefono.setForeground(new java.awt.Color(51, 51, 51));
@@ -394,6 +498,11 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         txtTelefono.setForeground(new java.awt.Color(204, 204, 204));
         txtTelefono.setText("Telefono");
         txtTelefono.setBorder(null);
+        txtTelefono.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtTelefonoMousePressed(evt);
+            }
+        });
         panelEditDatos.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 580, 40));
 
         panelVerPass.setBackground(new java.awt.Color(255, 255, 255));
@@ -481,7 +590,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jblDepositarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDepositarMouseClicked
-        
+
     }//GEN-LAST:event_jblDepositarMouseClicked
 
     private void jblDepositarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDepositarMouseEntered
@@ -493,7 +602,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     }//GEN-LAST:event_jblDepositarMouseExited
 
     private void jblRetirarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRetirarMouseClicked
-        
+
     }//GEN-LAST:event_jblRetirarMouseClicked
 
     private void jblRetirarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRetirarMouseEntered
@@ -505,7 +614,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     }//GEN-LAST:event_jblRetirarMouseExited
 
     private void jblVerSaldoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseClicked
-        
+
     }//GEN-LAST:event_jblVerSaldoMouseClicked
 
     private void jblVerSaldoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseEntered
@@ -517,7 +626,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     }//GEN-LAST:event_jblVerSaldoMouseExited
 
     private void jblDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDashboardMouseClicked
-        
+
     }//GEN-LAST:event_jblDashboardMouseClicked
 
     private void jblDashboardMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDashboardMouseEntered
@@ -529,7 +638,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     }//GEN-LAST:event_jblDashboardMouseExited
 
     private void jblHabilitarCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseClicked
-        
+
     }//GEN-LAST:event_jblHabilitarCuentasMouseClicked
 
     private void jblHabilitarCuentasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseEntered
@@ -541,7 +650,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     }//GEN-LAST:event_jblHabilitarCuentasMouseExited
 
     private void jblComentariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblComentariosMouseClicked
-        
+
     }//GEN-LAST:event_jblComentariosMouseClicked
 
     private void jblComentariosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblComentariosMouseEntered
@@ -568,15 +677,6 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         panelSalir.setBackground(new Color(247, 240, 194));
     }//GEN-LAST:event_jblSalirMouseExited
 
-    private void jblConfigMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblConfigMouseEntered
-        panelConfig.setBackground(new Color(255, 255, 218));
-        //255,248,200
-    }//GEN-LAST:event_jblConfigMouseEntered
-
-    private void jblConfigMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblConfigMouseExited
-        panelConfig.setBackground(new Color(247, 240, 194));
-    }//GEN-LAST:event_jblConfigMouseExited
-
     private void jblVerPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerPassMouseClicked
 
         if (verPassword == false) {
@@ -599,7 +699,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     }//GEN-LAST:event_jblVerPassMouseExited
 
     private void jblEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblEditarMouseClicked
-
+        this.BotonGuardarActivo = true;
         txtName.setEditable(true);
         txtApellido.setEditable(true);
         txtCedula.setEditable(true);
@@ -623,39 +723,78 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     }//GEN-LAST:event_jblEditarMouseExited
 
     private void jblGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblGuardarMouseClicked
-    
-        for(Usuarios i : Sedes.getListaUsers()){
-            if(i.getSede() == sede){ //necesita saber cual es el usuario hay que pasarle la cedula.
-                i.setUsuario(txtName.getText());
-                i.setApellidos(txtApellido.getText());
-                i.setCedula(txtCedula.getText());
-                i.setTelefono(txtTelefono.getText());
-                i.setPassword(String.valueOf(psdPassword.getPassword()));
-                jblNombrePerfil.setText(i.getUsuario()+" "+i.getApellidos());
+        if (this.BotonGuardarActivo == true) {
+            boolean EspaciosRepetidos = validarRepetidos();
+            if (EspaciosRepetidos == false) {
+                for (Usuarios i : Sedes.getListaUsers()) {
+                    if (i.getSede() == sede && i.getCedula().equals(this.cedula)) {
+
+                        i.setUsuario(txtName.getText());
+                        i.setApellidos(txtApellido.getText());
+                        i.setCedula(txtCedula.getText());
+                        i.setTelefono(txtTelefono.getText());
+                        i.setPassword(String.valueOf(psdPassword.getPassword()));
+                        jblNombrePerfil.setText(i.getUsuario() + " " + i.getApellidos());
+                        actualizarDatosRegistrados(i.getCedula(), i.getTelefono()); //Toma los datos nuevos y los compara con los anteriores.
+                        this.cedula = i.getCedula();
+                        this.telefono = i.getTelefono();
+                        actualizarDatosEnLaSede(this.sede, i.getCedula(), i);
+
+                    }
+                }
+
+                txtName.setForeground(new Color(204, 204, 204));
+                txtApellido.setForeground(new Color(204, 204, 204));
+                txtCedula.setForeground(new Color(204, 204, 204));
+                txtTelefono.setForeground(new Color(204, 204, 204));
+                psdPassword.setForeground(new Color(204, 204, 204));
+                txtName.setEditable(false);
+                txtApellido.setEditable(false);
+                txtCedula.setEditable(false);
+                txtTelefono.setEditable(false);
+                psdPassword.setEditable(false);
+                BotonGuardarActivo = false;
+                jblGuardar.setForeground(new Color(102, 102, 102));
+                panelGuardar.setBackground(new Color(204, 212, 152));
+            } else {
+                JOptionPane.showMessageDialog(null, "Error, datos en uso o en blanco");
             }
         }
-
-        txtName.setForeground(new Color(204, 204, 204));
-        txtApellido.setForeground(new Color(204, 204, 204));
-        txtCedula.setForeground(new Color(204, 204, 204));
-        txtTelefono.setForeground(new Color(204, 204, 204));
-        psdPassword.setForeground(new Color(204, 204, 204));
-        txtName.setEditable(false);
-        txtApellido.setEditable(false);
-        txtCedula.setEditable(false);
-        txtTelefono.setEditable(false);
-        psdPassword.setEditable(false);
     }//GEN-LAST:event_jblGuardarMouseClicked
 
     private void jblGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblGuardarMouseEntered
+        if (this.BotonGuardarActivo == true) {
         panelGuardar.setBackground(new Color(228, 237, 170));
         jblGuardar.setForeground(new Color(51, 51, 51));
+        }
     }//GEN-LAST:event_jblGuardarMouseEntered
 
     private void jblGuardarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblGuardarMouseExited
+        if (this.BotonGuardarActivo == true) {
         panelGuardar.setBackground(new Color(204, 212, 152));
         jblGuardar.setForeground(new Color(102, 102, 102));
+        }
     }//GEN-LAST:event_jblGuardarMouseExited
+
+    private void txtCedulaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCedulaMousePressed
+        alertaCedula.setVisible(false);
+    }//GEN-LAST:event_txtCedulaMousePressed
+
+    private void txtTelefonoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTelefonoMousePressed
+        alertaTelefono.setVisible(false);
+    }//GEN-LAST:event_txtTelefonoMousePressed
+
+    private void jblAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblAtrasMouseClicked
+        PrincipalUsers users = new PrincipalUsers(this.cedula,this.sede);
+        users.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jblAtrasMouseClicked
+
+    private void jblSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSalirMouseClicked
+        Inicio ini = new Inicio();
+        ini.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jblSalirMouseClicked
 
     /**
      * @param args the command line arguments
@@ -693,6 +832,8 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel alertaCedula;
+    private javax.swing.JLabel alertaTelefono;
     private javax.swing.JPanel background;
     private javax.swing.JLabel iconBarra;
     private javax.swing.JSeparator jSeparator1;
