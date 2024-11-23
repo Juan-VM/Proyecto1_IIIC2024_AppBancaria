@@ -5,7 +5,7 @@ import RegistroDatos.DatosRegistrados;
 import Sedes.SedeCiudadColon;
 import Sedes.SedePuriscal;
 import Sedes.SedeSanPedro;
-import Sedes.Sedes;
+import Sedes.SedeCentral;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 
@@ -27,7 +27,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         alertaTelefono.setVisible(false);
         this.BotonGuardarActivo = false;
 
-        for (Usuarios i : Sedes.getListaUsers()) {
+        for (Usuarios i : SedeCentral.getListaUsers()) {
             if (i.getSede() == this.sede && i.getCedula().equals(this.cedula)) {
                 txtName.setText(i.getUsuario());
                 txtApellido.setText(i.getApellidos());
@@ -296,8 +296,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         jblRetirar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jblRetirar.setForeground(new java.awt.Color(102, 102, 102));
         jblRetirar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jblRetirar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/depositar32px.png"))); // NOI18N
-        jblRetirar.setText("  Retirar          ");
+        jblRetirar.setText("Retirar");
         jblRetirar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jblRetirar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -726,7 +725,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         if (this.BotonGuardarActivo == true) {
             boolean EspaciosRepetidos = validarRepetidos();
             if (EspaciosRepetidos == false) {
-                for (Usuarios i : Sedes.getListaUsers()) {
+                for (Usuarios i : SedeCentral.getListaUsers()) {
                     if (i.getSede() == sede && i.getCedula().equals(this.cedula)) {
 
                         i.setUsuario(txtName.getText());

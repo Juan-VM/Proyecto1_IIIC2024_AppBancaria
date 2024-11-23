@@ -25,7 +25,7 @@ public class Cuentas {
         this.saldo = saldo;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 

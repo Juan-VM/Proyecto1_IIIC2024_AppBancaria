@@ -6,7 +6,7 @@ import Personas.Usuarios;
 import java.util.ArrayList;
 
 
-public class Sedes {
+public class SedeCentral {
     public static ArrayList<Usuarios> ListaUsers = new ArrayList<>();
     public static ArrayList<Administradores> ListaAdmins = new ArrayList<>();
 
@@ -15,7 +15,7 @@ public class Sedes {
     }
 
     public static void setListaUsers(ArrayList<Usuarios> ListaUsers) {
-        Sedes.ListaUsers = ListaUsers;
+        SedeCentral.ListaUsers = ListaUsers;
     }
 
     public static ArrayList<Administradores> getListaAdmins() {
@@ -23,7 +23,7 @@ public class Sedes {
     }
 
     public static void setListaAdmins(ArrayList<Administradores> ListaAdmins) {
-        Sedes.ListaAdmins = ListaAdmins;
+        SedeCentral.ListaAdmins = ListaAdmins;
     }
     
     

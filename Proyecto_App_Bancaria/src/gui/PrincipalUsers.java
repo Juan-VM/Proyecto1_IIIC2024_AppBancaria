@@ -4,6 +4,7 @@ import Personas.Usuarios;
 import Sedes.SedeCiudadColon;
 import Sedes.SedePuriscal;
 import Sedes.SedeSanPedro;
+import Sedes.SedeCentral;
 import java.awt.Color;
 
 public class PrincipalUsers extends javax.swing.JFrame {
@@ -18,6 +19,7 @@ public class PrincipalUsers extends javax.swing.JFrame {
         this.cedula = cedula;
         this.sede = sede;
         asignarIndicePersonaEnSede(this.cedula);
+        
 
         switch (this.sede) {
             case 0 -> {
@@ -237,8 +239,7 @@ public class PrincipalUsers extends javax.swing.JFrame {
         jblRetirar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jblRetirar.setForeground(new java.awt.Color(102, 102, 102));
         jblRetirar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jblRetirar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/depositar32px.png"))); // NOI18N
-        jblRetirar.setText("  Retirar          ");
+        jblRetirar.setText("Retirar");
         jblRetirar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jblRetirar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -405,7 +406,9 @@ public class PrincipalUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_jblDepositarMouseExited
 
     private void jblDepositarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDepositarMouseClicked
-        
+        Depositar depositar = new Depositar(this.cedula,this.sede);
+        depositar.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jblDepositarMouseClicked
 
     private void jblRetirarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRetirarMouseClicked
