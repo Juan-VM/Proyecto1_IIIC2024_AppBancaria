@@ -6,7 +6,7 @@ import RegistroDatos.DatosRegistrados;
 import Sedes.SedeCiudadColon;
 import Sedes.SedePuriscal;
 import Sedes.SedeSanPedro;
-import Sedes.Sedes;
+import Sedes.SedeCentral;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
@@ -552,7 +552,7 @@ public class Registro extends javax.swing.JFrame {
                         switch (rol) {
                             case 0 -> {
                                 Usuarios user = new Usuarios(usuario, apellido, password, cedula, telefono, claveNumerica, rol, sede, 0, 0, 0);
-                                Sedes.ListaUsers.add(user);
+                                SedeCentral.ListaUsers.add(user);
                                 DatosRegistrados.addCedula(cedula);
                                 DatosRegistrados.addTelefono(telefono);
                                 switch (sede) {
@@ -569,7 +569,7 @@ public class Registro extends javax.swing.JFrame {
                             }
                             case 1 -> {
                                 Administradores admin = new Administradores(usuario, apellido, password, cedula, telefono, claveNumerica, rol, sede);
-                                Sedes.ListaAdmins.add(admin);
+                                SedeCentral.ListaAdmins.add(admin);
                                 DatosRegistrados.addCedula(cedula);
                                 DatosRegistrados.addTelefono(telefono);
                                 switch (sede) {

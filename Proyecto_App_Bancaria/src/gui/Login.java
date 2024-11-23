@@ -2,6 +2,7 @@ package gui;
 
 import Personas.Administradores;
 import Personas.Usuarios;
+import Sedes.SedeCentral;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -26,8 +27,8 @@ public class Login extends javax.swing.JFrame {
 
     public boolean validarDatos(String listaRol) {
 
-        ArrayList<Usuarios> listaUsers = Sedes.Sedes.getListaUsers();
-        ArrayList<Administradores> listaAdmins = Sedes.Sedes.getListaAdmins();
+        ArrayList<Usuarios> listaUsers = SedeCentral.getListaUsers();
+        ArrayList<Administradores> listaAdmins = SedeCentral.getListaAdmins();
 
         boolean CredencialesIguales = false;
         String cedula = txtCedula.getText();
@@ -330,8 +331,8 @@ public class Login extends javax.swing.JFrame {
 
     private void jblEntrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblEntrarMouseClicked
 
-        ArrayList<Usuarios> listaUsers = Sedes.Sedes.getListaUsers();
-        ArrayList<Administradores> listaAdmins = Sedes.Sedes.getListaAdmins();
+        ArrayList<Usuarios> listaUsers = SedeCentral.getListaUsers();
+        ArrayList<Administradores> listaAdmins = SedeCentral.getListaAdmins();
         boolean datosIguales;
         getRol(listaAdmins, listaUsers);
 
@@ -339,7 +340,7 @@ public class Login extends javax.swing.JFrame {
             case 0 -> {
                 datosIguales = validarDatos("usuarios");
                 if (datosIguales == true) {
-                    PrincipalUsers users = new PrincipalUsers(cedula, sede);
+                    PrincipalUsers users = new PrincipalUsers(this.cedula, this.sede);
                     users.setVisible(true);
                     this.dispose();
                 }
