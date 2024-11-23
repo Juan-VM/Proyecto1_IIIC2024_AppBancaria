@@ -25,6 +25,34 @@ public class Depositar extends javax.swing.JFrame {
         this.verPassword = false;
         alertaClave.setVisible(false);
         jblAlerta.setVisible(false);
+        txtsPorDefecto();
+        panelDepositarBarra.setBackground(new Color(232, 225, 182));
+    }
+
+    public void txtsPorDefecto() {
+        txtClaveNum.setText("Ingrese su clave");
+        psdPassword.setText("Ingrese su password");
+    }
+
+    public boolean MontoMaximaAlcanzado(String num) {
+        boolean maximoAlcanzado = false;
+        try {
+            if (Double.parseDouble(jblMontoDeposito.getText() + num) > 10000000) {
+                maximoAlcanzado = true;
+                JOptionPane.showMessageDialog(null, "Monto max 10 000 000");
+            }
+        } catch (Exception e) {
+        }
+        return maximoAlcanzado;
+    }
+
+    public boolean DigitosMaxAlcanzados(String num) {
+        boolean digitosMaximos = false;
+        if ((jblMontoDeposito.getText() + num).length() > 10) {
+            digitosMaximos = true;
+            JOptionPane.showMessageDialog(null, "Maximo de digitos alcanzado");
+        }
+        return digitosMaximos;
     }
 
     /**
@@ -77,7 +105,9 @@ public class Depositar extends javax.swing.JFrame {
         jblContinuar = new javax.swing.JLabel();
         alertaClave = new javax.swing.JLabel();
         jblAlerta = new javax.swing.JLabel();
+        jblOpcionActual = new javax.swing.JLabel();
         panelElegir = new javax.swing.JPanel();
+        jblOpcionActual1 = new javax.swing.JLabel();
         panelCuentaCorriente = new javax.swing.JPanel();
         jblCuentaCorriente = new javax.swing.JLabel();
         panelCuentaAhorro = new javax.swing.JPanel();
@@ -470,10 +500,20 @@ public class Depositar extends javax.swing.JFrame {
         jblAlerta.setText("Solo numeros");
         panelValidar.add(jblAlerta, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 185, 250, -1));
 
+        jblOpcionActual.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jblOpcionActual.setForeground(new java.awt.Color(51, 51, 51));
+        jblOpcionActual.setText("DEPOSITAR");
+        panelValidar.add(jblOpcionActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 30, 220, 40));
+
         pizarra.addTab("Validar", panelValidar);
 
         panelElegir.setBackground(new java.awt.Color(255, 255, 255));
         panelElegir.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jblOpcionActual1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jblOpcionActual1.setForeground(new java.awt.Color(51, 51, 51));
+        jblOpcionActual1.setText("DEPOSITAR");
+        panelElegir.add(jblOpcionActual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 30, 220, 40));
 
         panelCuentaCorriente.setBackground(new java.awt.Color(92, 88, 29));
         panelCuentaCorriente.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -573,6 +613,11 @@ public class Depositar extends javax.swing.JFrame {
         uno.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         uno.setText("1");
         uno.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        uno.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                unoMousePressed(evt);
+            }
+        });
         panelNum1.add(uno, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 80));
 
         panelNumerico.add(panelNum1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 90, 80));
@@ -585,6 +630,11 @@ public class Depositar extends javax.swing.JFrame {
         dos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         dos.setText("2");
         dos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        dos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                dosMousePressed(evt);
+            }
+        });
         panelNum2.add(dos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 80));
 
         panelNumerico.add(panelNum2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 90, 80));
@@ -597,6 +647,11 @@ public class Depositar extends javax.swing.JFrame {
         tres.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tres.setText("3");
         tres.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tres.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tresMousePressed(evt);
+            }
+        });
         panelNum3.add(tres, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 80));
 
         panelNumerico.add(panelNum3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, 90, 80));
@@ -609,6 +664,11 @@ public class Depositar extends javax.swing.JFrame {
         cuatro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cuatro.setText("4");
         cuatro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cuatro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                cuatroMousePressed(evt);
+            }
+        });
         panelNum4.add(cuatro, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 80));
 
         panelNumerico.add(panelNum4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 90, 80));
@@ -621,6 +681,11 @@ public class Depositar extends javax.swing.JFrame {
         cinco.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cinco.setText("5");
         cinco.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cinco.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                cincoMousePressed(evt);
+            }
+        });
         panelNum5.add(cinco, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 80));
 
         panelNumerico.add(panelNum5, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 90, 80));
@@ -633,6 +698,11 @@ public class Depositar extends javax.swing.JFrame {
         seis.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         seis.setText("6");
         seis.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        seis.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                seisMousePressed(evt);
+            }
+        });
         panelNum6.add(seis, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 80));
 
         panelNumerico.add(panelNum6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 90, 80));
@@ -645,6 +715,11 @@ public class Depositar extends javax.swing.JFrame {
         siete.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         siete.setText("7");
         siete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        siete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                sieteMousePressed(evt);
+            }
+        });
         panelNum7.add(siete, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 80));
 
         panelNumerico.add(panelNum7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 90, 80));
@@ -657,6 +732,11 @@ public class Depositar extends javax.swing.JFrame {
         ocho.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ocho.setText("8");
         ocho.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        ocho.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                ochoMousePressed(evt);
+            }
+        });
         panelNum8.add(ocho, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 80));
 
         panelNumerico.add(panelNum8, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, 90, 80));
@@ -669,6 +749,11 @@ public class Depositar extends javax.swing.JFrame {
         nueve.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         nueve.setText("9");
         nueve.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        nueve.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                nueveMousePressed(evt);
+            }
+        });
         panelNum9.add(nueve, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 80));
 
         panelNumerico.add(panelNum9, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 90, 80));
@@ -681,6 +766,11 @@ public class Depositar extends javax.swing.JFrame {
         cero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cero.setText("0");
         cero.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cero.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                ceroMousePressed(evt);
+            }
+        });
         panelNum0.add(cero, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 80));
 
         panelNumerico.add(panelNum0, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 90, 80));
@@ -693,6 +783,11 @@ public class Depositar extends javax.swing.JFrame {
         punto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         punto.setText(".");
         punto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        punto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                puntoMousePressed(evt);
+            }
+        });
         panelPunto.add(punto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 80));
 
         panelNumerico.add(panelPunto, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 320, 90, 80));
@@ -705,6 +800,11 @@ public class Depositar extends javax.swing.JFrame {
         dobleCero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         dobleCero.setText("00");
         dobleCero.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        dobleCero.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                dobleCeroMousePressed(evt);
+            }
+        });
         panelNum00.add(dobleCero, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 80));
 
         panelNumerico.add(panelNum00, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, 90, 80));
@@ -718,6 +818,11 @@ public class Depositar extends javax.swing.JFrame {
         cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/eliminarCajero.png"))); // NOI18N
         cancelar.setText("CANCEL");
         cancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                cancelarMousePressed(evt);
+            }
+        });
         panelCancelar.add(cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 170, 50));
 
         panelNumerico.add(panelCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 20, 180, 50));
@@ -731,6 +836,11 @@ public class Depositar extends javax.swing.JFrame {
         correccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/correctionCajero.png"))); // NOI18N
         correccion.setText("CORRECCION");
         correccion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        correccion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                correccionMousePressed(evt);
+            }
+        });
         panelCorreccion.add(correccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 170, 50));
 
         panelNumerico.add(panelCorreccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, 180, 50));
@@ -744,6 +854,11 @@ public class Depositar extends javax.swing.JFrame {
         aceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/aceptarCajero.png"))); // NOI18N
         aceptar.setText("ACEPTAR");
         aceptar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        aceptar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                aceptarMousePressed(evt);
+            }
+        });
         panelAceptar.add(aceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 170, 50));
 
         panelNumerico.add(panelAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, 180, 50));
@@ -785,9 +900,21 @@ public class Depositar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jblAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblAtrasMouseClicked
-        PrincipalUsers users = new PrincipalUsers(this.cedula, this.sede);
-        users.setVisible(true);
-        this.dispose();
+        switch (pizarra.getSelectedIndex()) {
+            case 0 -> {
+                PrincipalUsers users = new PrincipalUsers(this.cedula, this.sede);
+                users.setVisible(true);
+                panelDepositarBarra.setBackground(new Color(252, 247, 215));
+                this.dispose();
+            }
+            case 1 -> {
+                pizarra.setSelectedIndex(0);
+                txtsPorDefecto();
+            }
+            case 2 -> {
+                pizarra.setSelectedIndex(1);
+            }
+        }
     }//GEN-LAST:event_jblAtrasMouseClicked
 
     private void jblAtrasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblAtrasMouseEntered
@@ -801,6 +928,7 @@ public class Depositar extends javax.swing.JFrame {
     private void jblSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSalirMouseClicked
         Inicio ini = new Inicio();
         ini.setVisible(true);
+        panelDepositarBarra.setBackground(new Color(252, 247, 215));
         this.dispose();
     }//GEN-LAST:event_jblSalirMouseClicked
 
@@ -817,11 +945,11 @@ public class Depositar extends javax.swing.JFrame {
     }//GEN-LAST:event_jblDepositarMouseClicked
 
     private void jblDepositarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDepositarMouseEntered
-        panelDepositarBarra.setBackground(new Color(232, 225, 182));
+        //panelDepositarBarra.setBackground(new Color(232, 225, 182));
     }//GEN-LAST:event_jblDepositarMouseEntered
 
     private void jblDepositarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDepositarMouseExited
-        panelDepositarBarra.setBackground(new Color(252, 247, 215));
+        //panelDepositarBarra.setBackground(new Color(252, 247, 215));
     }//GEN-LAST:event_jblDepositarMouseExited
 
     private void jblRetirarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRetirarMouseClicked
@@ -950,16 +1078,19 @@ public class Depositar extends javax.swing.JFrame {
     }//GEN-LAST:event_jblVerPasswordMouseExited
 
     private void jblContinuarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblContinuarMouseClicked
-
-        for (Usuarios i : SedeCentral.ListaUsers) {
-            if (i.getCedula().equals(this.cedula)) {
-                if (Integer.parseInt(txtClaveNum.getText()) == i.getClaveNumerica() && String.valueOf(psdPassword.getPassword()).equals(i.getPassword())) {
-                    JOptionPane.showMessageDialog(null, "Datos correctos");
-                    pizarra.setSelectedIndex(1);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Datos incorrectos");
+        try {
+            for (Usuarios i : SedeCentral.ListaUsers) {
+                if (i.getCedula().equals(this.cedula)) {
+                    if (Integer.parseInt(txtClaveNum.getText()) == i.getClaveNumerica() && String.valueOf(psdPassword.getPassword()).equals(i.getPassword())) {
+                        JOptionPane.showMessageDialog(null, "Datos correctos");
+                        pizarra.setSelectedIndex(1);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Datos incorrectos");
+                    }
                 }
             }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Rellena todos los espacios");
         }
     }//GEN-LAST:event_jblContinuarMouseClicked
 
@@ -1059,6 +1190,119 @@ public class Depositar extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jblCuentaSimpeMouseClicked
 
+    //PANEL NUMERICO
+
+    private void unoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_unoMousePressed
+        if (MontoMaximaAlcanzado("1") == false && DigitosMaxAlcanzados("1") == false)
+            jblMontoDeposito.setText(jblMontoDeposito.getText() + 1);
+    }//GEN-LAST:event_unoMousePressed
+
+    private void dosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dosMousePressed
+        if (MontoMaximaAlcanzado("2") == false && DigitosMaxAlcanzados("2") == false)
+            jblMontoDeposito.setText(jblMontoDeposito.getText() + 2);
+    }//GEN-LAST:event_dosMousePressed
+
+    private void tresMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tresMousePressed
+        if (MontoMaximaAlcanzado("3") == false && DigitosMaxAlcanzados("3") == false)
+            jblMontoDeposito.setText(jblMontoDeposito.getText() + 3);
+    }//GEN-LAST:event_tresMousePressed
+
+    private void cuatroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cuatroMousePressed
+        if (MontoMaximaAlcanzado("4") == false && DigitosMaxAlcanzados("4") == false)
+            jblMontoDeposito.setText(jblMontoDeposito.getText() + 4);
+    }//GEN-LAST:event_cuatroMousePressed
+
+    private void cincoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cincoMousePressed
+        if (MontoMaximaAlcanzado("5") == false && DigitosMaxAlcanzados("5") == false)
+            jblMontoDeposito.setText(jblMontoDeposito.getText() + 5);
+    }//GEN-LAST:event_cincoMousePressed
+
+    private void seisMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seisMousePressed
+        if (MontoMaximaAlcanzado("6") == false && DigitosMaxAlcanzados("6") == false)
+            jblMontoDeposito.setText(jblMontoDeposito.getText() + 6);
+    }//GEN-LAST:event_seisMousePressed
+
+    private void sieteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sieteMousePressed
+        if (MontoMaximaAlcanzado("7") == false && DigitosMaxAlcanzados("7") == false)
+            jblMontoDeposito.setText(jblMontoDeposito.getText() + 7);
+    }//GEN-LAST:event_sieteMousePressed
+
+    private void ochoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ochoMousePressed
+        if (MontoMaximaAlcanzado("8") == false && DigitosMaxAlcanzados("8") == false)
+            jblMontoDeposito.setText(jblMontoDeposito.getText() + 8);
+    }//GEN-LAST:event_ochoMousePressed
+
+    private void nueveMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nueveMousePressed
+        if (MontoMaximaAlcanzado("9") == false && DigitosMaxAlcanzados("9") == false)
+            jblMontoDeposito.setText(jblMontoDeposito.getText() + 9);
+    }//GEN-LAST:event_nueveMousePressed
+
+    private void ceroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ceroMousePressed
+        if (MontoMaximaAlcanzado("0") == false && DigitosMaxAlcanzados("0") == false)
+            jblMontoDeposito.setText(jblMontoDeposito.getText() + 0);
+    }//GEN-LAST:event_ceroMousePressed
+
+    private void puntoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_puntoMousePressed
+        if (MontoMaximaAlcanzado(".") == false && DigitosMaxAlcanzados(".") == false)
+            jblMontoDeposito.setText(jblMontoDeposito.getText() + ".");
+    }//GEN-LAST:event_puntoMousePressed
+
+    private void dobleCeroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dobleCeroMousePressed
+        if (MontoMaximaAlcanzado("00") == false && DigitosMaxAlcanzados("00") == false)
+            jblMontoDeposito.setText(jblMontoDeposito.getText() + "00");
+    }//GEN-LAST:event_dobleCeroMousePressed
+
+    private void cancelarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelarMousePressed
+        jblMontoDeposito.setText("");
+    }//GEN-LAST:event_cancelarMousePressed
+
+    private void correccionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_correccionMousePressed
+
+        if (jblMontoDeposito.getText().length() > 0) {
+            String nuevoTexto = "";
+            for (int i = 0; i < jblMontoDeposito.getText().length() - 1; i++) {
+                nuevoTexto = nuevoTexto + jblMontoDeposito.getText().charAt(i);
+            }
+            jblMontoDeposito.setText(nuevoTexto);
+        }
+    }//GEN-LAST:event_correccionMousePressed
+
+    private void aceptarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aceptarMousePressed
+        boolean montoValido = false;
+        double monto = 0.0;
+        try {
+            monto = Double.parseDouble(jblMontoDeposito.getText());
+            montoValido = true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en el monto ingresado");
+        }
+
+        if (montoValido == true) {
+            int eleccion = JOptionPane.showConfirmDialog(null, "Deseas realizar el deposito?", "Elije una opcion", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (eleccion == 0) {
+                for (Usuarios i : SedeCentral.getListaUsers()) {
+                    if (i.getCedula().equals(this.cedula)) {
+                        switch (this.cuentaElegida) {
+                            case "corriente" -> {
+                                i.getCuentaCorriente().depositarDinero(monto);
+                            }
+                            case "ahorro" -> {
+                                i.getCuentaAhorro().depositarDinero(monto);
+                            }
+                            case "simpe" -> {
+                                i.getCuentaSimpe().depositarDinero(monto);
+                            }
+                        }
+                        JOptionPane.showMessageDialog(null, "Deposito realizado exitosamente");
+                        jblMontoDeposito.setText("");
+                        pizarra.setSelectedIndex(0);
+                        txtsPorDefecto();
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_aceptarMousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -1127,6 +1371,8 @@ public class Depositar extends javax.swing.JFrame {
     private javax.swing.JLabel jblMontoDeposito;
     private javax.swing.JLabel jblNombreBanco;
     private javax.swing.JLabel jblNombrePerfil;
+    private javax.swing.JLabel jblOpcionActual;
+    private javax.swing.JLabel jblOpcionActual1;
     private javax.swing.JLabel jblPassword;
     private javax.swing.JLabel jblPerfil;
     private javax.swing.JLabel jblRetirar;
