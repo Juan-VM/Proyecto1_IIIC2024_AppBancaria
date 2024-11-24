@@ -39,7 +39,7 @@ public class PrincipalUsers extends javax.swing.JFrame {
     public PrincipalUsers() {
         initComponents();
     }
-    
+
     public void asignarIndicePersonaEnSede(String cedula) {
         switch (sede) {
             case 0 -> {
@@ -411,7 +411,10 @@ public class PrincipalUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_jblDepositarMouseClicked
 
     private void jblRetirarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRetirarMouseClicked
-
+        Retirar retirar = new Retirar(this.cedula, this.sede);
+        retirar.setVisible(true);
+        panelDashboardBarra.setBackground(new Color(252, 247, 215));
+        this.dispose();
     }//GEN-LAST:event_jblRetirarMouseClicked
 
     private void jblVerSaldoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseEntered
@@ -425,6 +428,7 @@ public class PrincipalUsers extends javax.swing.JFrame {
     private void jblVerSaldoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseClicked
         VerSaldo ver = new VerSaldo(this.cedula, this.sede);
         ver.setVisible(true);
+        panelDashboardBarra.setBackground(new Color(252, 247, 215));
         this.dispose();
     }//GEN-LAST:event_jblVerSaldoMouseClicked
 

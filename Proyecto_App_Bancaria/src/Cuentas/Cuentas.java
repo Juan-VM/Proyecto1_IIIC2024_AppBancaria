@@ -36,4 +36,8 @@ public class Cuentas {
     public void depositarDinero(double cantidadDeposito) {  //Suma a saldoDeLaCuenta una cantidad ingresada.
         this.saldo += cantidadDeposito;
     }
+    
+    public void retirarDinero(double cantidadRetiro) {  //Suma a saldoDeLaCuenta una cantidad ingresada.
+        this.saldo -= cantidadRetiro;
+    }
 }

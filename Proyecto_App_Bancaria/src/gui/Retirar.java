@@ -6,28 +6,28 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
-public class Depositar extends javax.swing.JFrame {
+public class Retirar extends javax.swing.JFrame {
 
     String cedula;
     int sede;
     boolean verPassword;
     String cuentaElegida;
 
-    public Depositar() {
+    public Retirar() {
         initComponents();
     }
 
-    public Depositar(String cedula, int sede) {
+    public Retirar(String cedula, int sede) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.cedula = cedula;
         this.sede = sede;
         this.verPassword = false;
+        panelRetirarBarra.setBackground(new Color(232, 225, 182));
         alertaClave.setVisible(false);
         jblAlerta.setVisible(false);
         txtsPorDefecto();
-        panelDepositarBarra.setBackground(new Color(232, 225, 182));
-        
+
         for (Usuarios i : SedeCentral.getListaUsers()) {
             if (i.getCedula().equals(this.cedula)) {
                 jblNombrePerfil.setText(i.getUsuario() + " " + i.getApellidos());
@@ -38,7 +38,7 @@ public class Depositar extends javax.swing.JFrame {
                     case 1 -> {
                         jblVentanaActual.setText("Sede San Pedro");
                     }
-                    case 2 -> { 
+                    case 2 -> {
                         jblVentanaActual.setText("Sede Ciudad Colon");
                     }
                 }
@@ -54,7 +54,7 @@ public class Depositar extends javax.swing.JFrame {
     public boolean MontoMaximaAlcanzado(String num) {
         boolean maximoAlcanzado = false;
         try {
-            if (Double.parseDouble(jblMontoDeposito.getText() + num) > 10000000) {
+            if (Double.parseDouble(jblMontoRetiro.getText() + num) > 10000000) {
                 maximoAlcanzado = true;
                 JOptionPane.showMessageDialog(null, "Monto max 10 000 000");
             }
@@ -65,7 +65,7 @@ public class Depositar extends javax.swing.JFrame {
 
     public boolean DigitosMaxAlcanzados(String num) {
         boolean digitosMaximos = false;
-        if ((jblMontoDeposito.getText() + num).length() > 10) {
+        if ((jblMontoRetiro.getText() + num).length() > 10) {
             digitosMaximos = true;
             JOptionPane.showMessageDialog(null, "Maximo de digitos alcanzado");
         }
@@ -132,8 +132,7 @@ public class Depositar extends javax.swing.JFrame {
         panelCuentaSimpe = new javax.swing.JPanel();
         jblCuentaSimpe = new javax.swing.JLabel();
         jblInformativo = new javax.swing.JLabel();
-        panelDeposito = new javax.swing.JPanel();
-        jblInformativoDep = new javax.swing.JLabel();
+        panelRetirar = new javax.swing.JPanel();
         panelNumerico = new javax.swing.JPanel();
         panelNum1 = new javax.swing.JPanel();
         uno = new javax.swing.JLabel();
@@ -166,8 +165,11 @@ public class Depositar extends javax.swing.JFrame {
         panelAceptar = new javax.swing.JPanel();
         aceptar = new javax.swing.JLabel();
         tocar = new javax.swing.JLabel();
-        panelMontoDeposito = new javax.swing.JPanel();
-        jblMontoDeposito = new javax.swing.JLabel();
+        panelMontoRetiro = new javax.swing.JPanel();
+        jblMontoRetiro = new javax.swing.JLabel();
+        jblRequisitos = new javax.swing.JLabel();
+        jblReq1 = new javax.swing.JLabel();
+        jblReq2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -519,7 +521,7 @@ public class Depositar extends javax.swing.JFrame {
 
         jblOpcionActual.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jblOpcionActual.setForeground(new java.awt.Color(51, 51, 51));
-        jblOpcionActual.setText("DEPOSITAR");
+        jblOpcionActual.setText("RETIRAR");
         panelValidar.add(jblOpcionActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 30, 220, 40));
 
         pizarra.addTab("Validar", panelValidar);
@@ -529,7 +531,7 @@ public class Depositar extends javax.swing.JFrame {
 
         jblOpcionActual1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jblOpcionActual1.setForeground(new java.awt.Color(51, 51, 51));
-        jblOpcionActual1.setText("DEPOSITAR");
+        jblOpcionActual1.setText("RETIRAR");
         panelElegir.add(jblOpcionActual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 30, 220, 40));
 
         panelCuentaCorriente.setBackground(new java.awt.Color(92, 88, 29));
@@ -610,14 +612,8 @@ public class Depositar extends javax.swing.JFrame {
 
         pizarra.addTab("Elegir", panelElegir);
 
-        panelDeposito.setBackground(new java.awt.Color(255, 255, 255));
-        panelDeposito.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jblInformativoDep.setFont(new java.awt.Font("Roboto", 1, 36)); // NOI18N
-        jblInformativoDep.setForeground(new java.awt.Color(51, 51, 51));
-        jblInformativoDep.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jblInformativoDep.setText("Ingresa el monto de deposito");
-        panelDeposito.add(jblInformativoDep, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 790, 60));
+        panelRetirar.setBackground(new java.awt.Color(255, 255, 255));
+        panelRetirar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelNumerico.setBackground(new java.awt.Color(204, 204, 204));
         panelNumerico.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -884,21 +880,36 @@ public class Depositar extends javax.swing.JFrame {
         tocar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tocar128px.png"))); // NOI18N
         panelNumerico.add(tocar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 260, -1, -1));
 
-        panelDeposito.add(panelNumerico, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 610, 420));
+        panelRetirar.add(panelNumerico, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 610, 420));
 
-        panelMontoDeposito.setBackground(new java.awt.Color(204, 204, 204));
-        panelMontoDeposito.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelMontoRetiro.setBackground(new java.awt.Color(204, 204, 204));
+        panelMontoRetiro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jblMontoDeposito.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        jblMontoDeposito.setForeground(new java.awt.Color(51, 51, 51));
-        jblMontoDeposito.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jblMontoDeposito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/colon55px.png"))); // NOI18N
-        jblMontoDeposito.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        panelMontoDeposito.add(jblMontoDeposito, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 70));
+        jblMontoRetiro.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        jblMontoRetiro.setForeground(new java.awt.Color(51, 51, 51));
+        jblMontoRetiro.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jblMontoRetiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/colon55px.png"))); // NOI18N
+        jblMontoRetiro.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        panelMontoRetiro.add(jblMontoRetiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 70));
 
-        panelDeposito.add(panelMontoDeposito, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 390, 70));
+        panelRetirar.add(panelMontoRetiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 390, 70));
 
-        pizarra.addTab("Depositar", panelDeposito);
+        jblRequisitos.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jblRequisitos.setForeground(new java.awt.Color(51, 51, 51));
+        jblRequisitos.setText("Requisitos:");
+        panelRetirar.add(jblRequisitos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, 40));
+
+        jblReq1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jblReq1.setForeground(new java.awt.Color(51, 51, 51));
+        jblReq1.setText("-> No se puede retirar mas dinero que el saldo de la cuenta.");
+        panelRetirar.add(jblReq1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
+
+        jblReq2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jblReq2.setForeground(new java.awt.Color(51, 51, 51));
+        jblReq2.setText("-> El monto de retiro debe ser multiplo de 1000.");
+        panelRetirar.add(jblReq2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, -1, -1));
+
+        pizarra.addTab("tab3", panelRetirar);
 
         background.add(pizarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, 790, 690));
 
@@ -921,7 +932,7 @@ public class Depositar extends javax.swing.JFrame {
             case 0 -> {
                 PrincipalUsers users = new PrincipalUsers(this.cedula, this.sede);
                 users.setVisible(true);
-                panelDepositarBarra.setBackground(new Color(252, 247, 215));
+                panelRetirarBarra.setBackground(new Color(252, 247, 215));
                 this.dispose();
             }
             case 1 -> {
@@ -945,7 +956,7 @@ public class Depositar extends javax.swing.JFrame {
     private void jblSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSalirMouseClicked
         Inicio ini = new Inicio();
         ini.setVisible(true);
-        panelDepositarBarra.setBackground(new Color(252, 247, 215));
+        panelRetirarBarra.setBackground(new Color(252, 247, 215));
         this.dispose();
     }//GEN-LAST:event_jblSalirMouseClicked
 
@@ -957,37 +968,52 @@ public class Depositar extends javax.swing.JFrame {
         panelSalir.setBackground(new Color(247, 240, 194));
     }//GEN-LAST:event_jblSalirMouseExited
 
-    private void jblDepositarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDepositarMouseClicked
+    private void jblConfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblConfigMouseClicked
+        ConfigurarPerfil config = new ConfigurarPerfil(this.cedula, this.sede);
+        config.setVisible(true);
+        panelRetirarBarra.setBackground(new Color(252, 247, 215));
+        this.dispose();
+    }//GEN-LAST:event_jblConfigMouseClicked
 
+    private void jblConfigMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblConfigMouseEntered
+        panelConfig.setBackground(new Color(255, 255, 218));
+    }//GEN-LAST:event_jblConfigMouseEntered
+
+    private void jblConfigMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblConfigMouseExited
+        panelConfig.setBackground(new Color(247, 240, 194));
+    }//GEN-LAST:event_jblConfigMouseExited
+
+    private void jblDepositarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDepositarMouseClicked
+        Depositar depositar = new Depositar(this.cedula, this.sede);
+        depositar.setVisible(true);
+        panelRetirarBarra.setBackground(new Color(252, 247, 215));
+        this.dispose();
     }//GEN-LAST:event_jblDepositarMouseClicked
 
     private void jblDepositarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDepositarMouseEntered
-        //panelDepositarBarra.setBackground(new Color(232, 225, 182));
+        panelDepositarBarra.setBackground(new Color(232, 225, 182));
     }//GEN-LAST:event_jblDepositarMouseEntered
 
     private void jblDepositarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDepositarMouseExited
-        //panelDepositarBarra.setBackground(new Color(252, 247, 215));
+        panelDepositarBarra.setBackground(new Color(252, 247, 215));
     }//GEN-LAST:event_jblDepositarMouseExited
 
     private void jblRetirarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRetirarMouseClicked
-        Retirar retirar = new Retirar(this.cedula, this.sede);
-        retirar.setVisible(true);
-        panelDepositarBarra.setBackground(new Color(252, 247, 215));
-        this.dispose();
+
     }//GEN-LAST:event_jblRetirarMouseClicked
 
     private void jblRetirarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRetirarMouseEntered
-        panelRetirarBarra.setBackground(new Color(232, 225, 182));
+        //panelRetirarBarra.setBackground(new Color(232, 225, 182));
     }//GEN-LAST:event_jblRetirarMouseEntered
 
     private void jblRetirarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRetirarMouseExited
-        panelRetirarBarra.setBackground(new Color(252, 247, 215));
+        //panelRetirarBarra.setBackground(new Color(252, 247, 215));
     }//GEN-LAST:event_jblRetirarMouseExited
 
     private void jblVerSaldoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseClicked
         VerSaldo ver = new VerSaldo(this.cedula, this.sede);
         ver.setVisible(true);
-        panelDepositarBarra.setBackground(new Color(252, 247, 215));
+        panelRetirarBarra.setBackground(new Color(252, 247, 215));
         this.dispose();
     }//GEN-LAST:event_jblVerSaldoMouseClicked
 
@@ -1002,7 +1028,7 @@ public class Depositar extends javax.swing.JFrame {
     private void jblDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDashboardMouseClicked
         PrincipalUsers users = new PrincipalUsers(this.cedula, this.sede);
         users.setVisible(true);
-        panelDepositarBarra.setBackground(new Color(252, 247, 215));
+        panelRetirarBarra.setBackground(new Color(252, 247, 215));
         this.dispose();
     }//GEN-LAST:event_jblDashboardMouseClicked
 
@@ -1038,21 +1064,6 @@ public class Depositar extends javax.swing.JFrame {
         panelComentariosBarra.setBackground(new Color(252, 247, 215));
     }//GEN-LAST:event_jblComentariosMouseExited
 
-    private void jblConfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblConfigMouseClicked
-        ConfigurarPerfil config = new ConfigurarPerfil(this.cedula, this.sede);
-        config.setVisible(true);
-        panelDepositarBarra.setBackground(new Color(252, 247, 215));
-        this.dispose();
-    }//GEN-LAST:event_jblConfigMouseClicked
-
-    private void jblConfigMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblConfigMouseEntered
-        panelConfig.setBackground(new Color(255, 255, 218));
-    }//GEN-LAST:event_jblConfigMouseEntered
-
-    private void jblConfigMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblConfigMouseExited
-        panelConfig.setBackground(new Color(247, 240, 194));
-    }//GEN-LAST:event_jblConfigMouseExited
-
     private void txtClaveNumMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtClaveNumMousePressed
 
         String psd = String.valueOf(psdPassword.getPassword());
@@ -1067,6 +1078,31 @@ public class Depositar extends javax.swing.JFrame {
         }
         psdPassword.setForeground(new Color(155, 155, 155));
     }//GEN-LAST:event_txtClaveNumMousePressed
+
+    private void txtClaveNumKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClaveNumKeyTyped
+        char tecla = evt.getKeyChar();
+        boolean teclaBorrar = true;
+        if (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE) {
+            teclaBorrar = false;
+        }
+
+        if (!Character.isDigit(tecla) && teclaBorrar == false) {
+
+            evt.consume();
+            alertaClave.setVisible(true);
+            jblAlerta.setVisible(true);
+            jblAlerta.setText("Solo numeros");
+
+        } else if (txtClaveNum.getText().length() == 4) {
+            evt.consume();
+            jblAlerta.setText("Max numeros alcanzado");
+            jblAlerta.setVisible(true);
+            alertaClave.setVisible(true);
+        } else {
+            alertaClave.setVisible(false);
+            jblAlerta.setVisible(false);
+        }
+    }//GEN-LAST:event_txtClaveNumKeyTyped
 
     private void psdPasswordMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_psdPasswordMousePressed
 
@@ -1131,30 +1167,10 @@ public class Depositar extends javax.swing.JFrame {
         jblContinuar.setForeground(Color.white);
     }//GEN-LAST:event_jblContinuarMouseExited
 
-    private void txtClaveNumKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClaveNumKeyTyped
-        char tecla = evt.getKeyChar();
-        boolean teclaBorrar = true;
-        if (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE) {
-            teclaBorrar = false;
-        }
-
-        if (!Character.isDigit(tecla) && teclaBorrar == false) {
-
-            evt.consume();
-            alertaClave.setVisible(true);
-            jblAlerta.setVisible(true);
-            jblAlerta.setText("Solo numeros");
-
-        } else if (txtClaveNum.getText().length() == 4) {
-            evt.consume();
-            jblAlerta.setText("Max numeros alcanzado");
-            jblAlerta.setVisible(true);
-            alertaClave.setVisible(true);
-        } else {
-            alertaClave.setVisible(false);
-            jblAlerta.setVisible(false);
-        }
-    }//GEN-LAST:event_txtClaveNumKeyTyped
+    private void jblCuentaCorrienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblCuentaCorrienteMouseClicked
+        this.cuentaElegida = "corriente";
+        pizarra.setSelectedIndex(2);
+    }//GEN-LAST:event_jblCuentaCorrienteMouseClicked
 
     private void jblCuentaCorrienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblCuentaCorrienteMouseEntered
         panelCuentaCorriente.setBackground(new Color(153, 145, 86));
@@ -1165,21 +1181,6 @@ public class Depositar extends javax.swing.JFrame {
         panelCuentaCorriente.setBackground(new Color(92, 88, 29));
         jblCuentaCorriente.setForeground(Color.white);
     }//GEN-LAST:event_jblCuentaCorrienteMouseExited
-
-    private void jblCuentaCorrienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblCuentaCorrienteMouseClicked
-        this.cuentaElegida = "corriente";
-        pizarra.setSelectedIndex(2);
-    }//GEN-LAST:event_jblCuentaCorrienteMouseClicked
-
-    private void jblCuentaAhorroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblCuentaAhorroMouseEntered
-        panelCuentaAhorro.setBackground(new Color(153, 145, 86));
-        jblCuentaAhorro.setForeground(Color.black);
-    }//GEN-LAST:event_jblCuentaAhorroMouseEntered
-
-    private void jblCuentaAhorroMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblCuentaAhorroMouseExited
-        panelCuentaAhorro.setBackground(new Color(92, 88, 29));
-        jblCuentaAhorro.setForeground(Color.white);
-    }//GEN-LAST:event_jblCuentaAhorroMouseExited
 
     private void jblCuentaAhorroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblCuentaAhorroMouseClicked
         for (Usuarios i : SedeCentral.getListaUsers()) {
@@ -1194,15 +1195,15 @@ public class Depositar extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jblCuentaAhorroMouseClicked
 
-    private void jblCuentaSimpeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblCuentaSimpeMouseEntered
-        panelCuentaSimpe.setBackground(new Color(153, 145, 86));
-        jblCuentaSimpe.setForeground(Color.black);
-    }//GEN-LAST:event_jblCuentaSimpeMouseEntered
+    private void jblCuentaAhorroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblCuentaAhorroMouseEntered
+        panelCuentaAhorro.setBackground(new Color(153, 145, 86));
+        jblCuentaAhorro.setForeground(Color.black);
+    }//GEN-LAST:event_jblCuentaAhorroMouseEntered
 
-    private void jblCuentaSimpeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblCuentaSimpeMouseExited
-        panelCuentaSimpe.setBackground(new Color(92, 88, 29));
-        jblCuentaSimpe.setForeground(Color.white);
-    }//GEN-LAST:event_jblCuentaSimpeMouseExited
+    private void jblCuentaAhorroMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblCuentaAhorroMouseExited
+        panelCuentaAhorro.setBackground(new Color(92, 88, 29));
+        jblCuentaAhorro.setForeground(Color.white);
+    }//GEN-LAST:event_jblCuentaAhorroMouseExited
 
     private void jblCuentaSimpeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblCuentaSimpeMouseClicked
         for (Usuarios i : SedeCentral.getListaUsers()) {
@@ -1217,80 +1218,88 @@ public class Depositar extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jblCuentaSimpeMouseClicked
 
-    //PANEL NUMERICO
+    private void jblCuentaSimpeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblCuentaSimpeMouseEntered
+        panelCuentaSimpe.setBackground(new Color(153, 145, 86));
+        jblCuentaSimpe.setForeground(Color.black);
+    }//GEN-LAST:event_jblCuentaSimpeMouseEntered
+
+    private void jblCuentaSimpeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblCuentaSimpeMouseExited
+        panelCuentaSimpe.setBackground(new Color(92, 88, 29));
+        jblCuentaSimpe.setForeground(Color.white);
+    }//GEN-LAST:event_jblCuentaSimpeMouseExited
 
     private void unoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_unoMousePressed
         if (MontoMaximaAlcanzado("1") == false && DigitosMaxAlcanzados("1") == false)
-            jblMontoDeposito.setText(jblMontoDeposito.getText() + 1);
+            jblMontoRetiro.setText(jblMontoRetiro.getText() + 1);
     }//GEN-LAST:event_unoMousePressed
 
     private void dosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dosMousePressed
         if (MontoMaximaAlcanzado("2") == false && DigitosMaxAlcanzados("2") == false)
-            jblMontoDeposito.setText(jblMontoDeposito.getText() + 2);
+            jblMontoRetiro.setText(jblMontoRetiro.getText() + 2);
     }//GEN-LAST:event_dosMousePressed
 
     private void tresMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tresMousePressed
         if (MontoMaximaAlcanzado("3") == false && DigitosMaxAlcanzados("3") == false)
-            jblMontoDeposito.setText(jblMontoDeposito.getText() + 3);
+            jblMontoRetiro.setText(jblMontoRetiro.getText() + 3);
     }//GEN-LAST:event_tresMousePressed
 
     private void cuatroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cuatroMousePressed
         if (MontoMaximaAlcanzado("4") == false && DigitosMaxAlcanzados("4") == false)
-            jblMontoDeposito.setText(jblMontoDeposito.getText() + 4);
+            jblMontoRetiro.setText(jblMontoRetiro.getText() + 4);
     }//GEN-LAST:event_cuatroMousePressed
 
     private void cincoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cincoMousePressed
         if (MontoMaximaAlcanzado("5") == false && DigitosMaxAlcanzados("5") == false)
-            jblMontoDeposito.setText(jblMontoDeposito.getText() + 5);
+            jblMontoRetiro.setText(jblMontoRetiro.getText() + 5);
     }//GEN-LAST:event_cincoMousePressed
 
     private void seisMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_seisMousePressed
         if (MontoMaximaAlcanzado("6") == false && DigitosMaxAlcanzados("6") == false)
-            jblMontoDeposito.setText(jblMontoDeposito.getText() + 6);
+            jblMontoRetiro.setText(jblMontoRetiro.getText() + 6);
     }//GEN-LAST:event_seisMousePressed
 
     private void sieteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sieteMousePressed
         if (MontoMaximaAlcanzado("7") == false && DigitosMaxAlcanzados("7") == false)
-            jblMontoDeposito.setText(jblMontoDeposito.getText() + 7);
+            jblMontoRetiro.setText(jblMontoRetiro.getText() + 7);
     }//GEN-LAST:event_sieteMousePressed
 
     private void ochoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ochoMousePressed
         if (MontoMaximaAlcanzado("8") == false && DigitosMaxAlcanzados("8") == false)
-            jblMontoDeposito.setText(jblMontoDeposito.getText() + 8);
+            jblMontoRetiro.setText(jblMontoRetiro.getText() + 8);
     }//GEN-LAST:event_ochoMousePressed
 
     private void nueveMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nueveMousePressed
         if (MontoMaximaAlcanzado("9") == false && DigitosMaxAlcanzados("9") == false)
-            jblMontoDeposito.setText(jblMontoDeposito.getText() + 9);
+            jblMontoRetiro.setText(jblMontoRetiro.getText() + 9);
     }//GEN-LAST:event_nueveMousePressed
 
     private void ceroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ceroMousePressed
         if (MontoMaximaAlcanzado("0") == false && DigitosMaxAlcanzados("0") == false)
-            jblMontoDeposito.setText(jblMontoDeposito.getText() + 0);
+            jblMontoRetiro.setText(jblMontoRetiro.getText() + 0);
     }//GEN-LAST:event_ceroMousePressed
 
     private void puntoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_puntoMousePressed
         if (MontoMaximaAlcanzado(".") == false && DigitosMaxAlcanzados(".") == false)
-            jblMontoDeposito.setText(jblMontoDeposito.getText() + ".");
+            jblMontoRetiro.setText(jblMontoRetiro.getText() + ".");
     }//GEN-LAST:event_puntoMousePressed
 
     private void dobleCeroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dobleCeroMousePressed
         if (MontoMaximaAlcanzado("00") == false && DigitosMaxAlcanzados("00") == false)
-            jblMontoDeposito.setText(jblMontoDeposito.getText() + "00");
+            jblMontoRetiro.setText(jblMontoRetiro.getText() + "00");
     }//GEN-LAST:event_dobleCeroMousePressed
 
     private void cancelarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelarMousePressed
-        jblMontoDeposito.setText("");
+        jblMontoRetiro.setText("");
     }//GEN-LAST:event_cancelarMousePressed
 
     private void correccionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_correccionMousePressed
 
-        if (jblMontoDeposito.getText().length() > 0) {
+        if (jblMontoRetiro.getText().length() > 0) {
             String nuevoTexto = "";
-            for (int i = 0; i < jblMontoDeposito.getText().length() - 1; i++) {
-                nuevoTexto = nuevoTexto + jblMontoDeposito.getText().charAt(i);
+            for (int i = 0; i < jblMontoRetiro.getText().length() - 1; i++) {
+                nuevoTexto = nuevoTexto + jblMontoRetiro.getText().charAt(i);
             }
-            jblMontoDeposito.setText(nuevoTexto);
+            jblMontoRetiro.setText(nuevoTexto);
         }
     }//GEN-LAST:event_correccionMousePressed
 
@@ -1298,30 +1307,56 @@ public class Depositar extends javax.swing.JFrame {
         boolean montoValido = false;
         double monto = 0.0;
         try {
-            monto = Double.parseDouble(jblMontoDeposito.getText());
-            montoValido = true;
+            monto = Double.parseDouble(jblMontoRetiro.getText());
+            for (Usuarios i : SedeCentral.getListaUsers()) {
+                if (i.getCedula().equals(this.cedula)) {
+                    switch (this.cuentaElegida) {
+                        case "corriente" -> {
+                            if (i.getCuentaCorriente().getSaldo() >= monto && monto % 1000.0 == 0.0) {
+                                montoValido = true; //verificar cedula
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Error en el monto ingresado, verifica los requisitos");
+                            }
+                        }
+                        case "ahorro" -> {
+                            if (i.getCuentaSimpe().getSaldo() >= monto && monto % 1000.0 == 0.0) {
+                                montoValido = true;
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Error en el monto ingresado, verifica los requisitos");
+                            }
+                        }
+                        case "simpe" -> {
+                            if (i.getCuentaAhorro().getSaldo() >= monto && monto % 1000.0 == 0.0) {
+                                montoValido = true;
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Error en el monto ingresado, verifica los requisitos");
+                            }
+                        }
+                    }
+                }
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error en el monto ingresado");
         }
 
         if (montoValido == true) {
-            int eleccion = JOptionPane.showConfirmDialog(null, "Deseas realizar el deposito?", "Elije una opcion", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+            int eleccion = JOptionPane.showConfirmDialog(null, "Deseas realizar el retiro?", "RETIRO", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
             if (eleccion == 0) {
                 for (Usuarios i : SedeCentral.getListaUsers()) {
                     if (i.getCedula().equals(this.cedula)) {
                         switch (this.cuentaElegida) {
                             case "corriente" -> {
-                                i.getCuentaCorriente().depositarDinero(monto);
+                                i.getCuentaCorriente().retirarDinero(monto);
                             }
                             case "ahorro" -> {
-                                i.getCuentaAhorro().depositarDinero(monto);
+                                i.getCuentaAhorro().retirarDinero(monto);
                             }
                             case "simpe" -> {
-                                i.getCuentaSimpe().depositarDinero(monto);
+                                i.getCuentaSimpe().retirarDinero(monto);
                             }
                         }
-                        JOptionPane.showMessageDialog(null, "Deposito realizado exitosamente");
-                        jblMontoDeposito.setText("");
+                        JOptionPane.showMessageDialog(null, "Retiro realizado exitosamente");
+                        jblMontoRetiro.setText("");
                         pizarra.setSelectedIndex(0);
                         txtsPorDefecto();
                     }
@@ -1347,20 +1382,20 @@ public class Depositar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Depositar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Retirar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Depositar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Retirar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Depositar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Retirar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Depositar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Retirar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Depositar().setVisible(true);
+                new Retirar().setVisible(true);
             }
         });
     }
@@ -1394,14 +1429,16 @@ public class Depositar extends javax.swing.JFrame {
     private javax.swing.JLabel jblFondoPerfil;
     private javax.swing.JLabel jblHabilitarCuentas;
     private javax.swing.JLabel jblInformativo;
-    private javax.swing.JLabel jblInformativoDep;
-    private javax.swing.JLabel jblMontoDeposito;
+    private javax.swing.JLabel jblMontoRetiro;
     private javax.swing.JLabel jblNombreBanco;
     private javax.swing.JLabel jblNombrePerfil;
     private javax.swing.JLabel jblOpcionActual;
     private javax.swing.JLabel jblOpcionActual1;
     private javax.swing.JLabel jblPassword;
     private javax.swing.JLabel jblPerfil;
+    private javax.swing.JLabel jblReq1;
+    private javax.swing.JLabel jblReq2;
+    private javax.swing.JLabel jblRequisitos;
     private javax.swing.JLabel jblRetirar;
     private javax.swing.JLabel jblSalir;
     private javax.swing.JLabel jblVentanaActual;
@@ -1420,10 +1457,9 @@ public class Depositar extends javax.swing.JFrame {
     private javax.swing.JPanel panelCuentaSimpe;
     private javax.swing.JPanel panelDashboardBarra;
     private javax.swing.JPanel panelDepositarBarra;
-    private javax.swing.JPanel panelDeposito;
     private javax.swing.JPanel panelElegir;
     private javax.swing.JPanel panelHabilitarCuentasBarra;
-    private javax.swing.JPanel panelMontoDeposito;
+    private javax.swing.JPanel panelMontoRetiro;
     private javax.swing.JPanel panelNum0;
     private javax.swing.JPanel panelNum00;
     private javax.swing.JPanel panelNum1;
@@ -1438,6 +1474,7 @@ public class Depositar extends javax.swing.JFrame {
     private javax.swing.JPanel panelNumerico;
     private javax.swing.JPanel panelOpciones;
     private javax.swing.JPanel panelPunto;
+    private javax.swing.JPanel panelRetirar;
     private javax.swing.JPanel panelRetirarBarra;
     private javax.swing.JPanel panelSalir;
     private javax.swing.JPanel panelValidar;
