@@ -72,6 +72,33 @@ public class Retirar extends javax.swing.JFrame {
         return digitosMaximos;
     }
 
+    public void mostarTipoDeCambio(double monto) {
+        int billetes20000, billetes10000, billetes5000, billetes2000, billetes1000;
+        double montoDeCambio = monto;
+
+        billetes20000 = (int) montoDeCambio / 20000;
+        montoDeCambio %= 20000;
+
+        billetes10000 = (int) montoDeCambio / 10000;
+        montoDeCambio %= 10000;
+
+        billetes5000 = (int) montoDeCambio / 5000;
+        montoDeCambio %= 5000;
+
+        billetes2000 = (int) montoDeCambio / 2000;
+        montoDeCambio %= 2000;
+
+        billetes1000 = (int) montoDeCambio / 1000;
+        montoDeCambio %= 1000;
+        
+        lbl1000.setText(" x"+billetes1000);
+        lbl2000.setText(" x"+billetes2000);
+        lbl5000.setText(" x"+billetes5000);
+        lbl10000.setText(" x"+billetes10000);
+        lbl20000.setText(" x"+billetes20000);
+        jblTotal.setText(String.valueOf(monto));
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -170,6 +197,18 @@ public class Retirar extends javax.swing.JFrame {
         jblRequisitos = new javax.swing.JLabel();
         jblReq1 = new javax.swing.JLabel();
         jblReq2 = new javax.swing.JLabel();
+        panelTipoCambio = new javax.swing.JPanel();
+        Mensaje = new javax.swing.JLabel();
+        lbl1000 = new javax.swing.JLabel();
+        lbl20000 = new javax.swing.JLabel();
+        lbl10000 = new javax.swing.JLabel();
+        lbl5000 = new javax.swing.JLabel();
+        lbl2000 = new javax.swing.JLabel();
+        panelAceptarRetiro = new javax.swing.JPanel();
+        jblAceptarRetiro = new javax.swing.JLabel();
+        jblInfo = new javax.swing.JLabel();
+        panelTotal = new javax.swing.JPanel();
+        jblTotal = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -911,6 +950,90 @@ public class Retirar extends javax.swing.JFrame {
 
         pizarra.addTab("tab3", panelRetirar);
 
+        panelTipoCambio.setBackground(new java.awt.Color(255, 255, 255));
+        panelTipoCambio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Mensaje.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        Mensaje.setForeground(new java.awt.Color(51, 51, 51));
+        Mensaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Mensaje.setText("Recibira el dinero de la siguiente forma");
+        panelTipoCambio.add(Mensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 30, 790, -1));
+
+        lbl1000.setFont(new java.awt.Font("Roboto", 1, 48)); // NOI18N
+        lbl1000.setForeground(new java.awt.Color(51, 51, 51));
+        lbl1000.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl1000.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/100064px.png"))); // NOI18N
+        lbl1000.setText(" x1");
+        panelTipoCambio.add(lbl1000, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 530, -1, -1));
+
+        lbl20000.setFont(new java.awt.Font("Roboto", 1, 48)); // NOI18N
+        lbl20000.setForeground(new java.awt.Color(51, 51, 51));
+        lbl20000.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl20000.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/2000064px.png"))); // NOI18N
+        lbl20000.setText(" x20");
+        panelTipoCambio.add(lbl20000, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, -1, -1));
+
+        lbl10000.setFont(new java.awt.Font("Roboto", 1, 48)); // NOI18N
+        lbl10000.setForeground(new java.awt.Color(51, 51, 51));
+        lbl10000.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl10000.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/1000064px.png"))); // NOI18N
+        lbl10000.setText(" x10");
+        panelTipoCambio.add(lbl10000, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, -1, -1));
+
+        lbl5000.setFont(new java.awt.Font("Roboto", 1, 48)); // NOI18N
+        lbl5000.setForeground(new java.awt.Color(51, 51, 51));
+        lbl5000.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl5000.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/500064px.png"))); // NOI18N
+        lbl5000.setText(" x5");
+        panelTipoCambio.add(lbl5000, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 330, -1, -1));
+
+        lbl2000.setFont(new java.awt.Font("Roboto", 1, 48)); // NOI18N
+        lbl2000.setForeground(new java.awt.Color(51, 51, 51));
+        lbl2000.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl2000.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/200064px.png"))); // NOI18N
+        lbl2000.setText(" x2");
+        panelTipoCambio.add(lbl2000, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, -1, -1));
+
+        panelAceptarRetiro.setBackground(new java.awt.Color(92, 88, 29));
+        panelAceptarRetiro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jblAceptarRetiro.setFont(new java.awt.Font("Roboto", 1, 48)); // NOI18N
+        jblAceptarRetiro.setForeground(new java.awt.Color(255, 255, 255));
+        jblAceptarRetiro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jblAceptarRetiro.setText("ACEPTAR");
+        jblAceptarRetiro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jblAceptarRetiroMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jblAceptarRetiroMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jblAceptarRetiroMouseExited(evt);
+            }
+        });
+        panelAceptarRetiro.add(jblAceptarRetiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 100));
+
+        panelTipoCambio.add(panelAceptarRetiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 430, 240, 100));
+
+        jblInfo.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jblInfo.setForeground(new java.awt.Color(51, 51, 51));
+        jblInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jblInfo.setText("TOTAL:");
+        panelTipoCambio.add(jblInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(382, 240, 380, 50));
+
+        panelTotal.setBackground(new java.awt.Color(204, 204, 204));
+        panelTotal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jblTotal.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        jblTotal.setForeground(new java.awt.Color(51, 51, 51));
+        jblTotal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/colon55px.png"))); // NOI18N
+        panelTotal.add(jblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 380, 60));
+
+        panelTipoCambio.add(panelTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 310, 380, 60));
+
+        pizarra.addTab("tab4", panelTipoCambio);
+
         background.add(pizarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, 790, 690));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -941,6 +1064,10 @@ public class Retirar extends javax.swing.JFrame {
             }
             case 2 -> {
                 pizarra.setSelectedIndex(1);
+            }
+            case 3 -> {
+                pizarra.setSelectedIndex(2);
+                jblMontoRetiro.setText("");
             }
         }
     }//GEN-LAST:event_jblAtrasMouseClicked
@@ -1041,7 +1168,10 @@ public class Retirar extends javax.swing.JFrame {
     }//GEN-LAST:event_jblDashboardMouseExited
 
     private void jblHabilitarCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseClicked
-
+        HabilitarCuentas habilitar = new HabilitarCuentas(this.cedula, this.sede);
+        habilitar.setVisible(true);
+        //panelDashboardBarra.setBackground(new Color(252, 247, 215));
+        this.dispose();
     }//GEN-LAST:event_jblHabilitarCuentasMouseClicked
 
     private void jblHabilitarCuentasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseEntered
@@ -1319,14 +1449,14 @@ public class Retirar extends javax.swing.JFrame {
                             }
                         }
                         case "ahorro" -> {
-                            if (i.getCuentaSimpe().getSaldo() >= monto && monto % 1000.0 == 0.0) {
+                            if (i.getCuentaAhorro().getSaldo() >= monto && monto % 1000.0 == 0.0) {
                                 montoValido = true;
                             } else {
                                 JOptionPane.showMessageDialog(null, "Error en el monto ingresado, verifica los requisitos");
                             }
                         }
                         case "simpe" -> {
-                            if (i.getCuentaAhorro().getSaldo() >= monto && monto % 1000.0 == 0.0) {
+                            if (i.getCuentaSimpe().getSaldo() >= monto && monto % 1000.0 == 0.0) {
                                 montoValido = true;
                             } else {
                                 JOptionPane.showMessageDialog(null, "Error en el monto ingresado, verifica los requisitos");
@@ -1357,13 +1487,28 @@ public class Retirar extends javax.swing.JFrame {
                         }
                         JOptionPane.showMessageDialog(null, "Retiro realizado exitosamente");
                         jblMontoRetiro.setText("");
-                        pizarra.setSelectedIndex(0);
-                        txtsPorDefecto();
+                        pizarra.setSelectedIndex(3);
+                        mostarTipoDeCambio(monto);
                     }
                 }
             }
         }
     }//GEN-LAST:event_aceptarMousePressed
+
+    private void jblAceptarRetiroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblAceptarRetiroMouseEntered
+        panelAceptarRetiro.setBackground(new Color(153, 145, 86));
+        jblAceptarRetiro.setForeground(Color.black);
+    }//GEN-LAST:event_jblAceptarRetiroMouseEntered
+
+    private void jblAceptarRetiroMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblAceptarRetiroMouseExited
+        panelAceptarRetiro.setBackground(new Color(92, 88, 29));
+        jblAceptarRetiro.setForeground(Color.white);
+    }//GEN-LAST:event_jblAceptarRetiroMouseExited
+
+    private void jblAceptarRetiroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblAceptarRetiroMouseClicked
+        pizarra.setSelectedIndex(0);
+        txtsPorDefecto();
+    }//GEN-LAST:event_jblAceptarRetiroMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1401,6 +1546,7 @@ public class Retirar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Mensaje;
     private javax.swing.JLabel aceptar;
     private javax.swing.JLabel alertaClave;
     private javax.swing.JPanel background;
@@ -1414,6 +1560,7 @@ public class Retirar extends javax.swing.JFrame {
     private javax.swing.JLabel iconBarra;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel jblAceptarRetiro;
     private javax.swing.JLabel jblAlerta;
     private javax.swing.JLabel jblAtras;
     private javax.swing.JLabel jblBarra;
@@ -1428,6 +1575,7 @@ public class Retirar extends javax.swing.JFrame {
     private javax.swing.JLabel jblDepositar;
     private javax.swing.JLabel jblFondoPerfil;
     private javax.swing.JLabel jblHabilitarCuentas;
+    private javax.swing.JLabel jblInfo;
     private javax.swing.JLabel jblInformativo;
     private javax.swing.JLabel jblMontoRetiro;
     private javax.swing.JLabel jblNombreBanco;
@@ -1441,11 +1589,18 @@ public class Retirar extends javax.swing.JFrame {
     private javax.swing.JLabel jblRequisitos;
     private javax.swing.JLabel jblRetirar;
     private javax.swing.JLabel jblSalir;
+    private javax.swing.JLabel jblTotal;
     private javax.swing.JLabel jblVentanaActual;
     private javax.swing.JLabel jblVerPassword;
+    private javax.swing.JLabel lbl1000;
+    private javax.swing.JLabel lbl10000;
+    private javax.swing.JLabel lbl2000;
+    private javax.swing.JLabel lbl20000;
+    private javax.swing.JLabel lbl5000;
     private javax.swing.JLabel nueve;
     private javax.swing.JLabel ocho;
     private javax.swing.JPanel panelAceptar;
+    private javax.swing.JPanel panelAceptarRetiro;
     private javax.swing.JPanel panelAtras;
     private javax.swing.JPanel panelCancelar;
     private javax.swing.JPanel panelComentariosBarra;
@@ -1477,6 +1632,8 @@ public class Retirar extends javax.swing.JFrame {
     private javax.swing.JPanel panelRetirar;
     private javax.swing.JPanel panelRetirarBarra;
     private javax.swing.JPanel panelSalir;
+    private javax.swing.JPanel panelTipoCambio;
+    private javax.swing.JPanel panelTotal;
     private javax.swing.JPanel panelValidar;
     private javax.swing.JPanel panelVerPassword;
     private javax.swing.JPanel panelVerSaldoBarra;

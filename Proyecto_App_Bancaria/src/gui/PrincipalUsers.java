@@ -103,8 +103,10 @@ public class PrincipalUsers extends javax.swing.JFrame {
         jblDashboard = new javax.swing.JLabel();
         panelHabilitarCuentasBarra = new javax.swing.JPanel();
         jblHabilitarCuentas = new javax.swing.JLabel();
-        panelComentariosBarra = new javax.swing.JPanel();
-        jblComentarios = new javax.swing.JLabel();
+        pnaelSimpeBarra = new javax.swing.JPanel();
+        jblSimpe = new javax.swing.JLabel();
+        panelComentariosBarra1 = new javax.swing.JPanel();
+        jblComentarios1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -324,28 +326,51 @@ public class PrincipalUsers extends javax.swing.JFrame {
 
         panelOpciones.add(panelHabilitarCuentasBarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 300, 60));
 
-        panelComentariosBarra.setBackground(new java.awt.Color(252, 247, 215));
-        panelComentariosBarra.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnaelSimpeBarra.setBackground(new java.awt.Color(252, 247, 215));
+        pnaelSimpeBarra.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jblComentarios.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jblComentarios.setForeground(new java.awt.Color(102, 102, 102));
-        jblComentarios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jblComentarios.setText("Comentarios");
-        jblComentarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jblComentarios.addMouseListener(new java.awt.event.MouseAdapter() {
+        jblSimpe.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jblSimpe.setForeground(new java.awt.Color(102, 102, 102));
+        jblSimpe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jblSimpe.setText("Simpe");
+        jblSimpe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jblSimpe.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jblComentariosMouseClicked(evt);
+                jblSimpeMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jblComentariosMouseEntered(evt);
+                jblSimpeMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jblComentariosMouseExited(evt);
+                jblSimpeMouseExited(evt);
             }
         });
-        panelComentariosBarra.add(jblComentarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 60));
+        pnaelSimpeBarra.add(jblSimpe, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 60));
 
-        panelOpciones.add(panelComentariosBarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 300, 60));
+        panelOpciones.add(pnaelSimpeBarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 300, 60));
+
+        panelComentariosBarra1.setBackground(new java.awt.Color(252, 247, 215));
+        panelComentariosBarra1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jblComentarios1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jblComentarios1.setForeground(new java.awt.Color(102, 102, 102));
+        jblComentarios1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jblComentarios1.setText("Comentarios");
+        jblComentarios1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jblComentarios1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jblComentarios1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jblComentarios1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jblComentarios1MouseExited(evt);
+            }
+        });
+        panelComentariosBarra1.add(jblComentarios1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 60));
+
+        panelOpciones.add(panelComentariosBarra1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 300, 60));
 
         background.add(panelOpciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 720));
 
@@ -453,20 +478,23 @@ public class PrincipalUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_jblHabilitarCuentasMouseExited
 
     private void jblHabilitarCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseClicked
-
+        HabilitarCuentas habilitar = new HabilitarCuentas(this.cedula, this.sede);
+        habilitar.setVisible(true);
+        //panelDashboardBarra.setBackground(new Color(252, 247, 215));
+        this.dispose();
     }//GEN-LAST:event_jblHabilitarCuentasMouseClicked
 
-    private void jblComentariosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblComentariosMouseEntered
-        panelComentariosBarra.setBackground(new Color(232, 225, 182));
-    }//GEN-LAST:event_jblComentariosMouseEntered
+    private void jblSimpeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseEntered
+        pnaelSimpeBarra.setBackground(new Color(232, 225, 182));
+    }//GEN-LAST:event_jblSimpeMouseEntered
 
-    private void jblComentariosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblComentariosMouseExited
-        panelComentariosBarra.setBackground(new Color(252, 247, 215));
-    }//GEN-LAST:event_jblComentariosMouseExited
+    private void jblSimpeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseExited
+        pnaelSimpeBarra.setBackground(new Color(252, 247, 215));
+    }//GEN-LAST:event_jblSimpeMouseExited
 
-    private void jblComentariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblComentariosMouseClicked
+    private void jblSimpeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseClicked
 
-    }//GEN-LAST:event_jblComentariosMouseClicked
+    }//GEN-LAST:event_jblSimpeMouseClicked
 
     private void jblConfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblConfigMouseClicked
         ConfigurarPerfil config = new ConfigurarPerfil(this.cedula, this.sede);
@@ -488,6 +516,18 @@ public class PrincipalUsers extends javax.swing.JFrame {
         panelDashboardBarra.setBackground(new Color(252, 247, 215));
         this.dispose();
     }//GEN-LAST:event_jblAtrasMouseClicked
+
+    private void jblComentarios1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblComentarios1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jblComentarios1MouseClicked
+
+    private void jblComentarios1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblComentarios1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jblComentarios1MouseEntered
+
+    private void jblComentarios1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblComentarios1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jblComentarios1MouseExited
 
     /**
      * @param args the command line arguments
@@ -532,7 +572,7 @@ public class PrincipalUsers extends javax.swing.JFrame {
     private javax.swing.JLabel iconBarra;
     private javax.swing.JLabel jblAtras;
     private javax.swing.JLabel jblBarra;
-    private javax.swing.JLabel jblComentarios;
+    private javax.swing.JLabel jblComentarios1;
     private javax.swing.JLabel jblConfig;
     private javax.swing.JLabel jblDashboard;
     private javax.swing.JLabel jblDepositar;
@@ -543,9 +583,10 @@ public class PrincipalUsers extends javax.swing.JFrame {
     private javax.swing.JLabel jblPerfil;
     private javax.swing.JLabel jblRetirar;
     private javax.swing.JLabel jblSalir;
+    private javax.swing.JLabel jblSimpe;
     private javax.swing.JLabel jblVentanaActual;
     private javax.swing.JPanel panelAtras;
-    private javax.swing.JPanel panelComentariosBarra;
+    private javax.swing.JPanel panelComentariosBarra1;
     private javax.swing.JPanel panelConfig;
     private javax.swing.JPanel panelDashboardBarra;
     private javax.swing.JPanel panelDepositarBarra;
@@ -554,5 +595,6 @@ public class PrincipalUsers extends javax.swing.JFrame {
     private javax.swing.JPanel panelRetirarBarra;
     private javax.swing.JPanel panelSalir;
     private javax.swing.JPanel panelVerSaldoBarra;
+    private javax.swing.JPanel pnaelSimpeBarra;
     // End of variables declaration//GEN-END:variables
 }

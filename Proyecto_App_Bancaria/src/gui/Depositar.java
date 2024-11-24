@@ -1015,7 +1015,10 @@ public class Depositar extends javax.swing.JFrame {
     }//GEN-LAST:event_jblDashboardMouseExited
 
     private void jblHabilitarCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseClicked
-
+        HabilitarCuentas habilitar = new HabilitarCuentas(this.cedula, this.sede);
+        habilitar.setVisible(true);
+        //panelDashboardBarra.setBackground(new Color(252, 247, 215));
+        this.dispose();
     }//GEN-LAST:event_jblHabilitarCuentasMouseClicked
 
     private void jblHabilitarCuentasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseEntered
