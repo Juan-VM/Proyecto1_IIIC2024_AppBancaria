@@ -4,7 +4,6 @@ import Personas.Usuarios;
 import Sedes.SedeCiudadColon;
 import Sedes.SedePuriscal;
 import Sedes.SedeSanPedro;
-import Sedes.SedeCentral;
 import java.awt.Color;
 
 public class PrincipalUsers extends javax.swing.JFrame {
@@ -19,7 +18,7 @@ public class PrincipalUsers extends javax.swing.JFrame {
         this.cedula = cedula;
         this.sede = sede;
         asignarIndicePersonaEnSede(this.cedula);
-        
+        panelDashboardBarra.setBackground(new Color(232, 225, 182));
 
         switch (this.sede) {
             case 0 -> {
@@ -38,9 +37,9 @@ public class PrincipalUsers extends javax.swing.JFrame {
     }
 
     public PrincipalUsers() {
-
+        initComponents();
     }
-
+    
     public void asignarIndicePersonaEnSede(String cedula) {
         switch (sede) {
             case 0 -> {
@@ -366,7 +365,6 @@ public class PrincipalUsers extends javax.swing.JFrame {
 
     private void jblConfigMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblConfigMouseEntered
         panelConfig.setBackground(new Color(255, 255, 218));
-        //255,248,200
     }//GEN-LAST:event_jblConfigMouseEntered
 
     private void jblConfigMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblConfigMouseExited
@@ -406,13 +404,14 @@ public class PrincipalUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_jblDepositarMouseExited
 
     private void jblDepositarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDepositarMouseClicked
-        Depositar depositar = new Depositar(this.cedula,this.sede);
+        Depositar depositar = new Depositar(this.cedula, this.sede);
         depositar.setVisible(true);
+        panelDashboardBarra.setBackground(new Color(252, 247, 215));
         this.dispose();
     }//GEN-LAST:event_jblDepositarMouseClicked
 
     private void jblRetirarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRetirarMouseClicked
-        
+
     }//GEN-LAST:event_jblRetirarMouseClicked
 
     private void jblVerSaldoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseEntered
@@ -424,19 +423,21 @@ public class PrincipalUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_jblVerSaldoMouseExited
 
     private void jblVerSaldoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseClicked
-        
+        VerSaldo ver = new VerSaldo(this.cedula, this.sede);
+        ver.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jblVerSaldoMouseClicked
 
     private void jblDashboardMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDashboardMouseEntered
-        panelDashboardBarra.setBackground(new Color(232, 225, 182));
+        //panelDashboardBarra.setBackground(new Color(232, 225, 182));
     }//GEN-LAST:event_jblDashboardMouseEntered
 
     private void jblDashboardMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDashboardMouseExited
-        panelDashboardBarra.setBackground(new Color(252, 247, 215));
+        //panelDashboardBarra.setBackground(new Color(252, 247, 215));
     }//GEN-LAST:event_jblDashboardMouseExited
 
     private void jblDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDashboardMouseClicked
-        
+
     }//GEN-LAST:event_jblDashboardMouseClicked
 
     private void jblHabilitarCuentasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseEntered
@@ -448,7 +449,7 @@ public class PrincipalUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_jblHabilitarCuentasMouseExited
 
     private void jblHabilitarCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseClicked
-        
+
     }//GEN-LAST:event_jblHabilitarCuentasMouseClicked
 
     private void jblComentariosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblComentariosMouseEntered
@@ -460,24 +461,27 @@ public class PrincipalUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_jblComentariosMouseExited
 
     private void jblComentariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblComentariosMouseClicked
-        
+
     }//GEN-LAST:event_jblComentariosMouseClicked
 
     private void jblConfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblConfigMouseClicked
         ConfigurarPerfil config = new ConfigurarPerfil(this.cedula, this.sede);
         config.setVisible(true);
+        panelDashboardBarra.setBackground(new Color(252, 247, 215));
         this.dispose();
     }//GEN-LAST:event_jblConfigMouseClicked
 
     private void jblSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSalirMouseClicked
         Inicio ini = new Inicio();
         ini.setVisible(true);
+        panelDashboardBarra.setBackground(new Color(252, 247, 215));
         this.dispose();
     }//GEN-LAST:event_jblSalirMouseClicked
 
     private void jblAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblAtrasMouseClicked
         Inicio ini = new Inicio();
         ini.setVisible(true);
+        panelDashboardBarra.setBackground(new Color(252, 247, 215));
         this.dispose();
     }//GEN-LAST:event_jblAtrasMouseClicked
 

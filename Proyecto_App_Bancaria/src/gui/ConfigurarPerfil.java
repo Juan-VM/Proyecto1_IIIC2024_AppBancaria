@@ -174,6 +174,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         jblEditar = new javax.swing.JLabel();
         panelGuardar = new javax.swing.JPanel();
         jblGuardar = new javax.swing.JLabel();
+        jblOpcionActual = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -471,7 +472,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
                 txtCedulaMousePressed(evt);
             }
         });
-        panelEditDatos.add(txtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 580, 40));
+        panelEditDatos.add(txtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 580, 50));
 
         jSeparator4.setForeground(new java.awt.Color(51, 51, 51));
         panelEditDatos.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 750, 10));
@@ -574,6 +575,11 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
 
         background.add(panelGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 90, 130, -1));
 
+        jblOpcionActual.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jblOpcionActual.setForeground(new java.awt.Color(51, 51, 51));
+        jblOpcionActual.setText("CONFIGURACION");
+        background.add(jblOpcionActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 90, 320, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -625,7 +631,9 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     }//GEN-LAST:event_jblVerSaldoMouseExited
 
     private void jblDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDashboardMouseClicked
-
+        PrincipalUsers users = new PrincipalUsers(this.cedula, this.sede);
+        users.setVisible(true);
+        this.dispose();;
     }//GEN-LAST:event_jblDashboardMouseClicked
 
     private void jblDashboardMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDashboardMouseEntered
@@ -854,6 +862,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     private javax.swing.JLabel jblName;
     private javax.swing.JLabel jblNombreBanco;
     private javax.swing.JLabel jblNombrePerfil;
+    private javax.swing.JLabel jblOpcionActual;
     private javax.swing.JLabel jblPassword;
     private javax.swing.JLabel jblPerfil;
     private javax.swing.JLabel jblRetirar;
