@@ -23,6 +23,7 @@ public class VerSaldo extends javax.swing.JFrame {
         alertaClave.setVisible(false);
         jblAlerta.setVisible(false);
         txtsPorDefecto();
+        
         for (Usuarios i : SedeCentral.getListaUsers()) {
             if (i.getCedula().equals(this.cedula)) {
                 jblNombrePerfil.setText(i.getUsuario() + " " + i.getApellidos());
@@ -33,7 +34,7 @@ public class VerSaldo extends javax.swing.JFrame {
                     case 1 -> {
                         jblVentanaActual.setText("Sede San Pedro");
                     }
-                    case 2 -> { 
+                    case 2 -> {
                         jblVentanaActual.setText("Sede Ciudad Colon");
                     }
                 }
@@ -55,13 +56,13 @@ public class VerSaldo extends javax.swing.JFrame {
             if (i.getCedula().equals(this.cedula)) {
                 switch (this.cuentaElegida) {
                     case "corriente" -> {
-                        jblMostarSaldo.setText(String.format("%.4f",(i.getCuentaCorriente().getSaldo())));
+                        jblMostarSaldo.setText(String.format("%.4f", (i.getCuentaCorriente().getSaldo())));
                     }
                     case "ahorro" -> {
-                        jblMostarSaldo.setText(String.format("%.4f",(i.getCuentaAhorro().getSaldo())));
+                        jblMostarSaldo.setText(String.format("%.4f", (i.getCuentaAhorro().getSaldo())));
                     }
                     case "simpe" -> {
-                        jblMostarSaldo.setText(String.format("%.4f",(i.getCuentaSimpe().getSaldo())));
+                        jblMostarSaldo.setText(String.format("%.4f", (i.getCuentaSimpe().getSaldo())));
                     }
                 }
             }
@@ -634,7 +635,7 @@ public class VerSaldo extends javax.swing.JFrame {
             case 0 -> {
                 PrincipalUsers users = new PrincipalUsers(this.cedula, this.sede);
                 users.setVisible(true);
-                panelDepositarBarra.setBackground(new Color(252, 247, 215));
+                panelVerSaldoBarra.setBackground(new Color(252, 247, 215));
                 this.dispose();
             }
             case 1 -> {
@@ -688,7 +689,7 @@ public class VerSaldo extends javax.swing.JFrame {
     private void jblDepositarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDepositarMouseClicked
         Depositar depositar = new Depositar(this.cedula, this.sede);
         depositar.setVisible(true);
-        panelDashboardBarra.setBackground(new Color(252, 247, 215));
+        panelVerSaldoBarra.setBackground(new Color(252, 247, 215));
         this.dispose();
     }//GEN-LAST:event_jblDepositarMouseClicked
 
@@ -701,7 +702,10 @@ public class VerSaldo extends javax.swing.JFrame {
     }//GEN-LAST:event_jblDepositarMouseExited
 
     private void jblRetirarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRetirarMouseClicked
-
+        Retirar retirar = new Retirar(this.cedula, this.sede);
+        retirar.setVisible(true);
+        panelVerSaldoBarra.setBackground(new Color(252, 247, 215));
+        this.dispose();
     }//GEN-LAST:event_jblRetirarMouseClicked
 
     private void jblRetirarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRetirarMouseEntered
@@ -717,23 +721,26 @@ public class VerSaldo extends javax.swing.JFrame {
     }//GEN-LAST:event_jblVerSaldoMouseClicked
 
     private void jblVerSaldoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseEntered
-        panelVerSaldoBarra.setBackground(new Color(232, 225, 182));
+        //panelVerSaldoBarra.setBackground(new Color(232, 225, 182));
     }//GEN-LAST:event_jblVerSaldoMouseEntered
 
     private void jblVerSaldoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseExited
-        panelVerSaldoBarra.setBackground(new Color(252, 247, 215));
+        //panelVerSaldoBarra.setBackground(new Color(252, 247, 215));
     }//GEN-LAST:event_jblVerSaldoMouseExited
 
     private void jblDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDashboardMouseClicked
-        
+        PrincipalUsers users = new PrincipalUsers(this.cedula, this.sede);
+        users.setVisible(true);
+        panelVerSaldoBarra.setBackground(new Color(252, 247, 215));
+        this.dispose();
     }//GEN-LAST:event_jblDashboardMouseClicked
 
     private void jblDashboardMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDashboardMouseEntered
-        //panelDashboardBarra.setBackground(new Color(232, 225, 182));
+        panelDashboardBarra.setBackground(new Color(232, 225, 182));
     }//GEN-LAST:event_jblDashboardMouseEntered
 
     private void jblDashboardMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDashboardMouseExited
-        //panelDashboardBarra.setBackground(new Color(252, 247, 215));
+        panelDashboardBarra.setBackground(new Color(252, 247, 215));
     }//GEN-LAST:event_jblDashboardMouseExited
 
     private void jblHabilitarCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseClicked

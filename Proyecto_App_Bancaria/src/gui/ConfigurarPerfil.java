@@ -595,7 +595,10 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jblDepositarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDepositarMouseClicked
-
+        Depositar depositar = new Depositar(this.cedula, this.sede);
+        depositar.setVisible(true);
+        panelConfig.setBackground(new Color(247, 240, 194));
+        this.dispose();
     }//GEN-LAST:event_jblDepositarMouseClicked
 
     private void jblDepositarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDepositarMouseEntered
@@ -607,7 +610,10 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     }//GEN-LAST:event_jblDepositarMouseExited
 
     private void jblRetirarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRetirarMouseClicked
-
+        Retirar retirar = new Retirar(this.cedula, this.sede);
+        retirar.setVisible(true);
+        panelConfig.setBackground(new Color(247, 240, 194));
+        this.dispose();
     }//GEN-LAST:event_jblRetirarMouseClicked
 
     private void jblRetirarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRetirarMouseEntered
@@ -619,7 +625,10 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     }//GEN-LAST:event_jblRetirarMouseExited
 
     private void jblVerSaldoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseClicked
-
+        VerSaldo ver = new VerSaldo(this.cedula, this.sede);
+        ver.setVisible(true);
+        panelConfig.setBackground(new Color(247, 240, 194));
+        this.dispose();
     }//GEN-LAST:event_jblVerSaldoMouseClicked
 
     private void jblVerSaldoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseEntered
@@ -633,6 +642,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     private void jblDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDashboardMouseClicked
         PrincipalUsers users = new PrincipalUsers(this.cedula, this.sede);
         users.setVisible(true);
+        panelConfig.setBackground(new Color(247, 240, 194));
         this.dispose();;
     }//GEN-LAST:event_jblDashboardMouseClicked
 
@@ -794,12 +804,14 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     private void jblAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblAtrasMouseClicked
         PrincipalUsers users = new PrincipalUsers(this.cedula,this.sede);
         users.setVisible(true);
+        panelConfig.setBackground(new Color(247, 240, 194));
         this.dispose();
     }//GEN-LAST:event_jblAtrasMouseClicked
 
     private void jblSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSalirMouseClicked
         Inicio ini = new Inicio();
         ini.setVisible(true);
+        panelConfig.setBackground(new Color(247, 240, 194));
         this.dispose();
     }//GEN-LAST:event_jblSalirMouseClicked
 
