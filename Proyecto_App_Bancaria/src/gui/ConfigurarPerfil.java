@@ -84,16 +84,16 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     public boolean validarRepetidos() {
         boolean existen = false;
         if (DatosRegistrados.getListaCedulas().contains(txtCedula.getText()) || DatosRegistrados.getListaTelefonos().contains(txtTelefono.getText())) {
-       
+
             if (DatosRegistrados.getListaCedulas().contains(txtCedula.getText())) {
-                if(!txtCedula.getText().equals(this.cedula) || txtCedula.getText().trim().equals("")){
+                if (!txtCedula.getText().equals(this.cedula) || txtCedula.getText().trim().equals("")) {
                     alertaCedula.setVisible(true);
                     existen = true;
-                } 
+                }
             }
 
             if (DatosRegistrados.getListaTelefonos().contains(txtTelefono.getText())) {
-                if(!txtTelefono.getText().equals(this.telefono) || txtTelefono.getText().trim().equals("")){
+                if (!txtTelefono.getText().equals(this.telefono) || txtTelefono.getText().trim().equals("")) {
                     alertaTelefono.setVisible(true);
                     existen = true;
                 }
@@ -101,14 +101,14 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         }
         return existen;
     }
-    
-    public void actualizarDatosRegistrados(String ced, String tel){
-        if(!ced.equals(this.cedula)){
+
+    public void actualizarDatosRegistrados(String ced, String tel) {
+        if (!ced.equals(this.cedula)) {
             DatosRegistrados.getListaCedulas().remove(this.cedula);
             DatosRegistrados.getListaCedulas().add(ced);
         }
-        
-        if(!tel.equals(this.telefono)){
+
+        if (!tel.equals(this.telefono)) {
             DatosRegistrados.getListaTelefonos().remove(this.telefono);
             DatosRegistrados.getListaTelefonos().add(tel);
         }
@@ -150,6 +150,8 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         jblHabilitarCuentas = new javax.swing.JLabel();
         panelComentariosBarra = new javax.swing.JPanel();
         jblComentarios = new javax.swing.JLabel();
+        panelSimpeBarra = new javax.swing.JPanel();
+        jblSimpe = new javax.swing.JLabel();
         panelConfigOp = new javax.swing.JPanel();
         panelEditDatos = new javax.swing.JPanel();
         jblPassword = new javax.swing.JLabel();
@@ -404,7 +406,30 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         });
         panelComentariosBarra.add(jblComentarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 60));
 
-        panelOpciones.add(panelComentariosBarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 300, 60));
+        panelOpciones.add(panelComentariosBarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 300, 60));
+
+        panelSimpeBarra.setBackground(new java.awt.Color(252, 247, 215));
+        panelSimpeBarra.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jblSimpe.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jblSimpe.setForeground(new java.awt.Color(102, 102, 102));
+        jblSimpe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jblSimpe.setText("Simpe");
+        jblSimpe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jblSimpe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jblSimpeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jblSimpeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jblSimpeMouseExited(evt);
+            }
+        });
+        panelSimpeBarra.add(jblSimpe, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 60));
+
+        panelOpciones.add(panelSimpeBarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 300, 60));
 
         background.add(panelOpciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 720));
 
@@ -784,15 +809,15 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
 
     private void jblGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblGuardarMouseEntered
         if (this.BotonGuardarActivo == true) {
-        panelGuardar.setBackground(new Color(228, 237, 170));
-        jblGuardar.setForeground(new Color(51, 51, 51));
+            panelGuardar.setBackground(new Color(228, 237, 170));
+            jblGuardar.setForeground(new Color(51, 51, 51));
         }
     }//GEN-LAST:event_jblGuardarMouseEntered
 
     private void jblGuardarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblGuardarMouseExited
         if (this.BotonGuardarActivo == true) {
-        panelGuardar.setBackground(new Color(204, 212, 152));
-        jblGuardar.setForeground(new Color(102, 102, 102));
+            panelGuardar.setBackground(new Color(204, 212, 152));
+            jblGuardar.setForeground(new Color(102, 102, 102));
         }
     }//GEN-LAST:event_jblGuardarMouseExited
 
@@ -805,7 +830,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTelefonoMousePressed
 
     private void jblAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblAtrasMouseClicked
-        PrincipalUsers users = new PrincipalUsers(this.cedula,this.sede);
+        PrincipalUsers users = new PrincipalUsers(this.cedula, this.sede);
         users.setVisible(true);
         panelConfig.setBackground(new Color(247, 240, 194));
         this.dispose();
@@ -817,6 +842,28 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         panelConfig.setBackground(new Color(247, 240, 194));
         this.dispose();
     }//GEN-LAST:event_jblSalirMouseClicked
+
+    private void jblSimpeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseClicked
+        for (Usuarios i : SedeCentral.getListaUsers()) {
+            if (i.getCedula().equals(this.cedula)) {
+                if (i.getCuentaSimpe().getEstado() == true) {
+                    Simpe simpe = new Simpe(this.cedula, this.sede);
+                    simpe.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Cuenta simpe inactiva, debes habilitarla");
+                }
+            }
+        }
+    }//GEN-LAST:event_jblSimpeMouseClicked
+
+    private void jblSimpeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseEntered
+        panelSimpeBarra.setBackground(new Color(232, 225, 182));
+    }//GEN-LAST:event_jblSimpeMouseEntered
+
+    private void jblSimpeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseExited
+        panelSimpeBarra.setBackground(new Color(252, 247, 215));
+    }//GEN-LAST:event_jblSimpeMouseExited
 
     /**
      * @param args the command line arguments
@@ -882,6 +929,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     private javax.swing.JLabel jblPerfil;
     private javax.swing.JLabel jblRetirar;
     private javax.swing.JLabel jblSalir;
+    private javax.swing.JLabel jblSimpe;
     private javax.swing.JLabel jblTelefono;
     private javax.swing.JLabel jblVentanaActual;
     private javax.swing.JLabel jblVerPass;
@@ -898,6 +946,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     private javax.swing.JPanel panelOpciones;
     private javax.swing.JPanel panelRetirarBarra;
     private javax.swing.JPanel panelSalir;
+    private javax.swing.JPanel panelSimpeBarra;
     private javax.swing.JPanel panelVerPass;
     private javax.swing.JPanel panelVerSaldoBarra;
     private javax.swing.JPasswordField psdPassword;

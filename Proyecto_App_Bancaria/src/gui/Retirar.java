@@ -135,6 +135,8 @@ public class Retirar extends javax.swing.JFrame {
         jblHabilitarCuentas = new javax.swing.JLabel();
         panelComentariosBarra = new javax.swing.JPanel();
         jblComentarios = new javax.swing.JLabel();
+        panelSimpeBarra = new javax.swing.JPanel();
+        jblSimpe = new javax.swing.JLabel();
         pizarra = new javax.swing.JTabbedPane();
         panelValidar = new javax.swing.JPanel();
         jblClaveNum = new javax.swing.JLabel();
@@ -449,7 +451,30 @@ public class Retirar extends javax.swing.JFrame {
         });
         panelComentariosBarra.add(jblComentarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 60));
 
-        panelOpciones.add(panelComentariosBarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 300, 60));
+        panelOpciones.add(panelComentariosBarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 300, 60));
+
+        panelSimpeBarra.setBackground(new java.awt.Color(252, 247, 215));
+        panelSimpeBarra.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jblSimpe.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jblSimpe.setForeground(new java.awt.Color(102, 102, 102));
+        jblSimpe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jblSimpe.setText("Simpe");
+        jblSimpe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jblSimpe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jblSimpeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jblSimpeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jblSimpeMouseExited(evt);
+            }
+        });
+        panelSimpeBarra.add(jblSimpe, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 60));
+
+        panelOpciones.add(panelSimpeBarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 300, 60));
 
         background.add(panelOpciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 720));
 
@@ -1510,6 +1535,28 @@ public class Retirar extends javax.swing.JFrame {
         txtsPorDefecto();
     }//GEN-LAST:event_jblAceptarRetiroMouseClicked
 
+    private void jblSimpeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseClicked
+        for (Usuarios i : SedeCentral.getListaUsers()) {
+            if (i.getCedula().equals(this.cedula)) {
+                if (i.getCuentaSimpe().getEstado() == true) {
+                    Simpe simpe = new Simpe(this.cedula, this.sede);
+                    simpe.setVisible(true);
+                    this.dispose();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Cuenta simpe inactiva, debes habilitarla");
+                }
+            }
+        }
+    }//GEN-LAST:event_jblSimpeMouseClicked
+
+    private void jblSimpeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseEntered
+        panelSimpeBarra.setBackground(new Color(232, 225, 182));
+    }//GEN-LAST:event_jblSimpeMouseEntered
+
+    private void jblSimpeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseExited
+        panelSimpeBarra.setBackground(new Color(252, 247, 215));
+    }//GEN-LAST:event_jblSimpeMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -1589,6 +1636,7 @@ public class Retirar extends javax.swing.JFrame {
     private javax.swing.JLabel jblRequisitos;
     private javax.swing.JLabel jblRetirar;
     private javax.swing.JLabel jblSalir;
+    private javax.swing.JLabel jblSimpe;
     private javax.swing.JLabel jblTotal;
     private javax.swing.JLabel jblVentanaActual;
     private javax.swing.JLabel jblVerPassword;
@@ -1632,6 +1680,7 @@ public class Retirar extends javax.swing.JFrame {
     private javax.swing.JPanel panelRetirar;
     private javax.swing.JPanel panelRetirarBarra;
     private javax.swing.JPanel panelSalir;
+    private javax.swing.JPanel panelSimpeBarra;
     private javax.swing.JPanel panelTipoCambio;
     private javax.swing.JPanel panelTotal;
     private javax.swing.JPanel panelValidar;

@@ -1,10 +1,12 @@
 package gui;
 
 import Personas.Usuarios;
+import Sedes.SedeCentral;
 import Sedes.SedeCiudadColon;
 import Sedes.SedePuriscal;
 import Sedes.SedeSanPedro;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 public class PrincipalUsers extends javax.swing.JFrame {
 
@@ -103,7 +105,7 @@ public class PrincipalUsers extends javax.swing.JFrame {
         jblDashboard = new javax.swing.JLabel();
         panelHabilitarCuentasBarra = new javax.swing.JPanel();
         jblHabilitarCuentas = new javax.swing.JLabel();
-        pnaelSimpeBarra = new javax.swing.JPanel();
+        panelSimpeBarra = new javax.swing.JPanel();
         jblSimpe = new javax.swing.JLabel();
         panelComentariosBarra1 = new javax.swing.JPanel();
         jblComentarios1 = new javax.swing.JLabel();
@@ -326,8 +328,8 @@ public class PrincipalUsers extends javax.swing.JFrame {
 
         panelOpciones.add(panelHabilitarCuentasBarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 300, 60));
 
-        pnaelSimpeBarra.setBackground(new java.awt.Color(252, 247, 215));
-        pnaelSimpeBarra.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelSimpeBarra.setBackground(new java.awt.Color(252, 247, 215));
+        panelSimpeBarra.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jblSimpe.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jblSimpe.setForeground(new java.awt.Color(102, 102, 102));
@@ -345,9 +347,9 @@ public class PrincipalUsers extends javax.swing.JFrame {
                 jblSimpeMouseExited(evt);
             }
         });
-        pnaelSimpeBarra.add(jblSimpe, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 60));
+        panelSimpeBarra.add(jblSimpe, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 60));
 
-        panelOpciones.add(pnaelSimpeBarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 300, 60));
+        panelOpciones.add(panelSimpeBarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 300, 60));
 
         panelComentariosBarra1.setBackground(new java.awt.Color(252, 247, 215));
         panelComentariosBarra1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -485,15 +487,25 @@ public class PrincipalUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_jblHabilitarCuentasMouseClicked
 
     private void jblSimpeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseEntered
-        pnaelSimpeBarra.setBackground(new Color(232, 225, 182));
+        panelSimpeBarra.setBackground(new Color(232, 225, 182));
     }//GEN-LAST:event_jblSimpeMouseEntered
 
     private void jblSimpeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseExited
-        pnaelSimpeBarra.setBackground(new Color(252, 247, 215));
+        panelSimpeBarra.setBackground(new Color(252, 247, 215));
     }//GEN-LAST:event_jblSimpeMouseExited
 
     private void jblSimpeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseClicked
-
+        for (Usuarios i : SedeCentral.getListaUsers()) {
+            if (i.getCedula().equals(this.cedula)) {
+                if (i.getCuentaSimpe().getEstado() == true) {
+                    Simpe simpe = new Simpe(this.cedula, this.sede);
+                    simpe.setVisible(true);
+                    this.dispose();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Cuenta simpe inactiva, debes habilitarla");
+                }
+            }
+        }
     }//GEN-LAST:event_jblSimpeMouseClicked
 
     private void jblConfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblConfigMouseClicked
@@ -594,7 +606,7 @@ public class PrincipalUsers extends javax.swing.JFrame {
     private javax.swing.JPanel panelOpciones;
     private javax.swing.JPanel panelRetirarBarra;
     private javax.swing.JPanel panelSalir;
+    private javax.swing.JPanel panelSimpeBarra;
     private javax.swing.JPanel panelVerSaldoBarra;
-    private javax.swing.JPanel pnaelSimpeBarra;
     // End of variables declaration//GEN-END:variables
 }
