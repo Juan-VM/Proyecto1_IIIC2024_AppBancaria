@@ -6,21 +6,25 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
-public class HabilitarCuentas extends javax.swing.JFrame {
+public class Simpe extends javax.swing.JFrame {
 
     String cedula;
     int sede;
     boolean verPassword;
+    String cuentaElegida;
 
-    public HabilitarCuentas(String cedula, int sede) {
+    public Simpe(String cedula, int sede) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.cedula = cedula;
         this.sede = sede;
         this.verPassword = false;
-        panelHabilitarCuentasBarra.setBackground(new Color(232, 225, 182));
-        alertaClave.setVisible(false);
+        panelSimpeBarra.setBackground(new Color(232, 225, 182));
         jblAlerta.setVisible(false);
+        alertaClave.setVisible(false);
+        alertaNumero.setVisible(false);
+        alertaMonto.setVisible(false);
+        alertaDetalle.setVisible(false);
         txtsPorDefecto();
 
         for (Usuarios i : SedeCentral.getListaUsers()) {
@@ -41,13 +45,41 @@ public class HabilitarCuentas extends javax.swing.JFrame {
         }
     }
 
-    public HabilitarCuentas() {
+    public Simpe() {
         initComponents();
     }
 
     public void txtsPorDefecto() {
         txtClaveNum.setText("Ingrese su clave");
         psdPassword.setText("Ingrese su password");
+    }
+    public void txtsSetPredeterminatedText(String is) {
+        if (!(txtNumeroSimpe.getText().equals("Ingrese el numero")) && !(txtNumeroSimpe.getText().trim().equals("")) && !is.equals("numero")) {
+            txtNumeroSimpe.setForeground(new Color(153, 153, 153));
+        } else {
+            if (txtNumeroSimpe.getText().equals("")) {
+                txtNumeroSimpe.setText("Ingrese el numero");
+            }
+            txtNumeroSimpe.setForeground(new Color(153, 153, 153));
+        }
+        
+        if (!(txtMontoTransferencia.getText().equals("Ingrese el monto")) && !(txtMontoTransferencia.getText().trim().equals("")) && !is.equals("monto")) {
+            txtMontoTransferencia.setForeground(new Color(153, 153, 153));
+        } else {
+            if (txtMontoTransferencia.getText().equals("")) {
+                txtMontoTransferencia.setText("Ingrese el monto");
+            }
+            txtMontoTransferencia.setForeground(new Color(153, 153, 153));
+        }
+        
+        if (!(txtDetalle.getText().equals("Ingrese el detalle")) && !(txtDetalle.getText().trim().equals("")) && !is.equals("detalle")) {
+            txtDetalle.setForeground(new Color(153, 153, 153));
+        } else {
+            if (txtDetalle.getText().equals("")) {
+                txtDetalle.setText("Ingrese el detalle");
+            }
+            txtDetalle.setForeground(new Color(153, 153, 153));
+        }
     }
 
     /**
@@ -105,11 +137,26 @@ public class HabilitarCuentas extends javax.swing.JFrame {
         jblOpcionActual = new javax.swing.JLabel();
         panelElegir = new javax.swing.JPanel();
         jblOpcionActual1 = new javax.swing.JLabel();
-        panelCuentaAhorro = new javax.swing.JPanel();
-        jblCuentaAhorro = new javax.swing.JLabel();
-        panelCuentaSimpe = new javax.swing.JPanel();
-        jblCuentaSimpe = new javax.swing.JLabel();
+        panelRealizarSimpe = new javax.swing.JPanel();
+        jblRealizarSimpe = new javax.swing.JLabel();
+        panelHistoriaSimpes = new javax.swing.JPanel();
+        jblHistorialSimpe = new javax.swing.JLabel();
         jblInformativo = new javax.swing.JLabel();
+        panelSimpe = new javax.swing.JPanel();
+        numero = new javax.swing.JLabel();
+        txtNumeroSimpe = new javax.swing.JTextField();
+        monto = new javax.swing.JLabel();
+        txtMontoTransferencia = new javax.swing.JTextField();
+        cuenta = new javax.swing.JLabel();
+        cbCuentaElegida = new javax.swing.JComboBox<>();
+        detalle = new javax.swing.JLabel();
+        txtDetalle = new javax.swing.JTextField();
+        panelRealizar = new javax.swing.JPanel();
+        jblRealizar = new javax.swing.JLabel();
+        alertaNumero = new javax.swing.JLabel();
+        alertaMonto = new javax.swing.JLabel();
+        alertaDetalle = new javax.swing.JLabel();
+        panelHistorial = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -484,8 +531,8 @@ public class HabilitarCuentas extends javax.swing.JFrame {
 
         jblOpcionActual.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jblOpcionActual.setForeground(new java.awt.Color(51, 51, 51));
-        jblOpcionActual.setText("HABILITAR CUENTA");
-        panelValidar.add(jblOpcionActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 30, 360, 40));
+        jblOpcionActual.setText("SIMPE");
+        panelValidar.add(jblOpcionActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 30, 130, 40));
 
         pizarra.addTab("Validar", panelValidar);
 
@@ -494,63 +541,189 @@ public class HabilitarCuentas extends javax.swing.JFrame {
 
         jblOpcionActual1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jblOpcionActual1.setForeground(new java.awt.Color(51, 51, 51));
-        jblOpcionActual1.setText("HABILITAR CUENTA");
-        panelElegir.add(jblOpcionActual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 30, 360, 40));
+        jblOpcionActual1.setText("SIMPE");
+        panelElegir.add(jblOpcionActual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 30, 110, 40));
 
-        panelCuentaAhorro.setBackground(new java.awt.Color(92, 88, 29));
-        panelCuentaAhorro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelRealizarSimpe.setBackground(new java.awt.Color(92, 88, 29));
+        panelRealizarSimpe.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jblCuentaAhorro.setBackground(new java.awt.Color(0, 0, 0));
-        jblCuentaAhorro.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jblCuentaAhorro.setForeground(new java.awt.Color(255, 255, 255));
-        jblCuentaAhorro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jblCuentaAhorro.setText("Cuenta ahorro");
-        jblCuentaAhorro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jblCuentaAhorro.addMouseListener(new java.awt.event.MouseAdapter() {
+        jblRealizarSimpe.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jblRealizarSimpe.setForeground(new java.awt.Color(255, 255, 255));
+        jblRealizarSimpe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jblRealizarSimpe.setText("Realizar simpe");
+        jblRealizarSimpe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jblRealizarSimpe.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jblCuentaAhorroMouseClicked(evt);
+                jblRealizarSimpeMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jblCuentaAhorroMouseEntered(evt);
+                jblRealizarSimpeMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jblCuentaAhorroMouseExited(evt);
+                jblRealizarSimpeMouseExited(evt);
             }
         });
-        panelCuentaAhorro.add(jblCuentaAhorro, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 70));
+        panelRealizarSimpe.add(jblRealizarSimpe, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 70));
 
-        panelElegir.add(panelCuentaAhorro, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 460, 70));
+        panelElegir.add(panelRealizarSimpe, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 460, 70));
 
-        panelCuentaSimpe.setBackground(new java.awt.Color(92, 88, 29));
-        panelCuentaSimpe.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelHistoriaSimpes.setBackground(new java.awt.Color(92, 88, 29));
+        panelHistoriaSimpes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jblCuentaSimpe.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jblCuentaSimpe.setForeground(new java.awt.Color(255, 255, 255));
-        jblCuentaSimpe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jblCuentaSimpe.setText("Cuenta simpe");
-        jblCuentaSimpe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jblCuentaSimpe.addMouseListener(new java.awt.event.MouseAdapter() {
+        jblHistorialSimpe.setBackground(new java.awt.Color(0, 0, 0));
+        jblHistorialSimpe.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jblHistorialSimpe.setForeground(new java.awt.Color(255, 255, 255));
+        jblHistorialSimpe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jblHistorialSimpe.setText("Ver historial simpes");
+        jblHistorialSimpe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jblHistorialSimpe.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jblCuentaSimpeMouseClicked(evt);
+                jblHistorialSimpeMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jblCuentaSimpeMouseEntered(evt);
+                jblHistorialSimpeMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jblCuentaSimpeMouseExited(evt);
+                jblHistorialSimpeMouseExited(evt);
             }
         });
-        panelCuentaSimpe.add(jblCuentaSimpe, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 70));
+        panelHistoriaSimpes.add(jblHistorialSimpe, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 70));
 
-        panelElegir.add(panelCuentaSimpe, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 400, 460, 70));
+        panelElegir.add(panelHistoriaSimpes, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 360, 460, 70));
 
         jblInformativo.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jblInformativo.setForeground(new java.awt.Color(51, 51, 51));
         jblInformativo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jblInformativo.setText("Elige la cuenta para habilitar");
-        panelElegir.add(jblInformativo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 550, 60));
+        jblInformativo.setText("Elige la accion que deseas realizar");
+        panelElegir.add(jblInformativo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 790, 60));
 
         pizarra.addTab("Elegir", panelElegir);
+
+        panelSimpe.setBackground(new java.awt.Color(255, 255, 255));
+        panelSimpe.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        numero.setFont(new java.awt.Font("Roboto", 1, 30)); // NOI18N
+        numero.setForeground(new java.awt.Color(51, 51, 51));
+        numero.setText("Numero de telefono");
+        panelSimpe.add(numero, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 310, -1));
+
+        txtNumeroSimpe.setBackground(new java.awt.Color(255, 255, 255));
+        txtNumeroSimpe.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txtNumeroSimpe.setForeground(new java.awt.Color(204, 204, 204));
+        txtNumeroSimpe.setText("Ingrese el numero");
+        txtNumeroSimpe.setBorder(null);
+        txtNumeroSimpe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtNumeroSimpeMousePressed(evt);
+            }
+        });
+        txtNumeroSimpe.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumeroSimpeKeyTyped(evt);
+            }
+        });
+        panelSimpe.add(txtNumeroSimpe, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 340, 50));
+
+        monto.setFont(new java.awt.Font("Roboto", 1, 29)); // NOI18N
+        monto.setForeground(new java.awt.Color(51, 51, 51));
+        monto.setText("Monto a transferir");
+        panelSimpe.add(monto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 280, -1));
+
+        txtMontoTransferencia.setBackground(new java.awt.Color(255, 255, 255));
+        txtMontoTransferencia.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txtMontoTransferencia.setForeground(new java.awt.Color(204, 204, 204));
+        txtMontoTransferencia.setText("Ingrese el monto");
+        txtMontoTransferencia.setBorder(null);
+        txtMontoTransferencia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtMontoTransferenciaMousePressed(evt);
+            }
+        });
+        txtMontoTransferencia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMontoTransferenciaKeyTyped(evt);
+            }
+        });
+        panelSimpe.add(txtMontoTransferencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 330, 50));
+
+        cuenta.setFont(new java.awt.Font("Roboto", 1, 29)); // NOI18N
+        cuenta.setForeground(new java.awt.Color(51, 51, 51));
+        cuenta.setText("Cuenta a debitar:");
+        panelSimpe.add(cuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 260, -1));
+
+        cbCuentaElegida.setBackground(new java.awt.Color(255, 255, 255));
+        cbCuentaElegida.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        cbCuentaElegida.setForeground(new java.awt.Color(102, 102, 102));
+        cbCuentaElegida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cuenta corriente", "Cuenta Ahorro", "Cuenta Simpe" }));
+        cbCuentaElegida.setBorder(null);
+        panelSimpe.add(cbCuentaElegida, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 290, -1, 50));
+
+        detalle.setFont(new java.awt.Font("Roboto", 1, 28)); // NOI18N
+        detalle.setForeground(new java.awt.Color(51, 51, 51));
+        detalle.setText("Detalle");
+        panelSimpe.add(detalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 130, -1));
+
+        txtDetalle.setBackground(new java.awt.Color(255, 255, 255));
+        txtDetalle.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txtDetalle.setForeground(new java.awt.Color(153, 153, 153));
+        txtDetalle.setText("Ingrese el detalle");
+        txtDetalle.setBorder(null);
+        txtDetalle.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtDetalleMousePressed(evt);
+            }
+        });
+        txtDetalle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDetalleKeyTyped(evt);
+            }
+        });
+        panelSimpe.add(txtDetalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 690, 50));
+
+        panelRealizar.setBackground(new java.awt.Color(92, 88, 29));
+        panelRealizar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jblRealizar.setBackground(new java.awt.Color(92, 88, 29));
+        jblRealizar.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jblRealizar.setForeground(new java.awt.Color(255, 255, 255));
+        jblRealizar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jblRealizar.setText("REALIZAR");
+        jblRealizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jblRealizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jblRealizarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jblRealizarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jblRealizarMouseExited(evt);
+            }
+        });
+        panelRealizar.add(jblRealizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 70));
+
+        panelSimpe.add(panelRealizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 550, 170, 70));
+
+        alertaNumero.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        alertaNumero.setForeground(new java.awt.Color(255, 102, 102));
+        alertaNumero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/advertencia.png"))); // NOI18N
+        panelSimpe.add(alertaNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 60, -1, -1));
+
+        alertaMonto.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        alertaMonto.setForeground(new java.awt.Color(255, 102, 102));
+        alertaMonto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/advertencia.png"))); // NOI18N
+        panelSimpe.add(alertaMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 180, -1, -1));
+
+        alertaDetalle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        alertaDetalle.setForeground(new java.awt.Color(255, 102, 102));
+        alertaDetalle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/advertencia.png"))); // NOI18N
+        panelSimpe.add(alertaDetalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 390, -1, -1));
+
+        pizarra.addTab("tab3", panelSimpe);
+
+        panelHistorial.setBackground(new java.awt.Color(255, 255, 255));
+        panelHistorial.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pizarra.addTab("tab4", panelHistorial);
 
         background.add(pizarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, 790, 690));
 
@@ -579,6 +752,12 @@ public class HabilitarCuentas extends javax.swing.JFrame {
             case 1 -> {
                 pizarra.setSelectedIndex(0);
                 txtsPorDefecto();
+            }
+            case 2 -> {
+                pizarra.setSelectedIndex(1);
+            }
+            case 3 -> {
+                pizarra.setSelectedIndex(1);
             }
         }
     }//GEN-LAST:event_jblAtrasMouseClicked
@@ -609,7 +788,7 @@ public class HabilitarCuentas extends javax.swing.JFrame {
     private void jblConfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblConfigMouseClicked
         ConfigurarPerfil config = new ConfigurarPerfil(this.cedula, this.sede);
         config.setVisible(true);
-        panelHabilitarCuentasBarra.setBackground(new Color(252, 247, 215));
+        panelVerSaldoBarra.setBackground(new Color(252, 247, 215));
         this.dispose();
     }//GEN-LAST:event_jblConfigMouseClicked
 
@@ -624,7 +803,7 @@ public class HabilitarCuentas extends javax.swing.JFrame {
     private void jblDepositarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDepositarMouseClicked
         Depositar depositar = new Depositar(this.cedula, this.sede);
         depositar.setVisible(true);
-        panelHabilitarCuentasBarra.setBackground(new Color(252, 247, 215));
+        panelVerSaldoBarra.setBackground(new Color(252, 247, 215));
         this.dispose();
     }//GEN-LAST:event_jblDepositarMouseClicked
 
@@ -639,7 +818,7 @@ public class HabilitarCuentas extends javax.swing.JFrame {
     private void jblRetirarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRetirarMouseClicked
         Retirar retirar = new Retirar(this.cedula, this.sede);
         retirar.setVisible(true);
-        panelHabilitarCuentasBarra.setBackground(new Color(252, 247, 215));
+        panelVerSaldoBarra.setBackground(new Color(252, 247, 215));
         this.dispose();
     }//GEN-LAST:event_jblRetirarMouseClicked
 
@@ -652,24 +831,21 @@ public class HabilitarCuentas extends javax.swing.JFrame {
     }//GEN-LAST:event_jblRetirarMouseExited
 
     private void jblVerSaldoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseClicked
-        VerSaldo ver = new VerSaldo(this.cedula, this.sede);
-        ver.setVisible(true);
-        panelRetirarBarra.setBackground(new Color(252, 247, 215));
-        this.dispose(); 
+
     }//GEN-LAST:event_jblVerSaldoMouseClicked
 
     private void jblVerSaldoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseEntered
-        panelVerSaldoBarra.setBackground(new Color(232, 225, 182));
+        //panelVerSaldoBarra.setBackground(new Color(232, 225, 182));
     }//GEN-LAST:event_jblVerSaldoMouseEntered
 
     private void jblVerSaldoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseExited
-        panelVerSaldoBarra.setBackground(new Color(252, 247, 215));
+        //panelVerSaldoBarra.setBackground(new Color(252, 247, 215));
     }//GEN-LAST:event_jblVerSaldoMouseExited
 
     private void jblDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDashboardMouseClicked
         PrincipalUsers users = new PrincipalUsers(this.cedula, this.sede);
         users.setVisible(true);
-        panelHabilitarCuentasBarra.setBackground(new Color(252, 247, 215));
+        panelVerSaldoBarra.setBackground(new Color(252, 247, 215));
         this.dispose();
     }//GEN-LAST:event_jblDashboardMouseClicked
 
@@ -682,15 +858,18 @@ public class HabilitarCuentas extends javax.swing.JFrame {
     }//GEN-LAST:event_jblDashboardMouseExited
 
     private void jblHabilitarCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseClicked
-
+        HabilitarCuentas habilitar = new HabilitarCuentas(this.cedula, this.sede);
+        habilitar.setVisible(true);
+        //panelDashboardBarra.setBackground(new Color(252, 247, 215));
+        this.dispose();
     }//GEN-LAST:event_jblHabilitarCuentasMouseClicked
 
     private void jblHabilitarCuentasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseEntered
-        //panelHabilitarCuentasBarra.setBackground(new Color(232, 225, 182));
+        panelHabilitarCuentasBarra.setBackground(new Color(232, 225, 182));
     }//GEN-LAST:event_jblHabilitarCuentasMouseEntered
 
     private void jblHabilitarCuentasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseExited
-        //panelHabilitarCuentasBarra.setBackground(new Color(252, 247, 215));
+        panelHabilitarCuentasBarra.setBackground(new Color(252, 247, 215));
     }//GEN-LAST:event_jblHabilitarCuentasMouseExited
 
     private void jblComentariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblComentariosMouseClicked
@@ -808,82 +987,150 @@ public class HabilitarCuentas extends javax.swing.JFrame {
         jblContinuar.setForeground(Color.white);
     }//GEN-LAST:event_jblContinuarMouseExited
 
-    private void jblCuentaAhorroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblCuentaAhorroMouseClicked
-        for (Usuarios i : SedeCentral.getListaUsers()) {
-            if (i.getCedula().equals(this.cedula)) {
-                if (i.getCuentaAhorro().getEstado() == false) {
-                    int eleccion = JOptionPane.showConfirmDialog(null, "Deseas habilitar la cuenta de ahorro?", "HABILITAR CUENTA", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-                    if(eleccion == 0){
-                        i.getCuentaAhorro().setEstado(true);
-                        JOptionPane.showMessageDialog(null, "Cuenta de ahorro habilitada para: "+i.getUsuario());
-                        pizarra.setSelectedIndex(0);
-                        txtsPorDefecto();
+    private void jblRealizarSimpeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRealizarSimpeMouseExited
+        panelRealizarSimpe.setBackground(new Color(92, 88, 29));
+        jblRealizarSimpe.setForeground(Color.white);
+    }//GEN-LAST:event_jblRealizarSimpeMouseExited
+
+    private void jblRealizarSimpeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRealizarSimpeMouseEntered
+        panelRealizarSimpe.setBackground(new Color(153, 145, 86));
+        jblRealizarSimpe.setForeground(Color.black);
+    }//GEN-LAST:event_jblRealizarSimpeMouseEntered
+
+    private void jblRealizarSimpeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRealizarSimpeMouseClicked
+        pizarra.setSelectedIndex(2);
+    }//GEN-LAST:event_jblRealizarSimpeMouseClicked
+
+    private void jblHistorialSimpeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHistorialSimpeMouseExited
+        panelHistoriaSimpes.setBackground(new Color(92, 88, 29));
+        jblHistorialSimpe.setForeground(Color.white);
+    }//GEN-LAST:event_jblHistorialSimpeMouseExited
+
+    private void jblHistorialSimpeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHistorialSimpeMouseEntered
+        panelHistoriaSimpes.setBackground(new Color(153, 145, 86));
+        jblHistorialSimpe.setForeground(Color.black);
+    }//GEN-LAST:event_jblHistorialSimpeMouseEntered
+
+    private void jblHistorialSimpeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHistorialSimpeMouseClicked
+        pizarra.setSelectedIndex(3);
+    }//GEN-LAST:event_jblHistorialSimpeMouseClicked
+
+    private void txtNumeroSimpeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNumeroSimpeMousePressed
+        txtsSetPredeterminatedText("numero");
+        if (txtNumeroSimpe.getText().equals("Ingrese el numero")) {
+            txtNumeroSimpe.setText("");
+        }
+        txtNumeroSimpe.setForeground(new Color(102, 102, 102));
+    }//GEN-LAST:event_txtNumeroSimpeMousePressed
+
+    private void txtMontoTransferenciaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtMontoTransferenciaMousePressed
+        txtsSetPredeterminatedText("monto");
+        if (txtMontoTransferencia.getText().equals("Ingrese el monto")) {
+            txtMontoTransferencia.setText("");
+        }
+        txtMontoTransferencia.setForeground(new Color(102, 102, 102));
+    }//GEN-LAST:event_txtMontoTransferenciaMousePressed
+
+    private void txtDetalleMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDetalleMousePressed
+        txtsSetPredeterminatedText("detalle");
+        if (txtDetalle.getText().equals("Ingrese el detalle")) {
+            txtDetalle.setText("");
+        }
+        txtDetalle.setForeground(new Color(102, 102, 102));
+    }//GEN-LAST:event_txtDetalleMousePressed
+
+    private void jblRealizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRealizarMouseClicked
+        try {
+            for (Usuarios i : SedeCentral.ListaUsers) {
+                if (i.getCedula().equals(this.cedula)) {
+                    if (Integer.parseInt(txtClaveNum.getText()) == i.getClaveNumerica() && String.valueOf(psdPassword.getPassword()).equals(i.getPassword())) {
+                        JOptionPane.showMessageDialog(null, "Datos correctos");
+                        pizarra.setSelectedIndex(1);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Datos incorrectos");
                     }
-                } else {
-                    JOptionPane.showMessageDialog(null, "La cuenta ya esta habilitada");
                 }
             }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Rellena todos los espacios");
         }
-    }//GEN-LAST:event_jblCuentaAhorroMouseClicked
+    }//GEN-LAST:event_jblRealizarMouseClicked
 
-    private void jblCuentaAhorroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblCuentaAhorroMouseEntered
-        panelCuentaAhorro.setBackground(new Color(153, 145, 86));
-        jblCuentaAhorro.setForeground(Color.black);
-    }//GEN-LAST:event_jblCuentaAhorroMouseEntered
+    private void jblRealizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRealizarMouseEntered
+        panelContinuar.setBackground(new Color(153, 145, 86));
+        jblContinuar.setForeground(Color.black);
+    }//GEN-LAST:event_jblRealizarMouseEntered
 
-    private void jblCuentaAhorroMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblCuentaAhorroMouseExited
-        panelCuentaAhorro.setBackground(new Color(92, 88, 29));
-        jblCuentaAhorro.setForeground(Color.white);
-    }//GEN-LAST:event_jblCuentaAhorroMouseExited
+    private void jblRealizarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRealizarMouseExited
+        panelContinuar.setBackground(new Color(92, 88, 29));
+        jblContinuar.setForeground(Color.white);
+    }//GEN-LAST:event_jblRealizarMouseExited
 
-    private void jblCuentaSimpeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblCuentaSimpeMouseClicked
-        for (Usuarios i : SedeCentral.getListaUsers()) {
-            if (i.getCedula().equals(this.cedula)) {
-                if (i.getCuentaSimpe().getEstado() == false) {
-                    int eleccion = JOptionPane.showConfirmDialog(null, "Deseas habilitar la cuenta de simpe?", "HABILITAR CUENTA", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-                    if(eleccion == 0){
-                        i.getCuentaSimpe().setEstado(true);
-                        JOptionPane.showMessageDialog(null, "Cuenta de simpe habilitada para: "+i.getUsuario());
-                        pizarra.setSelectedIndex(0);
-                        txtsPorDefecto();
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "La cuenta ya esta habilitada");
-                }
-            }
+    private void txtNumeroSimpeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroSimpeKeyTyped
+        char tecla = evt.getKeyChar();
+        boolean teclaBorrar = true;
+        if (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE) {
+            teclaBorrar = false;
         }
-    }//GEN-LAST:event_jblCuentaSimpeMouseClicked
 
-    private void jblCuentaSimpeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblCuentaSimpeMouseEntered
-        panelCuentaSimpe.setBackground(new Color(153, 145, 86));
-        jblCuentaSimpe.setForeground(Color.black);
-    }//GEN-LAST:event_jblCuentaSimpeMouseEntered
+        if (!Character.isDigit(tecla) && teclaBorrar == false) {
+            evt.consume();
+            alertaNumero.setVisible(true);
+            alertaNumero.setText("Debe ser un numero");
+        }else if((txtNumeroSimpe.getText()+evt.getKeyChar()).length() > 8){
+            evt.consume();
+            alertaNumero.setVisible(true);
+            alertaNumero.setText("Max digitos alcanzado");
+        }else{
+            alertaNumero.setVisible(false);
+        }
+        
+        
+    }//GEN-LAST:event_txtNumeroSimpeKeyTyped
 
-    private void jblCuentaSimpeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblCuentaSimpeMouseExited
-        panelCuentaSimpe.setBackground(new Color(92, 88, 29));
-        jblCuentaSimpe.setForeground(Color.white);
-    }//GEN-LAST:event_jblCuentaSimpeMouseExited
+    private void txtMontoTransferenciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoTransferenciaKeyTyped
+        char tecla = evt.getKeyChar();
+        boolean teclaBorrar = true;
+        if (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE) {
+            teclaBorrar = false;
+        }
+
+        if (!Character.isDigit(tecla) && teclaBorrar == false) {
+            evt.consume();
+            alertaMonto.setVisible(true);
+            alertaMonto.setText("Debe ser un numero");
+        }else if((txtMontoTransferencia.getText()+evt.getKeyChar()).length() > 10){
+            evt.consume();
+            alertaMonto.setVisible(true);
+            alertaMonto.setText("Max digitos alcanzado");
+        }else if(Double.parseDouble(txtMontoTransferencia.getText()+tecla) > 10000000){
+            evt.consume();
+            alertaMonto.setVisible(true);
+            alertaMonto.setText("Monto max 10.000.000");
+        }else{    
+            alertaMonto.setVisible(false);
+        }
+        
+    }//GEN-LAST:event_txtMontoTransferenciaKeyTyped
+
+    private void txtDetalleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDetalleKeyTyped
+        if((txtDetalle.getText()+evt.getKeyChar()).length() > 50){
+            evt.consume();
+            alertaDetalle.setVisible(true);
+            alertaDetalle.setText("Max digitos alcanzado");
+        }
+    }//GEN-LAST:event_txtDetalleKeyTyped
 
     private void jblSimpeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseClicked
-        for (Usuarios i : SedeCentral.getListaUsers()) {
-            if (i.getCedula().equals(this.cedula)) {
-                if (i.getCuentaSimpe().getEstado() == true) {
-                    Simpe simpe = new Simpe(this.cedula, this.sede);
-                    simpe.setVisible(true);
-                    this.dispose();
-                }else{
-                    JOptionPane.showMessageDialog(null, "Cuenta simpe inactiva, debes habilitarla");
-                }
-            }
-        }
+        // TODO add your handling code here:
     }//GEN-LAST:event_jblSimpeMouseClicked
 
     private void jblSimpeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseEntered
-        panelSimpeBarra.setBackground(new Color(232, 225, 182));
+        // TODO add your handling code here:
     }//GEN-LAST:event_jblSimpeMouseEntered
 
     private void jblSimpeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseExited
-        panelSimpeBarra.setBackground(new Color(252, 247, 215));
+        // TODO add your handling code here:
     }//GEN-LAST:event_jblSimpeMouseExited
 
     /**
@@ -903,27 +1150,33 @@ public class HabilitarCuentas extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HabilitarCuentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Simpe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HabilitarCuentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Simpe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HabilitarCuentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Simpe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HabilitarCuentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Simpe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new HabilitarCuentas().setVisible(true);
+                new Simpe().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel alertaClave;
+    private javax.swing.JLabel alertaDetalle;
+    private javax.swing.JLabel alertaMonto;
+    private javax.swing.JLabel alertaNumero;
     private javax.swing.JPanel background;
+    private javax.swing.JComboBox<String> cbCuentaElegida;
+    private javax.swing.JLabel cuenta;
+    private javax.swing.JLabel detalle;
     private javax.swing.JLabel iconBarra;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
@@ -934,12 +1187,11 @@ public class HabilitarCuentas extends javax.swing.JFrame {
     private javax.swing.JLabel jblComentarios;
     private javax.swing.JLabel jblConfig;
     private javax.swing.JLabel jblContinuar;
-    private javax.swing.JLabel jblCuentaAhorro;
-    private javax.swing.JLabel jblCuentaSimpe;
     private javax.swing.JLabel jblDashboard;
     private javax.swing.JLabel jblDepositar;
     private javax.swing.JLabel jblFondoPerfil;
     private javax.swing.JLabel jblHabilitarCuentas;
+    private javax.swing.JLabel jblHistorialSimpe;
     private javax.swing.JLabel jblInformativo;
     private javax.swing.JLabel jblNombreBanco;
     private javax.swing.JLabel jblNombrePerfil;
@@ -947,24 +1199,31 @@ public class HabilitarCuentas extends javax.swing.JFrame {
     private javax.swing.JLabel jblOpcionActual1;
     private javax.swing.JLabel jblPassword;
     private javax.swing.JLabel jblPerfil;
+    private javax.swing.JLabel jblRealizar;
+    private javax.swing.JLabel jblRealizarSimpe;
     private javax.swing.JLabel jblRetirar;
     private javax.swing.JLabel jblSalir;
     private javax.swing.JLabel jblSimpe;
     private javax.swing.JLabel jblVentanaActual;
     private javax.swing.JLabel jblVerPassword;
+    private javax.swing.JLabel monto;
+    private javax.swing.JLabel numero;
     private javax.swing.JPanel panelAtras;
     private javax.swing.JPanel panelComentariosBarra;
     private javax.swing.JPanel panelConfig;
     private javax.swing.JPanel panelContinuar;
-    private javax.swing.JPanel panelCuentaAhorro;
-    private javax.swing.JPanel panelCuentaSimpe;
     private javax.swing.JPanel panelDashboardBarra;
     private javax.swing.JPanel panelDepositarBarra;
     private javax.swing.JPanel panelElegir;
     private javax.swing.JPanel panelHabilitarCuentasBarra;
+    private javax.swing.JPanel panelHistoriaSimpes;
+    private javax.swing.JPanel panelHistorial;
     private javax.swing.JPanel panelOpciones;
+    private javax.swing.JPanel panelRealizar;
+    private javax.swing.JPanel panelRealizarSimpe;
     private javax.swing.JPanel panelRetirarBarra;
     private javax.swing.JPanel panelSalir;
+    private javax.swing.JPanel panelSimpe;
     private javax.swing.JPanel panelSimpeBarra;
     private javax.swing.JPanel panelValidar;
     private javax.swing.JPanel panelVerPassword;
@@ -972,5 +1231,8 @@ public class HabilitarCuentas extends javax.swing.JFrame {
     private javax.swing.JTabbedPane pizarra;
     private javax.swing.JPasswordField psdPassword;
     private javax.swing.JTextField txtClaveNum;
+    private javax.swing.JTextField txtDetalle;
+    private javax.swing.JTextField txtMontoTransferencia;
+    private javax.swing.JTextField txtNumeroSimpe;
     // End of variables declaration//GEN-END:variables
 }
