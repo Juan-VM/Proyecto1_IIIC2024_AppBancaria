@@ -1,20 +1,36 @@
 package gui;
 
+import Comprobantes.ComprobanteSimpeEntrada;
+import Comprobantes.ComprobanteSimpeSalida;
 import Personas.Usuarios;
+import RegistroDatos.DatosRegistrados;
 import Sedes.SedeCentral;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class Simpe extends javax.swing.JFrame {
 
     String cedula;
     int sede;
     boolean verPassword;
-    String cuentaElegida;
+    boolean numeroValido = false;
+    boolean montoValido = false;
+    boolean cuentaValida = false;
+    DefaultTableModel modelo = new DefaultTableModel();
 
     public Simpe(String cedula, int sede) {
         initComponents();
+        this.tabalSalidas.setModel(modelo);
+        this.tablaEntradas.setModel(modelo);
+        this.modelo.addColumn("Fecha");
+        this.modelo.addColumn("Hora");
+        this.modelo.addColumn("Monto");
+
         this.setLocationRelativeTo(null);
         this.cedula = cedula;
         this.sede = sede;
@@ -53,6 +69,14 @@ public class Simpe extends javax.swing.JFrame {
         txtClaveNum.setText("Ingrese su clave");
         psdPassword.setText("Ingrese su password");
     }
+
+    public void txtsRealizarSimpePorDefecto() {
+        txtNumeroSimpe.setText("Ingrese el numero");
+        txtMontoTransferencia.setText("Ingrese el monto");
+        txtDetalle.setText("Ingrese el detalle");
+        cbCuentaElegida.setSelectedIndex(0);
+    }
+
     public void txtsSetPredeterminatedText(String is) {
         if (!(txtNumeroSimpe.getText().equals("Ingrese el numero")) && !(txtNumeroSimpe.getText().trim().equals("")) && !is.equals("numero")) {
             txtNumeroSimpe.setForeground(new Color(153, 153, 153));
@@ -62,7 +86,7 @@ public class Simpe extends javax.swing.JFrame {
             }
             txtNumeroSimpe.setForeground(new Color(153, 153, 153));
         }
-        
+
         if (!(txtMontoTransferencia.getText().equals("Ingrese el monto")) && !(txtMontoTransferencia.getText().trim().equals("")) && !is.equals("monto")) {
             txtMontoTransferencia.setForeground(new Color(153, 153, 153));
         } else {
@@ -71,7 +95,7 @@ public class Simpe extends javax.swing.JFrame {
             }
             txtMontoTransferencia.setForeground(new Color(153, 153, 153));
         }
-        
+
         if (!(txtDetalle.getText().equals("Ingrese el detalle")) && !(txtDetalle.getText().trim().equals("")) && !is.equals("detalle")) {
             txtDetalle.setForeground(new Color(153, 153, 153));
         } else {
@@ -79,6 +103,178 @@ public class Simpe extends javax.swing.JFrame {
                 txtDetalle.setText("Ingrese el detalle");
             }
             txtDetalle.setForeground(new Color(153, 153, 153));
+        }
+    }
+
+    public void validarDatosSimpe() {
+        try {
+            String numero = txtNumeroSimpe.getText();
+            double monto = Double.parseDouble(txtMontoTransferencia.getText());
+
+            boolean numeroEncontrado = false;
+            boolean simpeActivo = false;
+
+            for (Usuarios i : SedeCentral.getListaUsers()) {
+                if (i.getTelefono().equals(numero)) {
+                    numeroEncontrado = true;
+                    if (i.getCuentaSimpe().getEstado() == true) {
+                        simpeActivo = true;
+                    }
+                }
+            }
+            if (numeroEncontrado == true) {
+                if (simpeActivo == true) {
+                    this.numeroValido = true;
+                    alertaNumero.setVisible(false);
+                } else {
+                    this.numeroValido = false;
+                    alertaNumero.setVisible(true);
+                    alertaNumero.setText("Este numero tiene el simpe desabilitado");
+                }
+            } else {
+                this.numeroValido = false;
+                alertaNumero.setVisible(true);
+                alertaNumero.setText("Numero no encontrado");
+            }
+
+            for (Usuarios i : SedeCentral.ListaUsers) {
+                if (i.getCedula().equals(this.cedula)) {
+
+                    switch (cbCuentaElegida.getSelectedIndex()) {
+                        case 0 -> {
+
+                            if (i.getCuentaCorriente().getSaldo() >= monto) {
+                                this.montoValido = true;
+                                alertaMonto.setVisible(false);
+                            } else {
+                                this.montoValido = false;
+                                alertaMonto.setVisible(true);
+                                alertaMonto.setText("Saldo insuficiente");
+                            }
+                            if (i.getCuentaCorriente().getEstado() == true) {
+                                this.cuentaValida = true;
+                            }
+                        }
+                        case 1 -> {
+
+                            if (i.getCuentaAhorro().getSaldo() >= monto) {
+                                this.montoValido = true;
+                                alertaMonto.setVisible(false);
+                            } else {
+                                this.montoValido = false;
+                                alertaMonto.setVisible(true);
+                                alertaMonto.setText("Saldo insuficiente");
+                            }
+                            if (i.getCuentaAhorro().getEstado() == true) {
+                                this.cuentaValida = true;
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Cuenta ahorro inactiva, debes habilitarla");
+                                cbCuentaElegida.setSelectedIndex(0);
+                            }
+                        }
+                        case 2 -> {
+
+                            if ((i.getCuentaSimpe().getSaldo()) >= monto) {
+                                this.montoValido = true;
+                                alertaMonto.setVisible(false);
+                            } else {
+                                this.montoValido = false;
+                                alertaMonto.setVisible(true);
+                                alertaMonto.setText("Saldo insuficiente");
+                            }
+                            if (i.getCuentaSimpe().getEstado() == true) {
+                                this.cuentaValida = true;
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Cuenta simpe inactiva, debes habilitarla");
+                                cbCuentaElegida.setSelectedIndex(0);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Rellena todos los espacios");
+            numeroValido = false;
+            montoValido = false;
+            cuentaValida = false;
+        }
+    }
+
+    public void setTextosMuestraComprobanteSalida(ComprobanteSimpeSalida comprobante) {
+        String realizadoPor = "";
+        String destinatario = "";
+        String detalle = comprobante.getDetalle();
+        if(detalle.equals("Ingrese el detalle"))
+            detalle = "ninguno";
+        
+        
+        for (Usuarios i : SedeCentral.getListaUsers()) {
+            if (i.getTelefono().equals(comprobante.getNumeroEmisor())) {
+                realizadoPor = i.getApellidos() + " " + i.getUsuario();
+            }
+
+            if (i.getTelefono().equals(comprobante.getNumeroReceptor())) {
+                destinatario = i.getApellidos() + " " + i.getUsuario();
+            }
+        }
+
+        jblFechaPago.setText(comprobante.getFecha() + "  " + comprobante.getHora());
+        jblMontoDebitado.setText(String.valueOf(comprobante.getMonto()) + " Colones");
+        jblRealizadoPor.setText(realizadoPor);
+        jblMontoAcreditado.setText(String.valueOf(comprobante.getMonto()) + " Colones");
+        jblNumeroMonedero.setText(comprobante.getNumeroReceptor());
+        jblDestinatario.setText(destinatario);
+        jblMontoTransferencia.setText(String.valueOf(comprobante.getMonto()) + " Colones");
+        jblDetalle.setText(detalle);
+    }
+    
+    public void setTextosMuestraComprobanteEntrada(ComprobanteSimpeEntrada comprobante) {
+        String realizadoPor = "";
+        String destinatario = "";
+        String detalle = comprobante.getDetalle();
+        if(detalle.equals("Ingrese el detalle"))
+            detalle = "ninguno";
+        
+        
+        for (Usuarios i : SedeCentral.getListaUsers()) {
+            if (i.getTelefono().equals(comprobante.getNumeroEmisor())) {
+                realizadoPor = i.getApellidos() + " " + i.getUsuario();
+            }
+
+            if (i.getTelefono().equals(comprobante.getNumeroReceptor())) {
+                destinatario = i.getApellidos() + " " + i.getUsuario();
+            }
+        }
+
+        jblFechaPago.setText(comprobante.getFecha() + "  " + comprobante.getHora());
+        jblMontoDebitado.setText(String.valueOf(comprobante.getMonto()) + " Colones");
+        jblRealizadoPor.setText(realizadoPor);
+        jblMontoAcreditado.setText(String.valueOf(comprobante.getMonto()) + " Colones");
+        jblNumeroMonedero.setText(comprobante.getNumeroReceptor());
+        jblDestinatario.setText(destinatario);
+        jblMontoTransferencia.setText(String.valueOf(comprobante.getMonto()) + " Colones");
+        jblDetalle.setText(detalle);
+    }
+
+    public void llenarTablaSalida() {
+        for (Usuarios i : SedeCentral.getListaUsers()) {
+            modelo.setRowCount(0);
+            if (i.getCedula().equals(this.cedula)) {
+                for (ComprobanteSimpeSalida c : i.getComprobantesSimpeSalida()) {
+                    modelo.addRow(new Object[]{c.getFecha(), c.getHora(), c.getMonto()});
+                }
+            }
+        }
+    }
+
+    public void llenarTablaEntrada() {
+        for (Usuarios i : SedeCentral.getListaUsers()) {
+            modelo.setRowCount(0);
+            if (i.getCedula().equals(this.cedula)) {
+                for (ComprobanteSimpeEntrada c : i.getComprobantesSimpeEntrada()) {
+                    modelo.addRow(new Object[]{c.getFecha(), c.getHora(), c.getMonto()});
+                }
+            }
         }
     }
 
@@ -157,6 +353,49 @@ public class Simpe extends javax.swing.JFrame {
         alertaMonto = new javax.swing.JLabel();
         alertaDetalle = new javax.swing.JLabel();
         panelHistorial = new javax.swing.JPanel();
+        panelSalidas = new javax.swing.JPanel();
+        jblHistorialSalidas = new javax.swing.JLabel();
+        panelEntradas = new javax.swing.JPanel();
+        jblHistorialEntradas = new javax.swing.JLabel();
+        jblInformativo1 = new javax.swing.JLabel();
+        panelComprobanteTransaccion = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
+        jSeparator4 = new javax.swing.JSeparator();
+        jSeparator5 = new javax.swing.JSeparator();
+        jSeparator6 = new javax.swing.JSeparator();
+        jSeparator7 = new javax.swing.JSeparator();
+        jSeparator8 = new javax.swing.JSeparator();
+        jSeparator9 = new javax.swing.JSeparator();
+        jSeparator10 = new javax.swing.JSeparator();
+        jLabel2 = new javax.swing.JLabel();
+        jblFechaPago = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jblMontoDebitado = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jblRealizadoPor = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jblMontoAcreditado = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jblNumeroMonedero = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jblDestinatario = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jblMontoTransferencia = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jblDetalle = new javax.swing.JLabel();
+        panelHistorialSalidas = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabalSalidas = new javax.swing.JTable();
+        jLabel10 = new javax.swing.JLabel();
+        panelVerComprobanteS = new javax.swing.JPanel();
+        jblVerComprobanteS = new javax.swing.JLabel();
+        panelHistorialEntradas = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaEntradas = new javax.swing.JTable();
+        jLabel11 = new javax.swing.JLabel();
+        panelVerComprobanteE = new javax.swing.JPanel();
+        jblVerComprobanteE = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -407,17 +646,6 @@ public class Simpe extends javax.swing.JFrame {
         jblSimpe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jblSimpe.setText("Simpe");
         jblSimpe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jblSimpe.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jblSimpeMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jblSimpeMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jblSimpeMouseExited(evt);
-            }
-        });
         panelSimpeBarra.add(jblSimpe, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 60));
 
         panelOpciones.add(panelSimpeBarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 300, 60));
@@ -723,7 +951,294 @@ public class Simpe extends javax.swing.JFrame {
 
         panelHistorial.setBackground(new java.awt.Color(255, 255, 255));
         panelHistorial.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelSalidas.setBackground(new java.awt.Color(92, 88, 29));
+        panelSalidas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jblHistorialSalidas.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jblHistorialSalidas.setForeground(new java.awt.Color(255, 255, 255));
+        jblHistorialSalidas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jblHistorialSalidas.setText("Historial salidas");
+        jblHistorialSalidas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jblHistorialSalidas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jblHistorialSalidasMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jblHistorialSalidasMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jblHistorialSalidasMouseExited(evt);
+            }
+        });
+        panelSalidas.add(jblHistorialSalidas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 70));
+
+        panelHistorial.add(panelSalidas, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 460, 70));
+
+        panelEntradas.setBackground(new java.awt.Color(92, 88, 29));
+        panelEntradas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jblHistorialEntradas.setBackground(new java.awt.Color(0, 0, 0));
+        jblHistorialEntradas.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jblHistorialEntradas.setForeground(new java.awt.Color(255, 255, 255));
+        jblHistorialEntradas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jblHistorialEntradas.setText("Historial entradas");
+        jblHistorialEntradas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jblHistorialEntradas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jblHistorialEntradasMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jblHistorialEntradasMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jblHistorialEntradasMouseExited(evt);
+            }
+        });
+        panelEntradas.add(jblHistorialEntradas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 70));
+
+        panelHistorial.add(panelEntradas, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 360, 460, 70));
+
+        jblInformativo1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jblInformativo1.setForeground(new java.awt.Color(51, 51, 51));
+        jblInformativo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jblInformativo1.setText("Elije el historial que deseas ver:");
+        panelHistorial.add(jblInformativo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 790, 60));
+
         pizarra.addTab("tab4", panelHistorial);
+
+        panelComprobanteTransaccion.setBackground(new java.awt.Color(255, 255, 255));
+        panelComprobanteTransaccion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Transferencia BNBUU SIMPE");
+        panelComprobanteTransaccion.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 12, 790, 40));
+
+        jSeparator3.setForeground(new java.awt.Color(51, 51, 51));
+        panelComprobanteTransaccion.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 550, 750, 10));
+
+        jSeparator4.setForeground(new java.awt.Color(51, 51, 51));
+        panelComprobanteTransaccion.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 750, 10));
+
+        jSeparator5.setForeground(new java.awt.Color(51, 51, 51));
+        panelComprobanteTransaccion.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 750, 10));
+
+        jSeparator6.setForeground(new java.awt.Color(51, 51, 51));
+        panelComprobanteTransaccion.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 273, 750, 10));
+
+        jSeparator7.setForeground(new java.awt.Color(51, 51, 51));
+        panelComprobanteTransaccion.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 750, 10));
+
+        jSeparator8.setForeground(new java.awt.Color(51, 51, 51));
+        panelComprobanteTransaccion.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 750, 10));
+
+        jSeparator9.setForeground(new java.awt.Color(51, 51, 51));
+        panelComprobanteTransaccion.add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 750, 10));
+
+        jSeparator10.setForeground(new java.awt.Color(51, 51, 51));
+        panelComprobanteTransaccion.add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 750, 10));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel2.setText("Fecha del pago:");
+        panelComprobanteTransaccion.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 750, -1));
+
+        jblFechaPago.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jblFechaPago.setForeground(new java.awt.Color(51, 51, 51));
+        jblFechaPago.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jblFechaPago.setText("dd-mm-yy  hh:mm:ss");
+        panelComprobanteTransaccion.add(jblFechaPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 750, -1));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel3.setText("Monto debitado");
+        panelComprobanteTransaccion.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 750, -1));
+
+        jblMontoDebitado.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jblMontoDebitado.setForeground(new java.awt.Color(51, 51, 51));
+        jblMontoDebitado.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jblMontoDebitado.setText("000000000 Colones");
+        panelComprobanteTransaccion.add(jblMontoDebitado, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 750, -1));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel4.setText("Realizado por:");
+        panelComprobanteTransaccion.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 750, -1));
+
+        jblRealizadoPor.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jblRealizadoPor.setForeground(new java.awt.Color(51, 51, 51));
+        jblRealizadoPor.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jblRealizadoPor.setText("Nombre");
+        panelComprobanteTransaccion.add(jblRealizadoPor, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 750, -1));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel5.setText("Monto acreditado:");
+        panelComprobanteTransaccion.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 750, -1));
+
+        jblMontoAcreditado.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jblMontoAcreditado.setForeground(new java.awt.Color(51, 51, 51));
+        jblMontoAcreditado.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jblMontoAcreditado.setText("Monto acreditado");
+        panelComprobanteTransaccion.add(jblMontoAcreditado, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 750, -1));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel6.setText("Numero de monedero:");
+        panelComprobanteTransaccion.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 750, -1));
+
+        jblNumeroMonedero.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jblNumeroMonedero.setForeground(new java.awt.Color(51, 51, 51));
+        jblNumeroMonedero.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jblNumeroMonedero.setText("000000000 Colones");
+        panelComprobanteTransaccion.add(jblNumeroMonedero, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 750, -1));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel7.setText("Destinatario:");
+        panelComprobanteTransaccion.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 750, -1));
+
+        jblDestinatario.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jblDestinatario.setForeground(new java.awt.Color(51, 51, 51));
+        jblDestinatario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jblDestinatario.setText("Destinatario");
+        panelComprobanteTransaccion.add(jblDestinatario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 750, -1));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel8.setText("Monto transferencia");
+        panelComprobanteTransaccion.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 520, 750, -1));
+
+        jblMontoTransferencia.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jblMontoTransferencia.setForeground(new java.awt.Color(51, 51, 51));
+        jblMontoTransferencia.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jblMontoTransferencia.setText("000000000 Colones");
+        panelComprobanteTransaccion.add(jblMontoTransferencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 490, 750, -1));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel9.setText("Detalle:");
+        panelComprobanteTransaccion.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 590, -1, -1));
+
+        jblDetalle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jblDetalle.setForeground(new java.awt.Color(51, 51, 51));
+        jblDetalle.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jblDetalle.setText("Texto del detalle");
+        panelComprobanteTransaccion.add(jblDetalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 560, 750, -1));
+
+        pizarra.addTab("tab5", panelComprobanteTransaccion);
+
+        panelHistorialSalidas.setBackground(new java.awt.Color(255, 255, 255));
+        panelHistorialSalidas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBorder(null);
+
+        tabalSalidas.setBackground(new java.awt.Color(204, 204, 204));
+        tabalSalidas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabalSalidas.setForeground(new java.awt.Color(51, 51, 51));
+        tabalSalidas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(tabalSalidas);
+
+        panelHistorialSalidas.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 730, 170));
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("Elige el comprobante que deseas ver:");
+        panelHistorialSalidas.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 750, -1));
+
+        panelVerComprobanteS.setBackground(new java.awt.Color(92, 88, 29));
+        panelVerComprobanteS.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jblVerComprobanteS.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jblVerComprobanteS.setForeground(new java.awt.Color(255, 255, 255));
+        jblVerComprobanteS.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jblVerComprobanteS.setText("VER");
+        jblVerComprobanteS.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jblVerComprobanteS.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jblVerComprobanteSMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jblVerComprobanteSMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jblVerComprobanteSMouseExited(evt);
+            }
+        });
+        panelVerComprobanteS.add(jblVerComprobanteS, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 70));
+
+        panelHistorialSalidas.add(panelVerComprobanteS, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 460, 220, 70));
+
+        pizarra.addTab("tab6", panelHistorialSalidas);
+
+        panelHistorialEntradas.setBackground(new java.awt.Color(255, 255, 255));
+        panelHistorialEntradas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.setBorder(null);
+
+        tablaEntradas.setBackground(new java.awt.Color(204, 204, 204));
+        tablaEntradas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tablaEntradas.setForeground(new java.awt.Color(51, 51, 51));
+        tablaEntradas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(tablaEntradas);
+
+        panelHistorialEntradas.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 730, 170));
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("Elige el comprobante que deseas ver:");
+        panelHistorialEntradas.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 750, -1));
+
+        panelVerComprobanteE.setBackground(new java.awt.Color(92, 88, 29));
+        panelVerComprobanteE.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jblVerComprobanteE.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jblVerComprobanteE.setForeground(new java.awt.Color(255, 255, 255));
+        jblVerComprobanteE.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jblVerComprobanteE.setText("VER");
+        jblVerComprobanteE.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jblVerComprobanteE.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jblVerComprobanteEMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jblVerComprobanteEMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jblVerComprobanteEMouseExited(evt);
+            }
+        });
+        panelVerComprobanteE.add(jblVerComprobanteE, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 70));
+
+        panelHistorialEntradas.add(panelVerComprobanteE, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 460, 220, 70));
+
+        pizarra.addTab("tab7", panelHistorialEntradas);
 
         background.add(pizarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, 790, 690));
 
@@ -758,6 +1273,15 @@ public class Simpe extends javax.swing.JFrame {
             }
             case 3 -> {
                 pizarra.setSelectedIndex(1);
+            }
+            case 4 -> {
+                pizarra.setSelectedIndex(1);
+            }
+            case 5 -> {
+                pizarra.setSelectedIndex(3);
+            }
+            case 6 -> {
+                pizarra.setSelectedIndex(3);
             }
         }
     }//GEN-LAST:event_jblAtrasMouseClicked
@@ -999,6 +1523,7 @@ public class Simpe extends javax.swing.JFrame {
 
     private void jblRealizarSimpeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRealizarSimpeMouseClicked
         pizarra.setSelectedIndex(2);
+        txtsRealizarSimpePorDefecto();
     }//GEN-LAST:event_jblRealizarSimpeMouseClicked
 
     private void jblHistorialSimpeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHistorialSimpeMouseExited
@@ -1017,6 +1542,7 @@ public class Simpe extends javax.swing.JFrame {
 
     private void txtNumeroSimpeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNumeroSimpeMousePressed
         txtsSetPredeterminatedText("numero");
+        alertaNumero.setVisible(false);
         if (txtNumeroSimpe.getText().equals("Ingrese el numero")) {
             txtNumeroSimpe.setText("");
         }
@@ -1025,6 +1551,7 @@ public class Simpe extends javax.swing.JFrame {
 
     private void txtMontoTransferenciaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtMontoTransferenciaMousePressed
         txtsSetPredeterminatedText("monto");
+        alertaMonto.setVisible(false);
         if (txtMontoTransferencia.getText().equals("Ingrese el monto")) {
             txtMontoTransferencia.setText("");
         }
@@ -1040,20 +1567,73 @@ public class Simpe extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDetalleMousePressed
 
     private void jblRealizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRealizarMouseClicked
-        try {
-            for (Usuarios i : SedeCentral.ListaUsers) {
-                if (i.getCedula().equals(this.cedula)) {
-                    if (Integer.parseInt(txtClaveNum.getText()) == i.getClaveNumerica() && String.valueOf(psdPassword.getPassword()).equals(i.getPassword())) {
-                        JOptionPane.showMessageDialog(null, "Datos correctos");
-                        pizarra.setSelectedIndex(1);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Datos incorrectos");
+        validarDatosSimpe();
+        
+        if (this.numeroValido == true && this.montoValido == true && this.cuentaValida == true) {
+            int eleccion = JOptionPane.showConfirmDialog(null, "Deseas realizar el simpe?", "SIMPE", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (eleccion == 0) {
+                Double monto = Double.parseDouble(txtMontoTransferencia.getText());
+                String numeroEmisor = "";
+                String numeroReceptor = "";
+                String cuentaUtiizada = "";
+                String detalle = txtDetalle.getText();
+
+                LocalTime hora = LocalTime.now();
+                DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
+                String horaFormateada = hora.format(formatoHora);
+
+                LocalDate fecha = LocalDate.now();
+                DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                String fechaFormateada = fecha.format(formatoFecha);
+
+                for (Usuarios i : SedeCentral.getListaUsers()) {
+                    if (i.getCedula().equals(this.cedula)) {
+                        numeroEmisor = i.getTelefono();
+
+                        //Reduce el monto a la cuenta elegida
+                        switch (cbCuentaElegida.getSelectedIndex()) {
+                            case 0 -> {
+                                i.getCuentaCorriente().retirarDinero(monto);
+                                cuentaUtiizada = "Cuenta corriente";
+                            }
+                            case 1 -> {
+                                i.getCuentaAhorro().retirarDinero(monto);
+                                cuentaUtiizada = "Cuenta ahorro";
+                            }
+                            case 2 -> {
+                                i.getCuentaSimpe().retirarDinero(monto);
+                                cuentaUtiizada = "Cuenta simpe";
+                            }
+                        }
+                    }
+                    //Le suma el monto a la cuenta simpe de destino
+                    if (i.getTelefono().equals(txtNumeroSimpe.getText())) {
+                        numeroReceptor = txtNumeroSimpe.getText();
+                        i.getCuentaSimpe().depositarDinero(monto);
                     }
                 }
+                ComprobanteSimpeSalida comprobanteSalida = new ComprobanteSimpeSalida(numeroEmisor, numeroReceptor, cuentaUtiizada, monto, fechaFormateada, horaFormateada, detalle);
+                ComprobanteSimpeEntrada comprobanteEntrada = new ComprobanteSimpeEntrada(numeroEmisor, numeroReceptor, cuentaUtiizada, monto, fechaFormateada, horaFormateada, detalle);
+
+                for (Usuarios i : SedeCentral.getListaUsers()) {
+                    if (i.getCedula().equals(this.cedula)) {
+                        i.getComprobantesSimpeSalida().add(comprobanteSalida);
+                    }
+
+                    if (i.getTelefono().equals(txtNumeroSimpe.getText())) {
+                        i.getComprobantesSimpeEntrada().add(comprobanteEntrada);
+                    }
+                }
+
+                JOptionPane.showMessageDialog(null, "Simpe Realizado con exito");
+                pizarra.setSelectedIndex(4);
+                txtsPorDefecto();
+                setTextosMuestraComprobanteSalida(comprobanteSalida);
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Rellena todos los espacios");
+        } else {
+            JOptionPane.showMessageDialog(null, "Error, verifica los datos ingresados");
         }
+
     }//GEN-LAST:event_jblRealizarMouseClicked
 
     private void jblRealizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRealizarMouseEntered
@@ -1077,15 +1657,15 @@ public class Simpe extends javax.swing.JFrame {
             evt.consume();
             alertaNumero.setVisible(true);
             alertaNumero.setText("Debe ser un numero");
-        }else if((txtNumeroSimpe.getText()+evt.getKeyChar()).length() > 8){
+        } else if ((txtNumeroSimpe.getText() + evt.getKeyChar()).length() > 8) {
             evt.consume();
             alertaNumero.setVisible(true);
             alertaNumero.setText("Max digitos alcanzado");
-        }else{
+        } else {
             alertaNumero.setVisible(false);
         }
-        
-        
+
+
     }//GEN-LAST:event_txtNumeroSimpeKeyTyped
 
     private void txtMontoTransferenciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoTransferenciaKeyTyped
@@ -1099,39 +1679,134 @@ public class Simpe extends javax.swing.JFrame {
             evt.consume();
             alertaMonto.setVisible(true);
             alertaMonto.setText("Debe ser un numero");
-        }else if((txtMontoTransferencia.getText()+evt.getKeyChar()).length() > 10){
+        } else if ((txtMontoTransferencia.getText() + evt.getKeyChar()).length() > 10) {
             evt.consume();
             alertaMonto.setVisible(true);
             alertaMonto.setText("Max digitos alcanzado");
-        }else if(Double.parseDouble(txtMontoTransferencia.getText()+tecla) > 10000000){
+        } else if (Double.parseDouble(txtMontoTransferencia.getText() + tecla) > 10000000) {
             evt.consume();
             alertaMonto.setVisible(true);
             alertaMonto.setText("Monto max 10.000.000");
-        }else{    
+        } else {
             alertaMonto.setVisible(false);
         }
-        
+
     }//GEN-LAST:event_txtMontoTransferenciaKeyTyped
 
     private void txtDetalleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDetalleKeyTyped
-        if((txtDetalle.getText()+evt.getKeyChar()).length() > 50){
+        if ((txtDetalle.getText() + evt.getKeyChar()).length() > 50) {
             evt.consume();
             alertaDetalle.setVisible(true);
             alertaDetalle.setText("Max digitos alcanzado");
         }
     }//GEN-LAST:event_txtDetalleKeyTyped
 
-    private void jblSimpeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jblSimpeMouseClicked
 
-    private void jblSimpeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jblSimpeMouseEntered
+    private void jblHistorialSalidasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHistorialSalidasMouseClicked
+        pizarra.setSelectedIndex(5);
+        llenarTablaSalida();
+    }//GEN-LAST:event_jblHistorialSalidasMouseClicked
 
-    private void jblSimpeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseExited
+    private void jblHistorialSalidasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHistorialSalidasMouseEntered
+        panelSalidas.setBackground(new Color(153, 145, 86));
+        jblHistorialSalidas.setForeground(Color.black);
+    }//GEN-LAST:event_jblHistorialSalidasMouseEntered
+
+    private void jblHistorialSalidasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHistorialSalidasMouseExited
+        panelSalidas.setBackground(new Color(92, 88, 29));
+        jblHistorialSalidas.setForeground(Color.white);
+    }//GEN-LAST:event_jblHistorialSalidasMouseExited
+
+    private void jblHistorialEntradasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHistorialEntradasMouseClicked
+        pizarra.setSelectedIndex(6);
+        llenarTablaEntrada();
+    }//GEN-LAST:event_jblHistorialEntradasMouseClicked
+
+    private void jblHistorialEntradasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHistorialEntradasMouseEntered
+        panelEntradas.setBackground(new Color(153, 145, 86));
+        jblHistorialEntradas.setForeground(Color.black);
+    }//GEN-LAST:event_jblHistorialEntradasMouseEntered
+
+    private void jblHistorialEntradasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHistorialEntradasMouseExited
+        panelEntradas.setBackground(new Color(92, 88, 29));
+        jblHistorialEntradas.setForeground(Color.white);
+    }//GEN-LAST:event_jblHistorialEntradasMouseExited
+
+    private void jblVerComprobanteSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerComprobanteSMouseClicked
+        if (tabalSalidas.getRowCount() > 0) {
+
+            boolean filaElegida = false;
+            int c = 0;
+            try {
+                c = tabalSalidas.getSelectedRow();
+                if (c >= 0) {
+                    filaElegida = true;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error, selecciona un comprobante");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error, verifica la eleccion");
+            }
+
+            if (filaElegida == true) {
+                pizarra.setSelectedIndex(4);
+                for (Usuarios i : SedeCentral.getListaUsers()) {
+                    if (i.getCedula().equals(this.cedula)) {
+                        setTextosMuestraComprobanteSalida(i.getComprobantesSimpeSalida().get(c));
+                    }
+                }
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay simpes registrados");
+        }
+    }//GEN-LAST:event_jblVerComprobanteSMouseClicked
+
+    private void jblVerComprobanteSMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerComprobanteSMouseEntered
+        panelVerComprobanteS.setBackground(new Color(153, 145, 86));
+        jblVerComprobanteS.setForeground(Color.black);
+    }//GEN-LAST:event_jblVerComprobanteSMouseEntered
+
+    private void jblVerComprobanteSMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerComprobanteSMouseExited
+        panelVerComprobanteS.setBackground(new Color(92, 88, 29));
+        jblVerComprobanteS.setForeground(Color.white);
+    }//GEN-LAST:event_jblVerComprobanteSMouseExited
+
+    private void jblVerComprobanteEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerComprobanteEMouseClicked
+        if (tablaEntradas.getRowCount() > 0) {
+
+            boolean filaElegida = false;
+            int c = 0;
+            try {
+                c = tablaEntradas.getSelectedRow();
+                if (c >= 0) {
+                    filaElegida = true;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error, selecciona un comprobante");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error, verifica la eleccion");
+            }
+
+            if (filaElegida == true) {
+                pizarra.setSelectedIndex(4);
+                for (Usuarios i : SedeCentral.getListaUsers()) {
+                    if (i.getCedula().equals(this.cedula)) {
+                        setTextosMuestraComprobanteEntrada(i.getComprobantesSimpeEntrada().get(c));
+                    }
+                }
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay simpes registrados");
+        }
+    }//GEN-LAST:event_jblVerComprobanteEMouseClicked
+
+    private void jblVerComprobanteEMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerComprobanteEMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_jblSimpeMouseExited
+    }//GEN-LAST:event_jblVerComprobanteEMouseEntered
+
+    private void jblVerComprobanteEMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerComprobanteEMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jblVerComprobanteEMouseExited
 
     /**
      * @param args the command line arguments
@@ -1178,8 +1853,29 @@ public class Simpe extends javax.swing.JFrame {
     private javax.swing.JLabel cuenta;
     private javax.swing.JLabel detalle;
     private javax.swing.JLabel iconBarra;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JSeparator jSeparator9;
     private javax.swing.JLabel jblAlerta;
     private javax.swing.JLabel jblAtras;
     private javax.swing.JLabel jblBarra;
@@ -1189,47 +1885,69 @@ public class Simpe extends javax.swing.JFrame {
     private javax.swing.JLabel jblContinuar;
     private javax.swing.JLabel jblDashboard;
     private javax.swing.JLabel jblDepositar;
+    private javax.swing.JLabel jblDestinatario;
+    private javax.swing.JLabel jblDetalle;
+    private javax.swing.JLabel jblFechaPago;
     private javax.swing.JLabel jblFondoPerfil;
     private javax.swing.JLabel jblHabilitarCuentas;
+    private javax.swing.JLabel jblHistorialEntradas;
+    private javax.swing.JLabel jblHistorialSalidas;
     private javax.swing.JLabel jblHistorialSimpe;
     private javax.swing.JLabel jblInformativo;
+    private javax.swing.JLabel jblInformativo1;
+    private javax.swing.JLabel jblMontoAcreditado;
+    private javax.swing.JLabel jblMontoDebitado;
+    private javax.swing.JLabel jblMontoTransferencia;
     private javax.swing.JLabel jblNombreBanco;
     private javax.swing.JLabel jblNombrePerfil;
+    private javax.swing.JLabel jblNumeroMonedero;
     private javax.swing.JLabel jblOpcionActual;
     private javax.swing.JLabel jblOpcionActual1;
     private javax.swing.JLabel jblPassword;
     private javax.swing.JLabel jblPerfil;
+    private javax.swing.JLabel jblRealizadoPor;
     private javax.swing.JLabel jblRealizar;
     private javax.swing.JLabel jblRealizarSimpe;
     private javax.swing.JLabel jblRetirar;
     private javax.swing.JLabel jblSalir;
     private javax.swing.JLabel jblSimpe;
     private javax.swing.JLabel jblVentanaActual;
+    private javax.swing.JLabel jblVerComprobanteE;
+    private javax.swing.JLabel jblVerComprobanteS;
     private javax.swing.JLabel jblVerPassword;
     private javax.swing.JLabel monto;
     private javax.swing.JLabel numero;
     private javax.swing.JPanel panelAtras;
     private javax.swing.JPanel panelComentariosBarra;
+    private javax.swing.JPanel panelComprobanteTransaccion;
     private javax.swing.JPanel panelConfig;
     private javax.swing.JPanel panelContinuar;
     private javax.swing.JPanel panelDashboardBarra;
     private javax.swing.JPanel panelDepositarBarra;
     private javax.swing.JPanel panelElegir;
+    private javax.swing.JPanel panelEntradas;
     private javax.swing.JPanel panelHabilitarCuentasBarra;
     private javax.swing.JPanel panelHistoriaSimpes;
     private javax.swing.JPanel panelHistorial;
+    private javax.swing.JPanel panelHistorialEntradas;
+    private javax.swing.JPanel panelHistorialSalidas;
     private javax.swing.JPanel panelOpciones;
     private javax.swing.JPanel panelRealizar;
     private javax.swing.JPanel panelRealizarSimpe;
     private javax.swing.JPanel panelRetirarBarra;
+    private javax.swing.JPanel panelSalidas;
     private javax.swing.JPanel panelSalir;
     private javax.swing.JPanel panelSimpe;
     private javax.swing.JPanel panelSimpeBarra;
     private javax.swing.JPanel panelValidar;
+    private javax.swing.JPanel panelVerComprobanteE;
+    private javax.swing.JPanel panelVerComprobanteS;
     private javax.swing.JPanel panelVerPassword;
     private javax.swing.JPanel panelVerSaldoBarra;
     private javax.swing.JTabbedPane pizarra;
     private javax.swing.JPasswordField psdPassword;
+    private javax.swing.JTable tabalSalidas;
+    private javax.swing.JTable tablaEntradas;
     private javax.swing.JTextField txtClaveNum;
     private javax.swing.JTextField txtDetalle;
     private javax.swing.JTextField txtMontoTransferencia;

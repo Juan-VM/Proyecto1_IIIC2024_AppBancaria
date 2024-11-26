@@ -1,13 +1,13 @@
 
 package Cuentas;
 
-import Comprobantes.ComprobanteSimpe;
+import Comprobantes.ComprobanteSimpeSalida;
 import java.util.ArrayList;
 
 
 public class CuentaSimpe extends Cuentas{
     
-    private ArrayList<ComprobanteSimpe> comprobantesSimpe = new ArrayList<>();
+    private ArrayList<ComprobanteSimpeSalida> comprobantesSimpe = new ArrayList<>();
     
     public CuentaSimpe(double saldo, boolean estado) {
         super(saldo, estado);
