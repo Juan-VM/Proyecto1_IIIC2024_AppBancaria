@@ -3,13 +3,12 @@ package Comprobantes;
 
 public class Comprobantes {
     
-    private String cuentaUtilizada;
     private double monto;
     private String fecha;
     private String hora;
 
-    public Comprobantes(String cuentaUtilizada, double monto, String fecha, String hora) {
-        this.cuentaUtilizada = cuentaUtilizada;
+
+    public Comprobantes(double monto, String fecha, String hora) {
         this.monto = monto;
         this.fecha = fecha;
         this.hora = hora;
@@ -17,14 +16,6 @@ public class Comprobantes {
    
     public Comprobantes(){
         
-    }
-
-    public String getCuentaUtilizada() {
-        return cuentaUtilizada;
-    }
-
-    public void setCuentaUtilizada(String cuentaUtilizada) {
-        this.cuentaUtilizada = cuentaUtilizada;
     }
 
     public double getMonto() {
@@ -50,6 +41,5 @@ public class Comprobantes {
     public void setHora(String hora) {
         this.hora = hora;
     }
-    
     
 }
