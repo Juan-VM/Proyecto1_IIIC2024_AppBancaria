@@ -1355,15 +1355,18 @@ public class Simpe extends javax.swing.JFrame {
     }//GEN-LAST:event_jblRetirarMouseExited
 
     private void jblVerSaldoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseClicked
-
+        VerSaldo ver = new VerSaldo(this.cedula, this.sede);
+        ver.setVisible(true);
+        panelRetirarBarra.setBackground(new Color(252, 247, 215));
+        this.dispose();
     }//GEN-LAST:event_jblVerSaldoMouseClicked
 
     private void jblVerSaldoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseEntered
-        //panelVerSaldoBarra.setBackground(new Color(232, 225, 182));
+        panelVerSaldoBarra.setBackground(new Color(232, 225, 182));
     }//GEN-LAST:event_jblVerSaldoMouseEntered
 
     private void jblVerSaldoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseExited
-        //panelVerSaldoBarra.setBackground(new Color(252, 247, 215));
+        panelVerSaldoBarra.setBackground(new Color(252, 247, 215));
     }//GEN-LAST:event_jblVerSaldoMouseExited
 
     private void jblDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDashboardMouseClicked
@@ -1384,7 +1387,6 @@ public class Simpe extends javax.swing.JFrame {
     private void jblHabilitarCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseClicked
         HabilitarCuentas habilitar = new HabilitarCuentas(this.cedula, this.sede);
         habilitar.setVisible(true);
-        //panelDashboardBarra.setBackground(new Color(252, 247, 215));
         this.dispose();
     }//GEN-LAST:event_jblHabilitarCuentasMouseClicked
 

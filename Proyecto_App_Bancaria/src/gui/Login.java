@@ -3,6 +3,9 @@ package gui;
 import Personas.Administradores;
 import Personas.Usuarios;
 import Sedes.SedeCentral;
+import Sedes.SedeCiudadColon;
+import Sedes.SedePuriscal;
+import Sedes.SedeSanPedro;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -13,11 +16,13 @@ public class Login extends javax.swing.JFrame {
     String cedula;
     int rol;
     int sede;
+    int intentosRestantes;
 
     public Login() {
         initComponents();
         this.setLocationRelativeTo(null);
         txtsPorDefecto();
+        this.intentosRestantes = 3;
     }
 
     public void txtsPorDefecto() {
@@ -62,7 +67,7 @@ public class Login extends javax.swing.JFrame {
 
         if (CredencialesIguales == true) {
             JOptionPane.showMessageDialog(null, "Datos correctos");
-        
+
         } else if (CredencialesIguales == false) {
             JOptionPane.showMessageDialog(null, "Datos incorrectos");
             txtsPorDefecto();
@@ -82,8 +87,7 @@ public class Login extends javax.swing.JFrame {
             }
         }
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -336,24 +340,51 @@ public class Login extends javax.swing.JFrame {
         boolean datosIguales;
         getRol(listaAdmins, listaUsers);
 
-        switch (rol) {
-            case 0 -> {
-                datosIguales = validarDatos("usuarios");
-                if (datosIguales == true) {
-                    PrincipalUsers users = new PrincipalUsers(this.cedula, this.sede);
-                    users.setVisible(true);
-                    this.dispose();
-                }
-            }
-            case 1 -> {
-                datosIguales = validarDatos("administradores");
-                if (datosIguales == true) {
-                    PrincipalAdmins admins = new PrincipalAdmins(cedula);
-                    admins.setVisible(true);
-                    this.dispose();
+        for (Usuarios i : SedeCentral.getListaUsers()) {
+            if (i.getCedula().equals(txtCedula.getText())) {
+                if (i.getEstadoUsuario() == true) {
+                    if (this.intentosRestantes > 0) {
+                        switch (rol) {
+                            case 0 -> {
+                                datosIguales = validarDatos("usuarios");
+                                if (datosIguales == true) {
+                                    PrincipalUsers users = new PrincipalUsers(this.cedula, this.sede);
+                                    users.setVisible(true);
+                                    this.dispose();
+                                } else {
+                                    this.intentosRestantes -= 1;
+                                }
+                            }
+                            case 1 -> {
+                                datosIguales = validarDatos("administradores");
+                                if (datosIguales == true) {
+                                    PrincipalAdmins admins = new PrincipalAdmins(cedula);
+                                    admins.setVisible(true);
+                                    this.dispose();
+                                }
+                            }
+                        }
+                    } else {
+                        i.setEstadoUsuario(false);
+                        switch (i.getSede()) {
+                            case 0 ->{
+                                SedePuriscal.ListaCuentasBloqueadas.add(i);
+                            }
+                            case 1 ->{
+                                SedeSanPedro.ListaCuentasBloqueadas.add(i);
+                            }
+                            case 2 ->{
+                                SedeCiudadColon.ListaCuentasBloqueadas.add(i);
+                            }
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Cuenta bloqueada, solo un admin puede desbloquearla");
                 }
             }
         }
+
+
     }//GEN-LAST:event_jblEntrarMouseClicked
 
     private void jblEntrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblEntrarMouseEntered
