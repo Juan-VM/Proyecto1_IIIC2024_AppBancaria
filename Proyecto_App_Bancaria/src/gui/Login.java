@@ -6,6 +6,8 @@ import Sedes.SedeCentral;
 import Sedes.SedeCiudadColon;
 import Sedes.SedePuriscal;
 import Sedes.SedeSanPedro;
+import gui.PrincipalAdmins;
+import gui.PrincipalUsers;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -340,12 +342,13 @@ public class Login extends javax.swing.JFrame {
         boolean datosIguales;
         getRol(listaAdmins, listaUsers);
 
-        for (Usuarios i : SedeCentral.getListaUsers()) {
-            if (i.getCedula().equals(txtCedula.getText())) {
-                if (i.getEstadoUsuario() == true) {
-                    if (this.intentosRestantes > 0) {
-                        switch (rol) {
-                            case 0 -> {
+        switch (this.rol) {
+            case 0 -> {
+                for (Usuarios i : SedeCentral.getListaUsers()) {
+                    if (i.getCedula().equals(txtCedula.getText())) {
+                        if (i.getEstadoUsuario() == true) {
+                            if (this.intentosRestantes > 0) {
+
                                 datosIguales = validarDatos("usuarios");
                                 if (datosIguales == true) {
                                     PrincipalUsers users = new PrincipalUsers(this.cedula, this.sede);
@@ -354,37 +357,49 @@ public class Login extends javax.swing.JFrame {
                                 } else {
                                     this.intentosRestantes -= 1;
                                 }
+                            } else {
+                                i.setEstadoUsuario(false);
                             }
-                            case 1 -> {
-                                datosIguales = validarDatos("administradores");
-                                if (datosIguales == true) {
-                                    PrincipalAdmins admins = new PrincipalAdmins(cedula);
-                                    admins.setVisible(true);
-                                    this.dispose();
+                        } else {
+                            int eleccion = JOptionPane.showConfirmDialog(null, "Cuenta bloqueada, deseas solicitar desbloqueo?", "Advertencia", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+                            if (eleccion == 0) {
+                                if (!SedeCentral.getListaCuentasBloqueadas().contains(i)) {
+                                    SedeCentral.getListaCuentasBloqueadas().add(i);
+                                    switch (i.getSede()) {
+                                        case 0 -> {
+                                            SedePuriscal.getListaCuentasBloqueadas().add(i);
+                                        }
+                                        case 1 -> {
+                                            SedeSanPedro.getListaCuentasBloqueadas().add(i);
+                                        }
+                                        case 2 -> {
+                                            SedeCiudadColon.getListaCuentasBloqueadas().add(i);
+                                        }
+                                    }
                                 }
                             }
                         }
                     } else {
-                        i.setEstadoUsuario(false);
-                        switch (i.getSede()) {
-                            case 0 ->{
-                                SedePuriscal.ListaCuentasBloqueadas.add(i);
-                            }
-                            case 1 ->{
-                                SedeSanPedro.ListaCuentasBloqueadas.add(i);
-                            }
-                            case 2 ->{
-                                SedeCiudadColon.ListaCuentasBloqueadas.add(i);
-                            }
-                        }
+                        JOptionPane.showMessageDialog(null, "Datos incorrectos");
                     }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Cuenta bloqueada, solo un admin puede desbloquearla");
+                }
+            }
+            case 1 -> {
+                for (Administradores a : SedeCentral.getListaAdmins()) {
+                    if (a.getCedula().equals(txtCedula.getText())) {
+
+                        datosIguales = validarDatos("administradores");
+                        if (datosIguales == true) {
+                            PrincipalAdmins admins = new PrincipalAdmins(this.cedula);
+                            admins.setVisible(true);
+                            this.dispose();
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Datos incorrectos");
+                    }
                 }
             }
         }
-
-
     }//GEN-LAST:event_jblEntrarMouseClicked
 
     private void jblEntrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblEntrarMouseEntered
