@@ -315,7 +315,9 @@ public class SolicitudesDesbloqueo extends javax.swing.JFrame {
     }//GEN-LAST:event_itemSolicitudesDesbloqueoActionPerformed
 
     private void itemBloquearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBloquearCuentaActionPerformed
-
+        BloquearCuenta bloquear = new BloquearCuenta(this.cedula);
+        bloquear.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_itemBloquearCuentaActionPerformed
 
     private void itemSedePuriscalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSedePuriscalActionPerformed

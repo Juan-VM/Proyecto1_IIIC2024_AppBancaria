@@ -379,8 +379,6 @@ public class Login extends javax.swing.JFrame {
                                 }
                             }
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Datos incorrectos");
                     }
                 }
             }
@@ -394,8 +392,6 @@ public class Login extends javax.swing.JFrame {
                             admins.setVisible(true);
                             this.dispose();
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Datos incorrectos");
                     }
                 }
             }
