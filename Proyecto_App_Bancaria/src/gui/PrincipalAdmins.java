@@ -79,7 +79,7 @@ public class PrincipalAdmins extends javax.swing.JFrame {
         jblAdmins.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jblAdmins.setForeground(new java.awt.Color(51, 51, 51));
         jblAdmins.setText("ADMINISTRADORES");
-        background.add(jblAdmins, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
+        background.add(jblAdmins, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, -1, -1));
 
         jblFondoAdmins.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jblFondoAdmins.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/FondoAdmins.png"))); // NOI18N
@@ -225,7 +225,9 @@ public class PrincipalAdmins extends javax.swing.JFrame {
     }//GEN-LAST:event_itemSolicitudesDesbloqueoActionPerformed
 
     private void itemBloquearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBloquearCuentaActionPerformed
-        
+        BloquearCuenta bloquear = new BloquearCuenta(this.cedula);
+        bloquear.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_itemBloquearCuentaActionPerformed
 
     private void itemSedePuriscalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSedePuriscalActionPerformed
