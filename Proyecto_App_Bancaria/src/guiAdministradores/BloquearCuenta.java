@@ -1,10 +1,14 @@
-package gui;
+package guiAdministradores;
 
+import guiAdministradores.DesbloquearCuenta;
+import guiAdministradores.SolicitudesDesbloqueo;
+import guiAdministradores.PrincipalAdmins;
 import Personas.Usuarios;
 import Sedes.SedeCentral;
 import Sedes.SedeCiudadColon;
 import Sedes.SedePuriscal;
 import Sedes.SedeSanPedro;
+import guiUsuarios.Inicio;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -137,6 +141,8 @@ public class BloquearCuenta extends javax.swing.JFrame {
         itemSolicitudesDesbloqueo = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         itemBloquearCuenta = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        itemDesbloquearCuenta = new javax.swing.JMenuItem();
         menuGestionFinanciera = new javax.swing.JMenu();
         menuGestionSedes = new javax.swing.JMenu();
         itemSedePuriscal = new javax.swing.JMenuItem();
@@ -301,6 +307,16 @@ public class BloquearCuenta extends javax.swing.JFrame {
             }
         });
         menuBloqueoDesbloqueo.add(itemBloquearCuenta);
+        menuBloqueoDesbloqueo.add(jSeparator5);
+
+        itemDesbloquearCuenta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        itemDesbloquearCuenta.setText("Desbloquear cuenta");
+        itemDesbloquearCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemDesbloquearCuentaActionPerformed(evt);
+            }
+        });
+        menuBloqueoDesbloqueo.add(itemDesbloquearCuenta);
 
         menuGestionUsuarios.add(menuBloqueoDesbloqueo);
 
@@ -450,6 +466,12 @@ public class BloquearCuenta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tablaSedeCiudadColonMousePressed
 
+    private void itemDesbloquearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDesbloquearCuentaActionPerformed
+        DesbloquearCuenta desbloquear = new DesbloquearCuenta(this.cedula);
+        desbloquear.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_itemDesbloquearCuentaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -490,6 +512,7 @@ public class BloquearCuenta extends javax.swing.JFrame {
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JMenuItem itemBienvenida;
     private javax.swing.JMenuItem itemBloquearCuenta;
+    private javax.swing.JMenuItem itemDesbloquearCuenta;
     private javax.swing.JMenuItem itemIrInicio;
     private javax.swing.JMenuItem itemSedeCiudadColon;
     private javax.swing.JMenuItem itemSedePuriscal;
@@ -502,6 +525,7 @@ public class BloquearCuenta extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JLabel jblBloquear;
     private javax.swing.JMenu menuBloqueoDesbloqueo;
     private javax.swing.JMenu menuGestionFinanciera;

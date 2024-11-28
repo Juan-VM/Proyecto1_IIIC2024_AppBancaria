@@ -1,5 +1,7 @@
 
-package gui;
+package guiAdministradores;
+
+import guiUsuarios.Inicio;
 
 
 public class PrincipalAdmins extends javax.swing.JFrame {
@@ -40,6 +42,8 @@ public class PrincipalAdmins extends javax.swing.JFrame {
         itemSolicitudesDesbloqueo = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         itemBloquearCuenta = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        itemDesbloquearCuenta = new javax.swing.JMenuItem();
         menuGestionFinanciera = new javax.swing.JMenu();
         menuGestionSedes = new javax.swing.JMenu();
         itemSedePuriscal = new javax.swing.JMenuItem();
@@ -149,6 +153,16 @@ public class PrincipalAdmins extends javax.swing.JFrame {
             }
         });
         menuBloqueoDesbloqueo.add(itemBloquearCuenta);
+        menuBloqueoDesbloqueo.add(jSeparator5);
+
+        itemDesbloquearCuenta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        itemDesbloquearCuenta.setText("Desbloquear cuenta");
+        itemDesbloquearCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemDesbloquearCuentaActionPerformed(evt);
+            }
+        });
+        menuBloqueoDesbloqueo.add(itemDesbloquearCuenta);
 
         menuGestionUsuarios.add(menuBloqueoDesbloqueo);
 
@@ -207,9 +221,7 @@ public class PrincipalAdmins extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void itemBienvenidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBienvenidaActionPerformed
-        PrincipalAdmins admins = new PrincipalAdmins(cedula);
-        admins.setVisible(true);
-        this.dispose();
+       
     }//GEN-LAST:event_itemBienvenidaActionPerformed
 
     private void itemIrInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemIrInicioActionPerformed
@@ -241,6 +253,12 @@ public class PrincipalAdmins extends javax.swing.JFrame {
     private void itemSedeCiudadColonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSedeCiudadColonActionPerformed
         
     }//GEN-LAST:event_itemSedeCiudadColonActionPerformed
+
+    private void itemDesbloquearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDesbloquearCuentaActionPerformed
+        DesbloquearCuenta desbloquear = new DesbloquearCuenta(this.cedula);
+        desbloquear.setVisible(true);
+        this.dispose(); 
+    }//GEN-LAST:event_itemDesbloquearCuentaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -283,6 +301,7 @@ public class PrincipalAdmins extends javax.swing.JFrame {
     private javax.swing.JPanel contenedorFondoVisible;
     private javax.swing.JMenuItem itemBienvenida;
     private javax.swing.JMenuItem itemBloquearCuenta;
+    private javax.swing.JMenuItem itemDesbloquearCuenta;
     private javax.swing.JMenuItem itemIrInicio;
     private javax.swing.JMenuItem itemSedeCiudadColon;
     private javax.swing.JMenuItem itemSedePuriscal;
@@ -292,6 +311,7 @@ public class PrincipalAdmins extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JLabel jblAdmins;
     private javax.swing.JLabel jblBNBUU;
     private javax.swing.JLabel jblBienvenida;
