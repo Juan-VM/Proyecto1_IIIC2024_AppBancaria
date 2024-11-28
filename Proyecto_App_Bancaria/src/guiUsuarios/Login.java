@@ -1,4 +1,4 @@
-package gui;
+package guiUsuarios;
 
 import Personas.Administradores;
 import Personas.Usuarios;
@@ -6,8 +6,8 @@ import Sedes.SedeCentral;
 import Sedes.SedeCiudadColon;
 import Sedes.SedePuriscal;
 import Sedes.SedeSanPedro;
-import gui.PrincipalAdmins;
-import gui.PrincipalUsers;
+import guiAdministradores.PrincipalAdmins;
+import guiUsuarios.PrincipalUsers;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;

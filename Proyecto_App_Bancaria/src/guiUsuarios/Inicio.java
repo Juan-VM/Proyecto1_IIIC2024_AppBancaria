@@ -1,5 +1,5 @@
 
-package gui;
+package guiUsuarios;
 
 import java.awt.Color;
 

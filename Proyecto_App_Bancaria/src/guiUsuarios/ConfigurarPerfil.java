@@ -1,4 +1,4 @@
-package gui;
+package guiUsuarios;
 
 import Personas.Usuarios;
 import RegistroDatos.DatosRegistrados;

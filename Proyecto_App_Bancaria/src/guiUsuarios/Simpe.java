@@ -1,4 +1,4 @@
-package gui;
+package guiUsuarios;
 
 import Comprobantes.ComprobanteSimpeEntrada;
 import Comprobantes.ComprobanteSimpeSalida;
