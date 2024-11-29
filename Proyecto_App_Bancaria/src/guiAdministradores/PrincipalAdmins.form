@@ -114,9 +114,9 @@
             <Property name="text" type="java.lang.String" value="Gestion financiera"/>
           </Properties>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="menuGestionSedes">
+        <Menu class="javax.swing.JMenu" name="menuInformacionSedes">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Gestion sedes"/>
+            <Property name="text" type="java.lang.String" value="Informacion sedes"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="itemSedePuriscal">

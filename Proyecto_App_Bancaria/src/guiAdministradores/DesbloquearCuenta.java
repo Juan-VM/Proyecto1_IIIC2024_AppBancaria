@@ -142,7 +142,7 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
         itemBloquearCuenta = new javax.swing.JMenuItem();
         itemDesbloquearCuenta = new javax.swing.JMenuItem();
         menuGestionFinanciera = new javax.swing.JMenu();
-        menuGestionSedes = new javax.swing.JMenu();
+        menuInformacionSedes = new javax.swing.JMenu();
         itemSedePuriscal = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         itemSedeSanPedro = new javax.swing.JMenuItem();
@@ -150,6 +150,7 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
         itemSedeCiudadColon = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         panelVisible.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -226,6 +227,7 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
         jblDesbloquear.setForeground(new java.awt.Color(255, 255, 255));
         jblDesbloquear.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jblDesbloquear.setText("DESBLOQUEAR");
+        jblDesbloquear.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jblDesbloquear.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jblDesbloquearMouseClicked(evt);
@@ -322,7 +324,7 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
         menuGestionFinanciera.setText("Gestion financiera");
         barraMenu.add(menuGestionFinanciera);
 
-        menuGestionSedes.setText("Gestion sedes");
+        menuInformacionSedes.setText("Informacion sedes");
 
         itemSedePuriscal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         itemSedePuriscal.setText("Sede Puriscal");
@@ -331,8 +333,8 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
                 itemSedePuriscalActionPerformed(evt);
             }
         });
-        menuGestionSedes.add(itemSedePuriscal);
-        menuGestionSedes.add(jSeparator3);
+        menuInformacionSedes.add(itemSedePuriscal);
+        menuInformacionSedes.add(jSeparator3);
 
         itemSedeSanPedro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         itemSedeSanPedro.setText("Sede San Pedro");
@@ -341,8 +343,8 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
                 itemSedeSanPedroActionPerformed(evt);
             }
         });
-        menuGestionSedes.add(itemSedeSanPedro);
-        menuGestionSedes.add(jSeparator4);
+        menuInformacionSedes.add(itemSedeSanPedro);
+        menuInformacionSedes.add(jSeparator4);
 
         itemSedeCiudadColon.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         itemSedeCiudadColon.setText("Sede Ciudad Colon");
@@ -351,9 +353,9 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
                 itemSedeCiudadColonActionPerformed(evt);
             }
         });
-        menuGestionSedes.add(itemSedeCiudadColon);
+        menuInformacionSedes.add(itemSedeCiudadColon);
 
-        barraMenu.add(menuGestionSedes);
+        barraMenu.add(menuInformacionSedes);
 
         setJMenuBar(barraMenu);
 
@@ -390,19 +392,27 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
     }//GEN-LAST:event_itemSolicitudesDesbloqueoActionPerformed
 
     private void itemBloquearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBloquearCuentaActionPerformed
-
+        BloquearCuenta bloquear = new BloquearCuenta(this.cedula);
+        bloquear.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_itemBloquearCuentaActionPerformed
 
     private void itemSedePuriscalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSedePuriscalActionPerformed
-
+        GestionSedes gestion = new GestionSedes(0, this.cedula);
+        gestion.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_itemSedePuriscalActionPerformed
 
     private void itemSedeSanPedroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSedeSanPedroActionPerformed
-
+        GestionSedes gestion = new GestionSedes(1, this.cedula);
+        gestion.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_itemSedeSanPedroActionPerformed
 
     private void itemSedeCiudadColonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSedeCiudadColonActionPerformed
-
+        GestionSedes gestion = new GestionSedes(2, this.cedula);
+        gestion.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_itemSedeCiudadColonActionPerformed
 
     private void tablaSedePuriscalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaSedePuriscalMousePressed
@@ -523,8 +533,8 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
     private javax.swing.JLabel jblDesbloquear;
     private javax.swing.JMenu menuBloqueoDesbloqueo;
     private javax.swing.JMenu menuGestionFinanciera;
-    private javax.swing.JMenu menuGestionSedes;
     private javax.swing.JMenu menuGestionUsuarios;
+    private javax.swing.JMenu menuInformacionSedes;
     private javax.swing.JMenu menuInicio;
     private javax.swing.JPanel panelBloquear;
     private javax.swing.JPanel panelVisible;
