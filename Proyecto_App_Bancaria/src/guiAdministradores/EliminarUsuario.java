@@ -1,112 +1,86 @@
 package guiAdministradores;
 
-import guiAdministradores.DesbloquearCuenta;
-import guiAdministradores.SolicitudesDesbloqueo;
-import guiAdministradores.PrincipalAdmins;
 import Personas.Usuarios;
+import RegistroDatos.DatosRegistrados;
 import Sedes.SedeCentral;
 import Sedes.SedeCiudadColon;
 import Sedes.SedePuriscal;
 import Sedes.SedeSanPedro;
 import guiUsuarios.Inicio;
 import java.awt.Color;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-public class BloquearCuenta extends javax.swing.JFrame {
+public class EliminarUsuario extends javax.swing.JFrame {
 
     String cedula;
-    DefaultTableModel modeloPuriscal = new DefaultTableModel();
-    DefaultTableModel modeloSanPedro = new DefaultTableModel();
-    DefaultTableModel modeloCiudadColon = new DefaultTableModel();
+    DefaultTableModel modelo = new DefaultTableModel();
 
-    public BloquearCuenta(String cedula) {
+    public EliminarUsuario() {
+    }
+
+    public EliminarUsuario(String cedula) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.cedula = cedula;
 
-        modeloPuriscal.addColumn("Sede");
-        modeloPuriscal.addColumn("Usuario");
-        modeloPuriscal.addColumn("Cedula");
+        modelo.addColumn("Usuario");
+        modelo.addColumn("Apellido");
+        modelo.addColumn("Cedula");
+        modelo.addColumn("Sede");
+        modelo.addColumn("Estado");
 
-        modeloSanPedro.addColumn("Sede");
-        modeloSanPedro.addColumn("Usuario");
-        modeloSanPedro.addColumn("Cedula");
-
-        modeloCiudadColon.addColumn("Sede");
-        modeloCiudadColon.addColumn("Usuario");
-        modeloCiudadColon.addColumn("Cedula");
-
-        tablaSedePuriscal.setModel(modeloPuriscal);
-        tablaSedeSanPedro.setModel(modeloSanPedro);
-        tablaSedeCiudadColon.setModel(modeloCiudadColon);
-        llenarTablas();
-    }
-
-    public BloquearCuenta() {
-        initComponents();
-    }
-
-    public void llenarTablas() {
-        for (Usuarios i : SedePuriscal.getListaUsers()) {
-            String sede = "Puriscal";
+        tablaUsuarios.setModel(modelo);
+        for (Usuarios i : SedeCentral.getListaUsers()) {
+            String estado = "";
+            String sede = "";
             if (i.getEstadoUsuario() == true) {
-                modeloPuriscal.addRow(new Object[]{sede, i.getUsuario(), i.getCedula()});
+                estado = "Activo";
+            } else {
+                estado = "Bloqueado";
             }
-        }
-        for (Usuarios i : SedeSanPedro.getListaUsers()) {
-            String sede = "San Pedro";
-            if (i.getEstadoUsuario() == true) {
-                modeloSanPedro.addRow(new Object[]{sede, i.getUsuario(), i.getCedula()});
+
+            if (i.getSede() == 0) {
+                sede = "Puriscal";
+            } else if (i.getSede() == 1) {
+                sede = "San Pedro";
+            } else {
+                sede = "Ciudad Colon";
             }
-        }
-        for (Usuarios i : SedeCiudadColon.getListaUsers()) {
-            String sede = "Ciudad Colon";
-            if (i.getEstadoUsuario() == true) {
-                modeloCiudadColon.addRow(new Object[]{sede, i.getUsuario(), i.getCedula()});
-            }
+            modelo.addRow(new Object[]{i.getUsuario(), i.getApellidos(), i.getCedula(), sede, estado});
         }
     }
 
-    public void bloquearCuenta(JTable tabla, int filaSeleccionada) {
-        String cedulaUser = tabla.getValueAt(filaSeleccionada, 2).toString();
-        String sede = tabla.getValueAt(filaSeleccionada, 0).toString();
-
+    public void removeUserToSede(String sede, String cedula) {
+        int indice = 0;
         switch (sede) {
             case "Puriscal" -> {
                 for (Usuarios i : SedePuriscal.getListaUsers()) {
-                    if (i.getCedula().equals(cedulaUser)) {
-                        i.setEstadoUsuario(false);
-                        SedeCentral.getListaCuentasBloqueadas().add(i);
-                        SedePuriscal.getListaCuentasBloqueadas().add(i);
-                        modeloPuriscal.removeRow(filaSeleccionada);
-                        JOptionPane.showMessageDialog(null, "Cuenta bloqueada para el usuario: "+i.getUsuario());
+                    if (cedula.equals(i.getCedula())) {
+                        indice = SedePuriscal.getListaUsers().indexOf(i);
+                        DatosRegistrados.getListaUsuariosEliminados().add(i);
                     }
                 }
+                SedePuriscal.getListaUsers().remove(indice);
             }
             case "San Pedro" -> {
                 for (Usuarios i : SedeSanPedro.getListaUsers()) {
-                    if (i.getCedula().equals(cedulaUser)) {
-                        i.setEstadoUsuario(false);
-                        SedeCentral.getListaCuentasBloqueadas().add(i);
-                        SedeSanPedro.getListaCuentasBloqueadas().add(i);
-                        modeloSanPedro.removeRow(filaSeleccionada);
-                        JOptionPane.showMessageDialog(null, "Cuenta bloqueada para el usuario: "+i.getUsuario());
+                    if (cedula.equals(i.getCedula())) {
+                        indice = SedeSanPedro.getListaUsers().indexOf(i);
+                        DatosRegistrados.getListaUsuariosEliminados().add(i);
                     }
                 }
+                SedeSanPedro.getListaUsers().remove(indice);
             }
             case "Ciudad Colon" -> {
                 for (Usuarios i : SedeCiudadColon.getListaUsers()) {
-                    if (i.getCedula().equals(cedulaUser)) {
-                        i.setEstadoUsuario(false);
-                        SedeCentral.getListaCuentasBloqueadas().add(i);
-                        SedeCiudadColon.getListaCuentasBloqueadas().add(i);
-                        modeloCiudadColon.removeRow(filaSeleccionada);
-                        JOptionPane.showMessageDialog(null, "Cuenta bloqueada para el usuario: "+i.getUsuario());
+                    if (cedula.equals(i.getCedula())) {
+                        indice = SedeCiudadColon.getListaUsers().indexOf(i);
+                        DatosRegistrados.getListaUsuariosEliminados().add(i);
                     }
                 }
+                SedeCiudadColon.getListaUsers().remove(indice);
             }
         }
     }
@@ -121,16 +95,20 @@ public class BloquearCuenta extends javax.swing.JFrame {
     private void initComponents() {
 
         panelVisible = new javax.swing.JPanel();
-        background = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        scrollPuriscal = new javax.swing.JScrollPane();
-        tablaSedePuriscal = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaSedeSanPedro = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tablaSedeCiudadColon = new javax.swing.JTable();
-        panelBloquear = new javax.swing.JPanel();
-        jblBloquear = new javax.swing.JLabel();
+        tablaUsuarios = new javax.swing.JTable();
+        jSeparator7 = new javax.swing.JSeparator();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtCedula = new javax.swing.JTextField();
+        panelBuscar = new javax.swing.JPanel();
+        jblBuscar = new javax.swing.JLabel();
+        jSeparator8 = new javax.swing.JSeparator();
+        jSeparator9 = new javax.swing.JSeparator();
+        panelEliminar = new javax.swing.JPanel();
+        jblEliminar = new javax.swing.JLabel();
         barraMenu = new javax.swing.JMenuBar();
         menuInicio = new javax.swing.JMenu();
         itemBienvenida = new javax.swing.JMenuItem();
@@ -144,7 +122,7 @@ public class BloquearCuenta extends javax.swing.JFrame {
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         itemDesbloquearCuenta = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
-        itemEliminarUsuario2 = new javax.swing.JMenuItem();
+        itemEliminarUsuario = new javax.swing.JMenuItem();
         menuInformacionSedes = new javax.swing.JMenu();
         itemSedePuriscal = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
@@ -153,108 +131,113 @@ public class BloquearCuenta extends javax.swing.JFrame {
         itemSedeCiudadColon = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
 
         panelVisible.setBackground(new java.awt.Color(255, 255, 255));
 
-        background.setBackground(new java.awt.Color(252, 247, 215));
-        background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.setBackground(new java.awt.Color(252, 247, 215));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        tablaUsuarios.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(tablaUsuarios);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 520, 610));
+
+        jSeparator7.setForeground(new java.awt.Color(51, 51, 51));
+        jSeparator7.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jPanel1.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 10, 10, 690));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Boquear cuentas de usuarios");
-        background.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 1070, -1));
+        jLabel1.setText("Busqueda en tabla");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 500, -1));
 
-        tablaSedePuriscal.setBackground(new java.awt.Color(204, 204, 204));
-        tablaSedePuriscal.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        tablaSedePuriscal.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Busqueda por cedula");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(542, 20, 530, -1));
 
-            },
-            new String [] {
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Ingrese la cedula del usuario:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 140, 340, -1));
 
-            }
-        ));
-        tablaSedePuriscal.addMouseListener(new java.awt.event.MouseAdapter() {
+        txtCedula.setBackground(new java.awt.Color(204, 204, 204));
+        txtCedula.setForeground(new java.awt.Color(51, 51, 51));
+        txtCedula.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                tablaSedePuriscalMousePressed(evt);
+                txtCedulaMousePressed(evt);
             }
         });
-        scrollPuriscal.setViewportView(tablaSedePuriscal);
+        jPanel1.add(txtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 220, 350, 50));
 
-        background.add(scrollPuriscal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 310, 450));
+        panelBuscar.setBackground(new java.awt.Color(92, 88, 29));
+        panelBuscar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tablaSedeSanPedro.setBackground(new java.awt.Color(204, 204, 204));
-        tablaSedeSanPedro.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        tablaSedeSanPedro.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        tablaSedeSanPedro.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                tablaSedeSanPedroMousePressed(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tablaSedeSanPedro);
-
-        background.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 80, 310, 450));
-
-        tablaSedeCiudadColon.setBackground(new java.awt.Color(204, 204, 204));
-        tablaSedeCiudadColon.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        tablaSedeCiudadColon.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        tablaSedeCiudadColon.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                tablaSedeCiudadColonMousePressed(evt);
-            }
-        });
-        jScrollPane2.setViewportView(tablaSedeCiudadColon);
-
-        background.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 80, 310, 450));
-
-        panelBloquear.setBackground(new java.awt.Color(92, 88, 29));
-        panelBloquear.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jblBloquear.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
-        jblBloquear.setForeground(new java.awt.Color(255, 255, 255));
-        jblBloquear.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jblBloquear.setText("BLOQUEAR");
-        jblBloquear.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jblBloquear.addMouseListener(new java.awt.event.MouseAdapter() {
+        jblBuscar.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jblBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        jblBuscar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jblBuscar.setText("Buscar");
+        jblBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jblBloquearMouseClicked(evt);
+                jblBuscarMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jblBloquearMouseEntered(evt);
+                jblBuscarMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jblBloquearMouseExited(evt);
+                jblBuscarMouseExited(evt);
             }
         });
-        panelBloquear.add(jblBloquear, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, 70));
+        panelBuscar.add(jblBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 50));
 
-        background.add(panelBloquear, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 560, 280, 70));
+        jPanel1.add(panelBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 220, 120, 50));
+        jPanel1.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 270, -1, -1));
+
+        jSeparator9.setForeground(new java.awt.Color(51, 51, 51));
+        jPanel1.add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 350, 500, 10));
+
+        panelEliminar.setBackground(new java.awt.Color(92, 88, 29));
+        panelEliminar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jblEliminar.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jblEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        jblEliminar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jblEliminar.setText("Eliminar");
+        jblEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jblEliminarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jblEliminarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jblEliminarMouseExited(evt);
+            }
+        });
+        panelEliminar.add(jblEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, 70));
+
+        jPanel1.add(panelEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 470, 230, 70));
 
         javax.swing.GroupLayout panelVisibleLayout = new javax.swing.GroupLayout(panelVisible);
         panelVisible.setLayout(panelVisibleLayout);
         panelVisibleLayout.setHorizontalGroup(
             panelVisibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1090, Short.MAX_VALUE)
         );
         panelVisibleLayout.setVerticalGroup(
             panelVisibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE)
         );
 
         barraMenu.setBackground(new java.awt.Color(255, 255, 255));
@@ -324,14 +307,9 @@ public class BloquearCuenta extends javax.swing.JFrame {
         menuGestionUsuarios.add(menuBloqueoDesbloqueo);
         menuGestionUsuarios.add(jSeparator6);
 
-        itemEliminarUsuario2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        itemEliminarUsuario2.setText("Eliminar usuario");
-        itemEliminarUsuario2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemEliminarUsuario2ActionPerformed(evt);
-            }
-        });
-        menuGestionUsuarios.add(itemEliminarUsuario2);
+        itemEliminarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        itemEliminarUsuario.setText("Eliminar usuario");
+        menuGestionUsuarios.add(itemEliminarUsuario);
 
         barraMenu.add(menuGestionUsuarios);
 
@@ -378,16 +356,14 @@ public class BloquearCuenta extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelVisible, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelVisible, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void itemBienvenidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBienvenidaActionPerformed
-        PrincipalAdmins admins = new PrincipalAdmins(cedula);
-        admins.setVisible(true);
-        this.dispose();
+
     }//GEN-LAST:event_itemBienvenidaActionPerformed
 
     private void itemIrInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemIrInicioActionPerformed
@@ -403,8 +379,16 @@ public class BloquearCuenta extends javax.swing.JFrame {
     }//GEN-LAST:event_itemSolicitudesDesbloqueoActionPerformed
 
     private void itemBloquearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBloquearCuentaActionPerformed
-
+        BloquearCuenta bloquear = new BloquearCuenta(this.cedula);
+        bloquear.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_itemBloquearCuentaActionPerformed
+
+    private void itemDesbloquearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDesbloquearCuentaActionPerformed
+        DesbloquearCuenta desbloquear = new DesbloquearCuenta(this.cedula);
+        desbloquear.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_itemDesbloquearCuentaActionPerformed
 
     private void itemSedePuriscalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSedePuriscalActionPerformed
         GestionSedes gestion = new GestionSedes(0, this.cedula);
@@ -424,75 +408,76 @@ public class BloquearCuenta extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_itemSedeCiudadColonActionPerformed
 
-    private void jblBloquearMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblBloquearMouseEntered
-        panelBloquear.setBackground(new Color(153, 145, 86));
-        jblBloquear.setForeground(Color.black);
-    }//GEN-LAST:event_jblBloquearMouseEntered
-
-    private void jblBloquearMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblBloquearMouseExited
-        panelBloquear.setBackground(new Color(92, 88, 29));
-        jblBloquear.setForeground(Color.white);
-    }//GEN-LAST:event_jblBloquearMouseExited
-
-    private void jblBloquearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblBloquearMouseClicked
-        if (tablaSedeSanPedro.getSelectedRow() >= 0 || tablaSedeCiudadColon.getSelectedRow() >= 0 || tablaSedePuriscal.getSelectedRow() >= 0) {
-            int eleccion = JOptionPane.showConfirmDialog(null, "Deseas bloquear esta cuenta?", "Advertencia", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-            if (eleccion == 0) {
-                if (tablaSedePuriscal.getSelectedRow() >= 0) {
-                    int filaSeleccionada = tablaSedePuriscal.getSelectedRow();
-                    bloquearCuenta(tablaSedePuriscal, filaSeleccionada);
-                    
-                } else if (tablaSedeCiudadColon.getSelectedRow() >= 0) {
-                    int filaSeleccionada = tablaSedeCiudadColon.getSelectedRow();
-                    bloquearCuenta(tablaSedeCiudadColon, filaSeleccionada);
-                } else {
-                    int filaSeleccionada = tablaSedeSanPedro.getSelectedRow();
-                    bloquearCuenta(tablaSedeSanPedro, filaSeleccionada);
+    private void jblBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblBuscarMouseClicked
+        if (!txtCedula.getText().trim().equals("")) {
+            String cedula = txtCedula.getText();
+            int indice;
+            boolean valorEncontrado = false;
+            for (int i = 0; i < tablaUsuarios.getRowCount(); i++) {
+                if (cedula.equals(tablaUsuarios.getValueAt(i, 2))) {
+                    indice = i;
+                    valorEncontrado = true;
+                    tablaUsuarios.setRowSelectionInterval(i, i);
                 }
             }
+            if (valorEncontrado == false) {
+                JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+                txtCedula.setText("");
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "Error selecciona un usuario de la tabla");
+            JOptionPane.showMessageDialog(null, "Error, ingresa una cedula");
         }
-    }//GEN-LAST:event_jblBloquearMouseClicked
+    }//GEN-LAST:event_jblBuscarMouseClicked
 
-    private void tablaSedePuriscalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaSedePuriscalMousePressed
-        if (tablaSedeSanPedro.getSelectedRow() >= 0) {
-            tablaSedeSanPedro.clearSelection();
-        }
-        if (tablaSedeCiudadColon.getSelectedRow() >= 0) {
-            tablaSedeCiudadColon.clearSelection();
-        }
-    }//GEN-LAST:event_tablaSedePuriscalMousePressed
+    private void txtCedulaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCedulaMousePressed
+        tablaUsuarios.clearSelection();
+    }//GEN-LAST:event_txtCedulaMousePressed
 
-    private void tablaSedeSanPedroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaSedeSanPedroMousePressed
-        if (tablaSedePuriscal.getSelectedRow() >= 0) {
-            tablaSedePuriscal.clearSelection();
-        }
-        if (tablaSedeCiudadColon.getSelectedRow() >= 0) {
-            tablaSedeCiudadColon.clearSelection();
-        }
-    }//GEN-LAST:event_tablaSedeSanPedroMousePressed
+    private void jblBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblBuscarMouseEntered
+        panelBuscar.setBackground(new Color(153, 145, 86));
+        jblBuscar.setForeground(Color.black);
+    }//GEN-LAST:event_jblBuscarMouseEntered
 
-    private void tablaSedeCiudadColonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaSedeCiudadColonMousePressed
-        if (tablaSedePuriscal.getSelectedRow() >= 0) {
-            tablaSedePuriscal.clearSelection();
-        }
-        if (tablaSedeSanPedro.getSelectedRow() >= 0) {
-            tablaSedeSanPedro.clearSelection();
-        }
-    }//GEN-LAST:event_tablaSedeCiudadColonMousePressed
+    private void jblBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblBuscarMouseExited
+        panelBuscar.setBackground(new Color(92, 88, 29));
+        jblBuscar.setForeground(Color.white);
+    }//GEN-LAST:event_jblBuscarMouseExited
 
-    private void itemDesbloquearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDesbloquearCuentaActionPerformed
-        DesbloquearCuenta desbloquear = new DesbloquearCuenta(this.cedula);
-        desbloquear.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_itemDesbloquearCuentaActionPerformed
+    private void jblEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblEliminarMouseClicked
 
-    private void itemEliminarUsuario2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEliminarUsuario2ActionPerformed
-        EliminarUsuario eliminar = new EliminarUsuario(this.cedula);
-        eliminar.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_itemEliminarUsuario2ActionPerformed
+        if (tablaUsuarios.getSelectedRow() >= 0) {
+            int eleccion = JOptionPane.showConfirmDialog(null, "Deseas eliminar este usuario?", "ELIMINAR", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (eleccion == 0) {
+                int filaSeleccionada = tablaUsuarios.getSelectedRow();
+                String cedulaUser = tablaUsuarios.getValueAt(filaSeleccionada, 2).toString();
+                String sede = tablaUsuarios.getValueAt(filaSeleccionada, 3).toString();
+                int indice = 0;
+                for (Usuarios i : SedeCentral.getListaUsers()) {
+                    if (cedulaUser.equals(i.getCedula())) {
+                        indice = SedeCentral.getListaUsers().indexOf(i);
+                        DatosRegistrados.getListaUsuariosEliminados().add(i);
+                    }
+                }
+                SedeCentral.getListaUsers().remove(indice);
+                removeUserToSede(sede, cedulaUser);
+                modelo.removeRow(filaSeleccionada);
+                JOptionPane.showMessageDialog(null, "Usuario eliminado exitosamente");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Error, selecciona un usuario");
+        }
+
+    }//GEN-LAST:event_jblEliminarMouseClicked
+
+    private void jblEliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblEliminarMouseEntered
+        panelEliminar.setBackground(new Color(153, 145, 86));
+        jblEliminar.setForeground(Color.black);
+    }//GEN-LAST:event_jblEliminarMouseEntered
+
+    private void jblEliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblEliminarMouseExited
+        panelEliminar.setBackground(new Color(92, 88, 29));
+        jblEliminar.setForeground(Color.white);
+    }//GEN-LAST:event_jblEliminarMouseExited
 
     /**
      * @param args the command line arguments
@@ -511,55 +496,59 @@ public class BloquearCuenta extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BloquearCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EliminarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BloquearCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EliminarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BloquearCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EliminarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BloquearCuenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EliminarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BloquearCuenta().setVisible(true);
+                new EliminarUsuario().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel background;
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JMenuItem itemBienvenida;
     private javax.swing.JMenuItem itemBloquearCuenta;
     private javax.swing.JMenuItem itemDesbloquearCuenta;
-    private javax.swing.JMenuItem itemEliminarUsuario2;
+    private javax.swing.JMenuItem itemEliminarUsuario;
     private javax.swing.JMenuItem itemIrInicio;
     private javax.swing.JMenuItem itemSedeCiudadColon;
     private javax.swing.JMenuItem itemSedePuriscal;
     javax.swing.JMenuItem itemSedeSanPedro;
     private javax.swing.JMenuItem itemSolicitudesDesbloqueo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JPopupMenu.Separator jSeparator6;
-    private javax.swing.JLabel jblBloquear;
+    private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JSeparator jSeparator9;
+    private javax.swing.JLabel jblBuscar;
+    private javax.swing.JLabel jblEliminar;
     private javax.swing.JMenu menuBloqueoDesbloqueo;
     private javax.swing.JMenu menuGestionUsuarios;
     private javax.swing.JMenu menuInformacionSedes;
     private javax.swing.JMenu menuInicio;
-    private javax.swing.JPanel panelBloquear;
+    private javax.swing.JPanel panelBuscar;
+    private javax.swing.JPanel panelEliminar;
     private javax.swing.JPanel panelVisible;
-    private javax.swing.JScrollPane scrollPuriscal;
-    private javax.swing.JTable tablaSedeCiudadColon;
-    private javax.swing.JTable tablaSedePuriscal;
-    private javax.swing.JTable tablaSedeSanPedro;
+    private javax.swing.JTable tablaUsuarios;
+    private javax.swing.JTextField txtCedula;
     // End of variables declaration//GEN-END:variables
 }
