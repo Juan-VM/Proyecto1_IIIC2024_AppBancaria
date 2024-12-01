@@ -123,7 +123,8 @@ public class HistorialSimpeUsuario extends javax.swing.JFrame {
         itemBloquearCuenta = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         itemDesbloquearCuenta = new javax.swing.JMenuItem();
-        menuGestionFinanciera = new javax.swing.JMenu();
+        jSeparator14 = new javax.swing.JPopupMenu.Separator();
+        itemEliminarUsuario = new javax.swing.JMenuItem();
         menuInformacionSedes = new javax.swing.JMenu();
         itemSedePuriscal = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
@@ -382,11 +383,18 @@ public class HistorialSimpeUsuario extends javax.swing.JFrame {
         menuBloqueoDesbloqueo.add(itemDesbloquearCuenta);
 
         menuGestionUsuarios.add(menuBloqueoDesbloqueo);
+        menuGestionUsuarios.add(jSeparator14);
+
+        itemEliminarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        itemEliminarUsuario.setText("Eliminar usuario");
+        itemEliminarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEliminarUsuarioActionPerformed(evt);
+            }
+        });
+        menuGestionUsuarios.add(itemEliminarUsuario);
 
         barraMenu.add(menuGestionUsuarios);
-
-        menuGestionFinanciera.setText("Gestion financiera");
-        barraMenu.add(menuGestionFinanciera);
 
         menuInformacionSedes.setText("Informacion sedes");
 
@@ -533,6 +541,12 @@ public class HistorialSimpeUsuario extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_panelAtrasMouseClicked
 
+    private void itemEliminarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEliminarUsuarioActionPerformed
+        EliminarUsuario eliminar = new EliminarUsuario(this.cedula);
+        eliminar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_itemEliminarUsuarioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -574,6 +588,7 @@ public class HistorialSimpeUsuario extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemBienvenida;
     private javax.swing.JMenuItem itemBloquearCuenta;
     private javax.swing.JMenuItem itemDesbloquearCuenta;
+    private javax.swing.JMenuItem itemEliminarUsuario;
     private javax.swing.JMenuItem itemIrInicio;
     private javax.swing.JMenuItem itemSedeCiudadColon;
     private javax.swing.JMenuItem itemSedePuriscal;
@@ -594,6 +609,7 @@ public class HistorialSimpeUsuario extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator12;
     private javax.swing.JSeparator jSeparator13;
+    private javax.swing.JPopupMenu.Separator jSeparator14;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -612,7 +628,6 @@ public class HistorialSimpeUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jblNumeroMonedero;
     private javax.swing.JLabel jblRealizadoPor;
     private javax.swing.JMenu menuBloqueoDesbloqueo;
-    private javax.swing.JMenu menuGestionFinanciera;
     private javax.swing.JMenu menuGestionUsuarios;
     private javax.swing.JMenu menuInformacionSedes;
     private javax.swing.JMenu menuInicio;

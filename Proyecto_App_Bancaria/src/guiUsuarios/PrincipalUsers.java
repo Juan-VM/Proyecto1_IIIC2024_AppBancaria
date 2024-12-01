@@ -109,6 +109,17 @@ public class PrincipalUsers extends javax.swing.JFrame {
         jblSimpe = new javax.swing.JLabel();
         panelComentariosBarra1 = new javax.swing.JPanel();
         jblComentarios1 = new javax.swing.JLabel();
+        tituloAnuncio1 = new javax.swing.JLabel();
+        masInfoAnuncio1 = new javax.swing.JLabel();
+        logoAnuncio1 = new javax.swing.JLabel();
+        ubicacionAnuncio1 = new javax.swing.JLabel();
+        marcoAnuncio1 = new javax.swing.JLabel();
+        titulo2 = new javax.swing.JLabel();
+        textoAnuncio2 = new javax.swing.JLabel();
+        texto2Anuncio2 = new javax.swing.JLabel();
+        texto3Titulo2 = new javax.swing.JLabel();
+        logoAnuncio2 = new javax.swing.JLabel();
+        marcoAnuncio2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -377,6 +388,58 @@ public class PrincipalUsers extends javax.swing.JFrame {
 
         background.add(panelOpciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 720));
 
+        tituloAnuncio1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        tituloAnuncio1.setForeground(new java.awt.Color(51, 51, 51));
+        tituloAnuncio1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tituloAnuncio1.setText("BNBUU ALAJUELA");
+        background.add(tituloAnuncio1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 200, 280, -1));
+
+        masInfoAnuncio1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        masInfoAnuncio1.setForeground(new java.awt.Color(255, 102, 102));
+        masInfoAnuncio1.setText("Proximamente");
+        background.add(masInfoAnuncio1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 540, -1, -1));
+
+        logoAnuncio1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logoAnuncio1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bambuLogo128px.png"))); // NOI18N
+        background.add(logoAnuncio1, new org.netbeans.lib.awtextra.AbsoluteConstraints(398, 320, 240, -1));
+
+        ubicacionAnuncio1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ubicacionAnuncio1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ubicacion32px.png"))); // NOI18N
+        background.add(ubicacionAnuncio1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 250, 260, -1));
+
+        marcoAnuncio1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MarcoAnunciosBorde.png"))); // NOI18N
+        background.add(marcoAnuncio1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, -1, 470));
+
+        titulo2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        titulo2.setForeground(new java.awt.Color(255, 102, 102));
+        titulo2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titulo2.setText("Crece con nosotros");
+        background.add(titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 200, 240, -1));
+
+        textoAnuncio2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        textoAnuncio2.setForeground(new java.awt.Color(51, 51, 51));
+        textoAnuncio2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        textoAnuncio2.setText("Tu aguinaldo esta seguro");
+        background.add(textoAnuncio2, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 280, -1, -1));
+
+        texto2Anuncio2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        texto2Anuncio2.setForeground(new java.awt.Color(51, 51, 51));
+        texto2Anuncio2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        texto2Anuncio2.setText("en BNBUU.");
+        background.add(texto2Anuncio2, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 320, -1, -1));
+
+        texto3Titulo2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        texto3Titulo2.setForeground(new java.awt.Color(51, 51, 51));
+        texto3Titulo2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        texto3Titulo2.setText("Deposita tu confianza.");
+        background.add(texto3Titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(737, 390, 280, -1));
+
+        logoAnuncio2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bambuLogo64px.png"))); // NOI18N
+        background.add(logoAnuncio2, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 450, -1, -1));
+
+        marcoAnuncio2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MarcoAnunciosBorde.png"))); // NOI18N
+        background.add(marcoAnuncio2, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 130, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -598,6 +661,11 @@ public class PrincipalUsers extends javax.swing.JFrame {
     private javax.swing.JLabel jblSalir;
     private javax.swing.JLabel jblSimpe;
     private javax.swing.JLabel jblVentanaActual;
+    private javax.swing.JLabel logoAnuncio1;
+    private javax.swing.JLabel logoAnuncio2;
+    private javax.swing.JLabel marcoAnuncio1;
+    private javax.swing.JLabel marcoAnuncio2;
+    private javax.swing.JLabel masInfoAnuncio1;
     private javax.swing.JPanel panelAtras;
     private javax.swing.JPanel panelComentariosBarra1;
     private javax.swing.JPanel panelConfig;
@@ -609,5 +677,11 @@ public class PrincipalUsers extends javax.swing.JFrame {
     private javax.swing.JPanel panelSalir;
     private javax.swing.JPanel panelSimpeBarra;
     private javax.swing.JPanel panelVerSaldoBarra;
+    private javax.swing.JLabel texto2Anuncio2;
+    private javax.swing.JLabel texto3Titulo2;
+    private javax.swing.JLabel textoAnuncio2;
+    private javax.swing.JLabel titulo2;
+    private javax.swing.JLabel tituloAnuncio1;
+    private javax.swing.JLabel ubicacionAnuncio1;
     // End of variables declaration//GEN-END:variables
 }

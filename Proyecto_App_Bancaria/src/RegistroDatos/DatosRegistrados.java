@@ -1,12 +1,14 @@
 
 package RegistroDatos;
 
+import Personas.Usuarios;
 import java.util.ArrayList;
 
 public class DatosRegistrados {
     private static ArrayList<String> listaTelefonos = new ArrayList<>();
     private static ArrayList<Integer> listaClaves = new ArrayList<>();
     private static ArrayList<String> listaCedulas = new ArrayList<>();
+    private static ArrayList<Usuarios> listaUsuariosEliminados = new ArrayList<>();
 
     public static ArrayList<String> getListaTelefonos() {
         return listaTelefonos;
@@ -35,10 +37,21 @@ public class DatosRegistrados {
     public static void addTelefono(String telefono){
         DatosRegistrados.listaTelefonos.add(telefono);
     }
+    
     public static void addCedula(String cedula){
         DatosRegistrados.listaCedulas.add(cedula);
     }
+    
     public static void addClave(int clave){
         DatosRegistrados.listaClaves.add(clave);
     }
+
+    public static ArrayList<Usuarios> getListaUsuariosEliminados() {
+        return listaUsuariosEliminados;
+    }
+
+    public static void setListaUsuariosEliminados(ArrayList<Usuarios> listaUsuariosEliminados) {
+        DatosRegistrados.listaUsuariosEliminados = listaUsuariosEliminados;
+    }
+    
 }

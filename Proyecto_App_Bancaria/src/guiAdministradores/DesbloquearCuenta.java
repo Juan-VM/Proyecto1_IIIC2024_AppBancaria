@@ -141,7 +141,8 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         itemBloquearCuenta = new javax.swing.JMenuItem();
         itemDesbloquearCuenta = new javax.swing.JMenuItem();
-        menuGestionFinanciera = new javax.swing.JMenu();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        itemEliminarUsuario = new javax.swing.JMenuItem();
         menuInformacionSedes = new javax.swing.JMenu();
         itemSedePuriscal = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
@@ -318,11 +319,18 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
         menuBloqueoDesbloqueo.add(itemDesbloquearCuenta);
 
         menuGestionUsuarios.add(menuBloqueoDesbloqueo);
+        menuGestionUsuarios.add(jSeparator5);
+
+        itemEliminarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        itemEliminarUsuario.setText("Eliminar usuario");
+        itemEliminarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEliminarUsuarioActionPerformed(evt);
+            }
+        });
+        menuGestionUsuarios.add(itemEliminarUsuario);
 
         barraMenu.add(menuGestionUsuarios);
-
-        menuGestionFinanciera.setText("Gestion financiera");
-        barraMenu.add(menuGestionFinanciera);
 
         menuInformacionSedes.setText("Informacion sedes");
 
@@ -477,6 +485,12 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
         
     }//GEN-LAST:event_itemDesbloquearCuentaActionPerformed
 
+    private void itemEliminarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEliminarUsuarioActionPerformed
+        EliminarUsuario eliminar = new EliminarUsuario(this.cedula);
+        eliminar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_itemEliminarUsuarioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -518,6 +532,7 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemBienvenida;
     private javax.swing.JMenuItem itemBloquearCuenta;
     private javax.swing.JMenuItem itemDesbloquearCuenta;
+    private javax.swing.JMenuItem itemEliminarUsuario;
     private javax.swing.JMenuItem itemIrInicio;
     private javax.swing.JMenuItem itemSedeCiudadColon;
     private javax.swing.JMenuItem itemSedePuriscal;
@@ -530,9 +545,9 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JLabel jblDesbloquear;
     private javax.swing.JMenu menuBloqueoDesbloqueo;
-    private javax.swing.JMenu menuGestionFinanciera;
     private javax.swing.JMenu menuGestionUsuarios;
     private javax.swing.JMenu menuInformacionSedes;
     private javax.swing.JMenu menuInicio;
