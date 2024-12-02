@@ -143,6 +143,8 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
         itemDesbloquearCuenta = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         itemEliminarUsuario = new javax.swing.JMenuItem();
+        jSeparator6 = new javax.swing.JPopupMenu.Separator();
+        itemRestaurarUsuario = new javax.swing.JMenuItem();
         menuInformacionSedes = new javax.swing.JMenu();
         itemSedePuriscal = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
@@ -329,6 +331,16 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
             }
         });
         menuGestionUsuarios.add(itemEliminarUsuario);
+        menuGestionUsuarios.add(jSeparator6);
+
+        itemRestaurarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        itemRestaurarUsuario.setText("Restaurar Usuario");
+        itemRestaurarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemRestaurarUsuarioActionPerformed(evt);
+            }
+        });
+        menuGestionUsuarios.add(itemRestaurarUsuario);
 
         barraMenu.add(menuGestionUsuarios);
 
@@ -491,6 +503,12 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_itemEliminarUsuarioActionPerformed
 
+    private void itemRestaurarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRestaurarUsuarioActionPerformed
+        RestaurarUsuario restaurar =  new RestaurarUsuario(this.cedula);
+        restaurar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_itemRestaurarUsuarioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -534,6 +552,7 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemDesbloquearCuenta;
     private javax.swing.JMenuItem itemEliminarUsuario;
     private javax.swing.JMenuItem itemIrInicio;
+    private javax.swing.JMenuItem itemRestaurarUsuario;
     private javax.swing.JMenuItem itemSedeCiudadColon;
     private javax.swing.JMenuItem itemSedePuriscal;
     javax.swing.JMenuItem itemSedeSanPedro;
@@ -546,6 +565,7 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JPopupMenu.Separator jSeparator6;
     private javax.swing.JLabel jblDesbloquear;
     private javax.swing.JMenu menuBloqueoDesbloqueo;
     private javax.swing.JMenu menuGestionUsuarios;
