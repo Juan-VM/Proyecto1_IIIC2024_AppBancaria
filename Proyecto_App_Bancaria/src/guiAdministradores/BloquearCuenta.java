@@ -145,6 +145,8 @@ public class BloquearCuenta extends javax.swing.JFrame {
         itemDesbloquearCuenta = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         itemEliminarUsuario2 = new javax.swing.JMenuItem();
+        jSeparator7 = new javax.swing.JPopupMenu.Separator();
+        itemRestaurarUsuario = new javax.swing.JMenuItem();
         menuInformacionSedes = new javax.swing.JMenu();
         itemSedePuriscal = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
@@ -163,7 +165,7 @@ public class BloquearCuenta extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Boquear cuentas de usuarios");
+        jLabel1.setText("Bloquear cuentas de usuarios");
         background.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 1070, -1));
 
         tablaSedePuriscal.setBackground(new java.awt.Color(204, 204, 204));
@@ -183,7 +185,7 @@ public class BloquearCuenta extends javax.swing.JFrame {
         });
         scrollPuriscal.setViewportView(tablaSedePuriscal);
 
-        background.add(scrollPuriscal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 310, 450));
+        background.add(scrollPuriscal, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 330, 450));
 
         tablaSedeSanPedro.setBackground(new java.awt.Color(204, 204, 204));
         tablaSedeSanPedro.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -202,7 +204,7 @@ public class BloquearCuenta extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tablaSedeSanPedro);
 
-        background.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 80, 310, 450));
+        background.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 340, 450));
 
         tablaSedeCiudadColon.setBackground(new java.awt.Color(204, 204, 204));
         tablaSedeCiudadColon.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -221,7 +223,7 @@ public class BloquearCuenta extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tablaSedeCiudadColon);
 
-        background.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 80, 310, 450));
+        background.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 80, 340, 450));
 
         panelBloquear.setBackground(new java.awt.Color(92, 88, 29));
         panelBloquear.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -332,6 +334,16 @@ public class BloquearCuenta extends javax.swing.JFrame {
             }
         });
         menuGestionUsuarios.add(itemEliminarUsuario2);
+        menuGestionUsuarios.add(jSeparator7);
+
+        itemRestaurarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        itemRestaurarUsuario.setText("Restaurar Usuario");
+        itemRestaurarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemRestaurarUsuarioActionPerformed(evt);
+            }
+        });
+        menuGestionUsuarios.add(itemRestaurarUsuario);
 
         barraMenu.add(menuGestionUsuarios);
 
@@ -494,6 +506,12 @@ public class BloquearCuenta extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_itemEliminarUsuario2ActionPerformed
 
+    private void itemRestaurarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRestaurarUsuarioActionPerformed
+        RestaurarUsuario restaurar =  new RestaurarUsuario(this.cedula);
+        restaurar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_itemRestaurarUsuarioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -537,6 +555,7 @@ public class BloquearCuenta extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemDesbloquearCuenta;
     private javax.swing.JMenuItem itemEliminarUsuario2;
     private javax.swing.JMenuItem itemIrInicio;
+    private javax.swing.JMenuItem itemRestaurarUsuario;
     private javax.swing.JMenuItem itemSedeCiudadColon;
     private javax.swing.JMenuItem itemSedePuriscal;
     javax.swing.JMenuItem itemSedeSanPedro;
@@ -550,6 +569,7 @@ public class BloquearCuenta extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JPopupMenu.Separator jSeparator6;
+    private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JLabel jblBloquear;
     private javax.swing.JMenu menuBloqueoDesbloqueo;
     private javax.swing.JMenu menuGestionUsuarios;

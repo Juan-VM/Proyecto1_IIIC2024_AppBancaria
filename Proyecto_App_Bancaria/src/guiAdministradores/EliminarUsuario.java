@@ -8,7 +8,6 @@ import Sedes.SedePuriscal;
 import Sedes.SedeSanPedro;
 import guiUsuarios.Inicio;
 import java.awt.Color;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -59,7 +58,6 @@ public class EliminarUsuario extends javax.swing.JFrame {
                 for (Usuarios i : SedePuriscal.getListaUsers()) {
                     if (cedula.equals(i.getCedula())) {
                         indice = SedePuriscal.getListaUsers().indexOf(i);
-                        DatosRegistrados.getListaUsuariosEliminados().add(i);
                     }
                 }
                 SedePuriscal.getListaUsers().remove(indice);
@@ -68,7 +66,6 @@ public class EliminarUsuario extends javax.swing.JFrame {
                 for (Usuarios i : SedeSanPedro.getListaUsers()) {
                     if (cedula.equals(i.getCedula())) {
                         indice = SedeSanPedro.getListaUsers().indexOf(i);
-                        DatosRegistrados.getListaUsuariosEliminados().add(i);
                     }
                 }
                 SedeSanPedro.getListaUsers().remove(indice);
@@ -77,7 +74,6 @@ public class EliminarUsuario extends javax.swing.JFrame {
                 for (Usuarios i : SedeCiudadColon.getListaUsers()) {
                     if (cedula.equals(i.getCedula())) {
                         indice = SedeCiudadColon.getListaUsers().indexOf(i);
-                        DatosRegistrados.getListaUsuariosEliminados().add(i);
                     }
                 }
                 SedeCiudadColon.getListaUsers().remove(indice);
@@ -123,6 +119,8 @@ public class EliminarUsuario extends javax.swing.JFrame {
         itemDesbloquearCuenta = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         itemEliminarUsuario = new javax.swing.JMenuItem();
+        jSeparator10 = new javax.swing.JPopupMenu.Separator();
+        itemRestaurarUsuario = new javax.swing.JMenuItem();
         menuInformacionSedes = new javax.swing.JMenu();
         itemSedePuriscal = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
@@ -137,6 +135,7 @@ public class EliminarUsuario extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(252, 247, 215));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        tablaUsuarios.setBackground(new java.awt.Color(204, 204, 204));
         tablaUsuarios.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -310,6 +309,16 @@ public class EliminarUsuario extends javax.swing.JFrame {
         itemEliminarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         itemEliminarUsuario.setText("Eliminar usuario");
         menuGestionUsuarios.add(itemEliminarUsuario);
+        menuGestionUsuarios.add(jSeparator10);
+
+        itemRestaurarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        itemRestaurarUsuario.setText("Restaurar Usuario");
+        itemRestaurarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemRestaurarUsuarioActionPerformed(evt);
+            }
+        });
+        menuGestionUsuarios.add(itemRestaurarUsuario);
 
         barraMenu.add(menuGestionUsuarios);
 
@@ -411,11 +420,11 @@ public class EliminarUsuario extends javax.swing.JFrame {
     private void jblBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblBuscarMouseClicked
         if (!txtCedula.getText().trim().equals("")) {
             String cedula = txtCedula.getText();
-            int indice;
+
             boolean valorEncontrado = false;
             for (int i = 0; i < tablaUsuarios.getRowCount(); i++) {
                 if (cedula.equals(tablaUsuarios.getValueAt(i, 2))) {
-                    indice = i;
+
                     valorEncontrado = true;
                     tablaUsuarios.setRowSelectionInterval(i, i);
                 }
@@ -479,6 +488,12 @@ public class EliminarUsuario extends javax.swing.JFrame {
         jblEliminar.setForeground(Color.white);
     }//GEN-LAST:event_jblEliminarMouseExited
 
+    private void itemRestaurarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRestaurarUsuarioActionPerformed
+        RestaurarUsuario restaurar = new RestaurarUsuario(this.cedula);
+        restaurar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_itemRestaurarUsuarioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -521,6 +536,7 @@ public class EliminarUsuario extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemDesbloquearCuenta;
     private javax.swing.JMenuItem itemEliminarUsuario;
     private javax.swing.JMenuItem itemIrInicio;
+    private javax.swing.JMenuItem itemRestaurarUsuario;
     private javax.swing.JMenuItem itemSedeCiudadColon;
     private javax.swing.JMenuItem itemSedePuriscal;
     javax.swing.JMenuItem itemSedeSanPedro;
@@ -531,6 +547,7 @@ public class EliminarUsuario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;

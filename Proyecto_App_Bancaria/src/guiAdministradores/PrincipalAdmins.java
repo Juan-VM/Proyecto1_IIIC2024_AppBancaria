@@ -1,20 +1,21 @@
-
 package guiAdministradores;
 
 import guiUsuarios.Inicio;
 
-
 public class PrincipalAdmins extends javax.swing.JFrame {
 
     String cedula;
+
     public PrincipalAdmins(String cedula) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.cedula = cedula;
     }
+
     public PrincipalAdmins() {
         initComponents();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,6 +47,8 @@ public class PrincipalAdmins extends javax.swing.JFrame {
         itemDesbloquearCuenta = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         itemEliminarUsuario = new javax.swing.JMenuItem();
+        jSeparator7 = new javax.swing.JPopupMenu.Separator();
+        itemRestaurarUsuario = new javax.swing.JMenuItem();
         menuInformacionSedes = new javax.swing.JMenu();
         itemSedePuriscal = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
@@ -176,6 +179,16 @@ public class PrincipalAdmins extends javax.swing.JFrame {
             }
         });
         menuGestionUsuarios.add(itemEliminarUsuario);
+        menuGestionUsuarios.add(jSeparator7);
+
+        itemRestaurarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        itemRestaurarUsuario.setText("Restaurar Usuario");
+        itemRestaurarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemRestaurarUsuarioActionPerformed(evt);
+            }
+        });
+        menuGestionUsuarios.add(itemRestaurarUsuario);
 
         barraMenu.add(menuGestionUsuarios);
 
@@ -229,7 +242,7 @@ public class PrincipalAdmins extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void itemBienvenidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBienvenidaActionPerformed
-       
+
     }//GEN-LAST:event_itemBienvenidaActionPerformed
 
     private void itemIrInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemIrInicioActionPerformed
@@ -271,14 +284,20 @@ public class PrincipalAdmins extends javax.swing.JFrame {
     private void itemDesbloquearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDesbloquearCuentaActionPerformed
         DesbloquearCuenta desbloquear = new DesbloquearCuenta(this.cedula);
         desbloquear.setVisible(true);
-        this.dispose(); 
+        this.dispose();
     }//GEN-LAST:event_itemDesbloquearCuentaActionPerformed
 
     private void itemEliminarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEliminarUsuarioActionPerformed
         EliminarUsuario eliminar = new EliminarUsuario(this.cedula);
         eliminar.setVisible(true);
-        this.dispose(); 
+        this.dispose();
     }//GEN-LAST:event_itemEliminarUsuarioActionPerformed
+
+    private void itemRestaurarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRestaurarUsuarioActionPerformed
+        RestaurarUsuario restaurar = new RestaurarUsuario(this.cedula);
+        restaurar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_itemRestaurarUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -324,6 +343,7 @@ public class PrincipalAdmins extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemDesbloquearCuenta;
     private javax.swing.JMenuItem itemEliminarUsuario;
     private javax.swing.JMenuItem itemIrInicio;
+    private javax.swing.JMenuItem itemRestaurarUsuario;
     private javax.swing.JMenuItem itemSedeCiudadColon;
     private javax.swing.JMenuItem itemSedePuriscal;
     javax.swing.JMenuItem itemSedeSanPedro;
@@ -334,6 +354,7 @@ public class PrincipalAdmins extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JPopupMenu.Separator jSeparator6;
+    private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JLabel jblAdmins;
     private javax.swing.JLabel jblBNBUU;
     private javax.swing.JLabel jblBienvenida;
