@@ -153,6 +153,8 @@ public class BloquearCuenta extends javax.swing.JFrame {
         itemSedeSanPedro = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         itemSedeCiudadColon = new javax.swing.JMenuItem();
+        menuComentarios1 = new javax.swing.JMenu();
+        itemComentariosUsuarios1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -380,6 +382,19 @@ public class BloquearCuenta extends javax.swing.JFrame {
 
         barraMenu.add(menuInformacionSedes);
 
+        menuComentarios1.setText("Comentarios");
+
+        itemComentariosUsuarios1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        itemComentariosUsuarios1.setText("Comentarios usuarios");
+        itemComentariosUsuarios1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemComentariosUsuarios1ActionPerformed(evt);
+            }
+        });
+        menuComentarios1.add(itemComentariosUsuarios1);
+
+        barraMenu.add(menuComentarios1);
+
         setJMenuBar(barraMenu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -512,6 +527,12 @@ public class BloquearCuenta extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_itemRestaurarUsuarioActionPerformed
 
+    private void itemComentariosUsuarios1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemComentariosUsuarios1ActionPerformed
+        ComentariosUsuarios coments = new ComentariosUsuarios(this.cedula);
+        coments.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_itemComentariosUsuarios1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -552,6 +573,8 @@ public class BloquearCuenta extends javax.swing.JFrame {
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JMenuItem itemBienvenida;
     private javax.swing.JMenuItem itemBloquearCuenta;
+    private javax.swing.JMenuItem itemComentariosUsuarios;
+    private javax.swing.JMenuItem itemComentariosUsuarios1;
     private javax.swing.JMenuItem itemDesbloquearCuenta;
     private javax.swing.JMenuItem itemEliminarUsuario2;
     private javax.swing.JMenuItem itemIrInicio;
@@ -572,6 +595,8 @@ public class BloquearCuenta extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JLabel jblBloquear;
     private javax.swing.JMenu menuBloqueoDesbloqueo;
+    private javax.swing.JMenu menuComentarios;
+    private javax.swing.JMenu menuComentarios1;
     private javax.swing.JMenu menuGestionUsuarios;
     private javax.swing.JMenu menuInformacionSedes;
     private javax.swing.JMenu menuInicio;

@@ -19,9 +19,6 @@ public class HabilitarCuentas extends javax.swing.JFrame {
         this.sede = sede;
         this.verPassword = false;
         panelHabilitarCuentasBarra.setBackground(new Color(232, 225, 182));
-        alertaClave.setVisible(false);
-        jblAlerta.setVisible(false);
-        txtsPorDefecto();
 
         for (Usuarios i : SedeCentral.getListaUsers()) {
             if (i.getCedula().equals(this.cedula)) {
@@ -43,11 +40,6 @@ public class HabilitarCuentas extends javax.swing.JFrame {
 
     public HabilitarCuentas() {
         initComponents();
-    }
-
-    public void txtsPorDefecto() {
-        txtClaveNum.setText("Ingrese su clave");
-        psdPassword.setText("Ingrese su password");
     }
 
     /**
@@ -89,20 +81,6 @@ public class HabilitarCuentas extends javax.swing.JFrame {
         panelSimpeBarra = new javax.swing.JPanel();
         jblSimpe = new javax.swing.JLabel();
         pizarra = new javax.swing.JTabbedPane();
-        panelValidar = new javax.swing.JPanel();
-        jblClaveNum = new javax.swing.JLabel();
-        txtClaveNum = new javax.swing.JTextField();
-        jSeparator2 = new javax.swing.JSeparator();
-        jblPassword = new javax.swing.JLabel();
-        psdPassword = new javax.swing.JPasswordField();
-        jSeparator1 = new javax.swing.JSeparator();
-        panelVerPassword = new javax.swing.JPanel();
-        jblVerPassword = new javax.swing.JLabel();
-        panelContinuar = new javax.swing.JPanel();
-        jblContinuar = new javax.swing.JLabel();
-        alertaClave = new javax.swing.JLabel();
-        jblAlerta = new javax.swing.JLabel();
-        jblOpcionActual = new javax.swing.JLabel();
         panelElegir = new javax.swing.JPanel();
         jblOpcionActual1 = new javax.swing.JLabel();
         panelCuentaAhorro = new javax.swing.JPanel();
@@ -381,115 +359,6 @@ public class HabilitarCuentas extends javax.swing.JFrame {
         pizarra.setBackground(new java.awt.Color(204, 204, 204));
         pizarra.setForeground(new java.awt.Color(102, 102, 102));
 
-        panelValidar.setBackground(new java.awt.Color(255, 255, 255));
-        panelValidar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jblClaveNum.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
-        jblClaveNum.setForeground(new java.awt.Color(51, 51, 51));
-        jblClaveNum.setText("CLAVE NUMERICA");
-        panelValidar.add(jblClaveNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
-
-        txtClaveNum.setBackground(new java.awt.Color(255, 255, 255));
-        txtClaveNum.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        txtClaveNum.setForeground(new java.awt.Color(204, 204, 204));
-        txtClaveNum.setText("Ingrese su clave");
-        txtClaveNum.setBorder(null);
-        txtClaveNum.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                txtClaveNumMousePressed(evt);
-            }
-        });
-        txtClaveNum.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtClaveNumKeyTyped(evt);
-            }
-        });
-        panelValidar.add(txtClaveNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 350, 50));
-
-        jSeparator2.setForeground(new java.awt.Color(51, 51, 51));
-        panelValidar.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 530, 10));
-
-        jblPassword.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
-        jblPassword.setForeground(new java.awt.Color(51, 51, 51));
-        jblPassword.setText("PASSWORD");
-        panelValidar.add(jblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, -1));
-
-        psdPassword.setBackground(new java.awt.Color(255, 255, 255));
-        psdPassword.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        psdPassword.setForeground(new java.awt.Color(204, 204, 204));
-        psdPassword.setText("Ingrese su password");
-        psdPassword.setBorder(null);
-        psdPassword.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                psdPasswordMousePressed(evt);
-            }
-        });
-        panelValidar.add(psdPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 380, 60));
-
-        jSeparator1.setForeground(new java.awt.Color(51, 51, 51));
-        panelValidar.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 470, 530, 10));
-
-        panelVerPassword.setBackground(new java.awt.Color(255, 255, 255));
-        panelVerPassword.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jblVerPassword.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jblVerPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ojoCerrado.png"))); // NOI18N
-        jblVerPassword.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jblVerPassword.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jblVerPasswordMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jblVerPasswordMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jblVerPasswordMouseExited(evt);
-            }
-        });
-        panelVerPassword.add(jblVerPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 40, 40));
-
-        panelValidar.add(panelVerPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 380, 40, 40));
-
-        panelContinuar.setBackground(new java.awt.Color(92, 88, 29));
-        panelContinuar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jblContinuar.setBackground(new java.awt.Color(92, 88, 29));
-        jblContinuar.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jblContinuar.setForeground(new java.awt.Color(255, 255, 255));
-        jblContinuar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jblContinuar.setText("CONTINUAR");
-        jblContinuar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jblContinuar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jblContinuarMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jblContinuarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jblContinuarMouseExited(evt);
-            }
-        });
-        panelContinuar.add(jblContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 70));
-
-        panelValidar.add(panelContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 530, 170, 70));
-
-        alertaClave.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        alertaClave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/advertencia.png"))); // NOI18N
-        panelValidar.add(alertaClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 180, 40, 40));
-
-        jblAlerta.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jblAlerta.setForeground(new java.awt.Color(255, 102, 102));
-        jblAlerta.setText("Solo numeros");
-        panelValidar.add(jblAlerta, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 185, 250, -1));
-
-        jblOpcionActual.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jblOpcionActual.setForeground(new java.awt.Color(51, 51, 51));
-        jblOpcionActual.setText("HABILITAR CUENTA");
-        panelValidar.add(jblOpcionActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 30, 360, 40));
-
-        pizarra.addTab("Validar", panelValidar);
-
         panelElegir.setBackground(new java.awt.Color(255, 255, 255));
         panelElegir.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -579,7 +448,6 @@ public class HabilitarCuentas extends javax.swing.JFrame {
             }
             case 1 -> {
                 pizarra.setSelectedIndex(0);
-                txtsPorDefecto();
             }
         }
     }//GEN-LAST:event_jblAtrasMouseClicked
@@ -695,7 +563,9 @@ public class HabilitarCuentas extends javax.swing.JFrame {
     }//GEN-LAST:event_jblHabilitarCuentasMouseExited
 
     private void jblComentariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblComentariosMouseClicked
-
+        Comentarios comentario = new Comentarios(this.cedula, this.sede);
+        comentario.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jblComentariosMouseClicked
 
     private void jblComentariosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblComentariosMouseEntered
@@ -706,109 +576,6 @@ public class HabilitarCuentas extends javax.swing.JFrame {
         panelComentariosBarra.setBackground(new Color(252, 247, 215));
     }//GEN-LAST:event_jblComentariosMouseExited
 
-    private void txtClaveNumMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtClaveNumMousePressed
-
-        String psd = String.valueOf(psdPassword.getPassword());
-        if (txtClaveNum.getText().equals("Ingrese su clave")) {
-            txtClaveNum.setText("");
-        }
-        txtClaveNum.setForeground(Color.black);
-        if (psd.equals("")) {
-            psdPassword.setText("Ingrese su password");
-        } else {
-            psdPassword.setText(psd);
-        }
-        psdPassword.setForeground(new Color(155, 155, 155));
-    }//GEN-LAST:event_txtClaveNumMousePressed
-
-    private void txtClaveNumKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClaveNumKeyTyped
-        char tecla = evt.getKeyChar();
-        boolean teclaBorrar = true;
-        if (evt.getKeyCode() != KeyEvent.VK_BACK_SPACE) {
-            teclaBorrar = false;
-        }
-
-        if (!Character.isDigit(tecla) && teclaBorrar == false) {
-
-            evt.consume();
-            alertaClave.setVisible(true);
-            jblAlerta.setVisible(true);
-            jblAlerta.setText("Solo numeros");
-
-        } else if (txtClaveNum.getText().length() == 4) {
-            evt.consume();
-            jblAlerta.setText("Max numeros alcanzado");
-            jblAlerta.setVisible(true);
-            alertaClave.setVisible(true);
-        } else {
-            alertaClave.setVisible(false);
-            jblAlerta.setVisible(false);
-        }
-    }//GEN-LAST:event_txtClaveNumKeyTyped
-
-    private void psdPasswordMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_psdPasswordMousePressed
-
-        String user = txtClaveNum.getText();
-        if (String.valueOf(psdPassword.getPassword()).equals("Ingrese su password")) {
-            psdPassword.setText("");
-        }
-        psdPassword.setForeground(Color.black);
-        if (user.equals("")) {
-            txtClaveNum.setText("Ingrese su clave");
-        } else {
-            txtClaveNum.setText(user);
-        }
-        txtClaveNum.setForeground(new Color(155, 155, 155));
-    }//GEN-LAST:event_psdPasswordMousePressed
-
-    private void jblVerPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerPasswordMouseClicked
-        if (verPassword == false) {
-            verPassword = true;
-            jblVerPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ojoAbierto.png")));
-            psdPassword.setEchoChar((char) 0);
-        } else {
-            verPassword = false;
-            jblVerPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ojoCerrado.png")));
-            psdPassword.setEchoChar('*');
-
-        }
-    }//GEN-LAST:event_jblVerPasswordMouseClicked
-
-    private void jblVerPasswordMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerPasswordMouseEntered
-        panelVerPassword.setBackground(new Color(204, 204, 204));
-    }//GEN-LAST:event_jblVerPasswordMouseEntered
-
-    private void jblVerPasswordMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerPasswordMouseExited
-        panelVerPassword.setBackground(Color.white);
-    }//GEN-LAST:event_jblVerPasswordMouseExited
-
-    private void jblContinuarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblContinuarMouseClicked
-        try {
-            for (Usuarios i : SedeCentral.ListaUsers) {
-                if (i.getCedula().equals(this.cedula)) {
-                    if (Integer.parseInt(txtClaveNum.getText()) == i.getClaveNumerica() && String.valueOf(psdPassword.getPassword()).equals(i.getPassword())) {
-                        JOptionPane.showMessageDialog(null, "Datos correctos");
-                        pizarra.setSelectedIndex(1);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Datos incorrectos");
-                    }
-                }
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Rellena todos los espacios");
-        }
-    }//GEN-LAST:event_jblContinuarMouseClicked
-
-    private void jblContinuarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblContinuarMouseEntered
-        panelContinuar.setBackground(new Color(153, 145, 86));
-        jblContinuar.setForeground(Color.black);
-    }//GEN-LAST:event_jblContinuarMouseEntered
-
-    private void jblContinuarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblContinuarMouseExited
-        panelContinuar.setBackground(new Color(92, 88, 29));
-        jblContinuar.setForeground(Color.white);
-    }//GEN-LAST:event_jblContinuarMouseExited
-
     private void jblCuentaAhorroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblCuentaAhorroMouseClicked
         for (Usuarios i : SedeCentral.getListaUsers()) {
             if (i.getCedula().equals(this.cedula)) {
@@ -818,7 +585,6 @@ public class HabilitarCuentas extends javax.swing.JFrame {
                         i.getCuentaAhorro().setEstado(true);
                         JOptionPane.showMessageDialog(null, "Cuenta de ahorro habilitada para: "+i.getUsuario());
                         pizarra.setSelectedIndex(0);
-                        txtsPorDefecto();
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "La cuenta ya esta habilitada");
@@ -846,7 +612,6 @@ public class HabilitarCuentas extends javax.swing.JFrame {
                         i.getCuentaSimpe().setEstado(true);
                         JOptionPane.showMessageDialog(null, "Cuenta de simpe habilitada para: "+i.getUsuario());
                         pizarra.setSelectedIndex(0);
-                        txtsPorDefecto();
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "La cuenta ya esta habilitada");
@@ -923,18 +688,12 @@ public class HabilitarCuentas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel alertaClave;
     private javax.swing.JPanel background;
     private javax.swing.JLabel iconBarra;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JLabel jblAlerta;
     private javax.swing.JLabel jblAtras;
     private javax.swing.JLabel jblBarra;
-    private javax.swing.JLabel jblClaveNum;
     private javax.swing.JLabel jblComentarios;
     private javax.swing.JLabel jblConfig;
-    private javax.swing.JLabel jblContinuar;
     private javax.swing.JLabel jblCuentaAhorro;
     private javax.swing.JLabel jblCuentaSimpe;
     private javax.swing.JLabel jblDashboard;
@@ -944,19 +703,15 @@ public class HabilitarCuentas extends javax.swing.JFrame {
     private javax.swing.JLabel jblInformativo;
     private javax.swing.JLabel jblNombreBanco;
     private javax.swing.JLabel jblNombrePerfil;
-    private javax.swing.JLabel jblOpcionActual;
     private javax.swing.JLabel jblOpcionActual1;
-    private javax.swing.JLabel jblPassword;
     private javax.swing.JLabel jblPerfil;
     private javax.swing.JLabel jblRetirar;
     private javax.swing.JLabel jblSalir;
     private javax.swing.JLabel jblSimpe;
     private javax.swing.JLabel jblVentanaActual;
-    private javax.swing.JLabel jblVerPassword;
     private javax.swing.JPanel panelAtras;
     private javax.swing.JPanel panelComentariosBarra;
     private javax.swing.JPanel panelConfig;
-    private javax.swing.JPanel panelContinuar;
     private javax.swing.JPanel panelCuentaAhorro;
     private javax.swing.JPanel panelCuentaSimpe;
     private javax.swing.JPanel panelDashboardBarra;
@@ -967,11 +722,7 @@ public class HabilitarCuentas extends javax.swing.JFrame {
     private javax.swing.JPanel panelRetirarBarra;
     private javax.swing.JPanel panelSalir;
     private javax.swing.JPanel panelSimpeBarra;
-    private javax.swing.JPanel panelValidar;
-    private javax.swing.JPanel panelVerPassword;
     private javax.swing.JPanel panelVerSaldoBarra;
     private javax.swing.JTabbedPane pizarra;
-    private javax.swing.JPasswordField psdPassword;
-    private javax.swing.JTextField txtClaveNum;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,6 +1,7 @@
 
 package RegistroDatos;
 
+import Comentarios.Comentario;
 import Personas.Usuarios;
 import java.util.ArrayList;
 
@@ -9,6 +10,7 @@ public class DatosRegistrados {
     private static ArrayList<Integer> listaClaves = new ArrayList<>();
     private static ArrayList<String> listaCedulas = new ArrayList<>();
     private static ArrayList<Usuarios> listaUsuariosEliminados = new ArrayList<>();
+    private static ArrayList<Comentario> listaComentarios = new ArrayList<>();
 
     public static ArrayList<String> getListaTelefonos() {
         return listaTelefonos;
@@ -52,6 +54,14 @@ public class DatosRegistrados {
 
     public static void setListaUsuariosEliminados(ArrayList<Usuarios> listaUsuariosEliminados) {
         DatosRegistrados.listaUsuariosEliminados = listaUsuariosEliminados;
+    }
+
+    public static ArrayList<Comentario> getListaComentarios() {
+        return listaComentarios;
+    }
+
+    public static void setListaComentarios(ArrayList<Comentario> listaComentarios) {
+        DatosRegistrados.listaComentarios = listaComentarios;
     }
     
 }

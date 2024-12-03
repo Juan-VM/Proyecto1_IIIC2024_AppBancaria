@@ -1196,7 +1196,6 @@ public class Retirar extends javax.swing.JFrame {
     private void jblHabilitarCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseClicked
         HabilitarCuentas habilitar = new HabilitarCuentas(this.cedula, this.sede);
         habilitar.setVisible(true);
-        //panelDashboardBarra.setBackground(new Color(252, 247, 215));
         this.dispose();
     }//GEN-LAST:event_jblHabilitarCuentasMouseClicked
 
@@ -1209,7 +1208,9 @@ public class Retirar extends javax.swing.JFrame {
     }//GEN-LAST:event_jblHabilitarCuentasMouseExited
 
     private void jblComentariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblComentariosMouseClicked
-
+        Comentarios comentario = new Comentarios(this.cedula, this.sede);
+        comentario.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jblComentariosMouseClicked
 
     private void jblComentariosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblComentariosMouseEntered

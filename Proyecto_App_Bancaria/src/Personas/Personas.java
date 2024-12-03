@@ -1,9 +1,6 @@
 
 package Personas;
 
-import Personas.Usuarios;
-import java.util.ArrayList;
-
 public class Personas {
     private String usuario;
     private String password;
@@ -13,8 +10,6 @@ public class Personas {
     private String apellidos;
     private int rol;
     private int sede;
-    public  String comentario;
-
     
     public Personas(String usuario, String apellidos, String password, String cedula, String telefono, int claveNumerica, int rol, int sede){
         this.usuario = usuario;
@@ -98,32 +93,5 @@ public class Personas {
     public void setSede(int sede) {
         this.sede = sede;
     }
-
-    public  String getComentario() {
-        return comentario;
-    }
-
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
-    }
-
-    
-    public static int obtenerIndicePersona(ArrayList<Usuarios> lista, int claveNumerica){
-        
-        int indiceDelObjeto = -1;
-        
-        //for( Personas i : lista){
-        //    if( i.getClaveNumerica() == claveNumerica){
-          //      indiceDelObjeto = lista.indexOf(i);
-          //  }
-        //}
-        return indiceDelObjeto;
-    }
-    
-    
-    public class Comentario {
-       // private String 
-    }
-    
     
 } //Fin clase persona

@@ -696,7 +696,9 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     }//GEN-LAST:event_jblHabilitarCuentasMouseExited
 
     private void jblComentariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblComentariosMouseClicked
-
+        Comentarios comentario = new Comentarios(this.cedula, this.sede);
+        comentario.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jblComentariosMouseClicked
 
     private void jblComentariosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblComentariosMouseEntered
