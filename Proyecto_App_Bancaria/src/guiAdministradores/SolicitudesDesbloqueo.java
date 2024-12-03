@@ -115,7 +115,7 @@ public class SolicitudesDesbloqueo extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tablaSolicitudesDesbloqueo);
 
-        Background.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, -1, 600));
+        Background.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, 580));
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
@@ -184,7 +184,7 @@ public class SolicitudesDesbloqueo extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(51, 51, 51));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Tabla solicitudes de desbloqueo");
-        Background.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 430, -1));
+        Background.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 450, -1));
 
         javax.swing.GroupLayout panelLibreLayout = new javax.swing.GroupLayout(panelLibre);
         panelLibre.setLayout(panelLibreLayout);
