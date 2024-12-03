@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Usuarios extends Personas {
 
     private boolean estadoUsuario = true;
+    private boolean estadoCuenta = true;
     private CuentaCorriente cuentaCorriente = new CuentaCorriente(0, true);
     private CuentaAhorro cuentaAhorro = new CuentaAhorro(0, false);
     private CuentaSimpe cuentaSimpe = new CuentaSimpe(0, false);
@@ -72,6 +73,14 @@ public class Usuarios extends Personas {
 
     public void setEstadoUsuario(boolean estadoUsuario) {
         this.estadoUsuario = estadoUsuario;
+    }
+
+    public boolean getEstadoCuenta() {
+        return estadoCuenta;
+    }
+
+    public void setEstadoCuenta(boolean estadoCuenta) {
+        this.estadoCuenta = estadoCuenta;
     }
     
     

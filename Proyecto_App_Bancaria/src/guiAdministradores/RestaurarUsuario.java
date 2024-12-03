@@ -385,6 +385,7 @@ public class RestaurarUsuario extends javax.swing.JFrame {
                 
                 for(Usuarios i : DatosRegistrados.getListaUsuariosEliminados()){
                     if(i.getCedula().equals(cedulaUser)){
+                        i.setEstadoCuenta(true);
                         indice = DatosRegistrados.getListaUsuariosEliminados().indexOf(i);
                         SedeCentral.getListaUsers().add(i);
                         switch (sede) {
@@ -422,6 +423,7 @@ public class RestaurarUsuario extends javax.swing.JFrame {
                 
                 for(Usuarios i : DatosRegistrados.getListaUsuariosEliminados()){
                     if(i.getCedula().equals(cedulaUser)){
+                        i.setEstadoCuenta(true);
                         indice = DatosRegistrados.getListaUsuariosEliminados().indexOf(i);
                         reestablecerDatosUsuario(i);
                         SedeCentral.getListaUsers().add(i);

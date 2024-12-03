@@ -339,44 +339,60 @@ public class Login extends javax.swing.JFrame {
 
         ArrayList<Usuarios> listaUsers = SedeCentral.getListaUsers();
         ArrayList<Administradores> listaAdmins = SedeCentral.getListaAdmins();
+        ArrayList<String> listaCedulas = new ArrayList<>();
+        int contador = 0;
         boolean datosIguales;
         getRol(listaAdmins, listaUsers);
 
         switch (this.rol) {
             case 0 -> {
-                for (Usuarios i : SedeCentral.getListaUsers()) {
-                    if (i.getCedula().equals(txtCedula.getText())) {
-                        if (i.getEstadoUsuario() == true) {
-                            if (this.intentosRestantes > 0) {
+                if (SedeCentral.getListaUsers().size() == 0) {
+                    JOptionPane.showMessageDialog(null, "No hay usuarios registrados");
+                } else {
+                    for (Usuarios i : SedeCentral.getListaUsers()) {
+                        if (i.getCedula().equals(txtCedula.getText())) {
+                            if (i.getEstadoCuenta() == true) {
+                                if (i.getEstadoUsuario() == true) {
+                                    if (this.intentosRestantes > 0) {
 
-                                datosIguales = validarDatos("usuarios");
-                                if (datosIguales == true) {
-                                    PrincipalUsers users = new PrincipalUsers(this.cedula, this.sede);
-                                    users.setVisible(true);
-                                    this.dispose();
+                                        datosIguales = validarDatos("usuarios");
+                                        if (datosIguales == true) {
+                                            PrincipalUsers users = new PrincipalUsers(this.cedula, this.sede);
+                                            users.setVisible(true);
+                                            this.dispose();
+                                        } else {
+                                            this.intentosRestantes -= 1;
+                                        }
+                                    } else {
+                                        i.setEstadoUsuario(false);
+                                    }
                                 } else {
-                                    this.intentosRestantes -= 1;
-                                }
-                            } else {
-                                i.setEstadoUsuario(false);
-                            }
-                        } else {
-                            int eleccion = JOptionPane.showConfirmDialog(null, "Cuenta bloqueada, deseas solicitar desbloqueo?", "Advertencia", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-                            if (eleccion == 0) {
-                                if (!SedeCentral.getListaCuentasBloqueadas().contains(i)) {
-                                    SedeCentral.getListaCuentasBloqueadas().add(i);
-                                    switch (i.getSede()) {
-                                        case 0 -> {
-                                            SedePuriscal.getListaCuentasBloqueadas().add(i);
-                                        }
-                                        case 1 -> {
-                                            SedeSanPedro.getListaCuentasBloqueadas().add(i);
-                                        }
-                                        case 2 -> {
-                                            SedeCiudadColon.getListaCuentasBloqueadas().add(i);
+                                    int eleccion = JOptionPane.showConfirmDialog(null, "Cuenta bloqueada, deseas solicitar desbloqueo?", "Advertencia", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+                                    if (eleccion == 0) {
+                                        if (!SedeCentral.getListaCuentasBloqueadas().contains(i)) {
+                                            SedeCentral.getListaCuentasBloqueadas().add(i);
+                                            switch (i.getSede()) {
+                                                case 0 -> {
+                                                    SedePuriscal.getListaCuentasBloqueadas().add(i);
+                                                }
+                                                case 1 -> {
+                                                    SedeSanPedro.getListaCuentasBloqueadas().add(i);
+                                                }
+                                                case 2 -> {
+                                                    SedeCiudadColon.getListaCuentasBloqueadas().add(i);
+                                                }
+                                            }
                                         }
                                     }
                                 }
+                            } else {
+                                JOptionPane.showMessageDialog(null, "La cuenta se encuentra eliminada");
+                            }
+                        } else {
+                            contador += 1;
+                            listaCedulas.add(i.getCedula());
+                            if (contador == SedeCentral.getListaUsers().size() && !listaCedulas.contains(txtCedula.getText())) {
+                                JOptionPane.showMessageDialog(null, "Usuario no encontrado");
                             }
                         }
                     }
