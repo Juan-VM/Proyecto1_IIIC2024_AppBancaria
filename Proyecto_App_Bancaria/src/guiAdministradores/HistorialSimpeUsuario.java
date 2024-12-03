@@ -133,6 +133,8 @@ public class HistorialSimpeUsuario extends javax.swing.JFrame {
         itemSedeSanPedro = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         itemSedeCiudadColon = new javax.swing.JMenuItem();
+        menuComentarios = new javax.swing.JMenu();
+        itemComentariosUsuarios = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -441,6 +443,19 @@ public class HistorialSimpeUsuario extends javax.swing.JFrame {
 
         barraMenu.add(menuInformacionSedes);
 
+        menuComentarios.setText("Comentarios");
+
+        itemComentariosUsuarios.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        itemComentariosUsuarios.setText("Comentarios usuarios");
+        itemComentariosUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemComentariosUsuariosActionPerformed(evt);
+            }
+        });
+        menuComentarios.add(itemComentariosUsuarios);
+
+        barraMenu.add(menuComentarios);
+
         setJMenuBar(barraMenu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -565,6 +580,12 @@ public class HistorialSimpeUsuario extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_itemRestaurarUsuarioActionPerformed
 
+    private void itemComentariosUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemComentariosUsuariosActionPerformed
+        ComentariosUsuarios coments = new ComentariosUsuarios(this.cedula);
+        coments.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_itemComentariosUsuariosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -605,6 +626,7 @@ public class HistorialSimpeUsuario extends javax.swing.JFrame {
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JMenuItem itemBienvenida;
     private javax.swing.JMenuItem itemBloquearCuenta;
+    private javax.swing.JMenuItem itemComentariosUsuarios;
     private javax.swing.JMenuItem itemDesbloquearCuenta;
     private javax.swing.JMenuItem itemEliminarUsuario;
     private javax.swing.JMenuItem itemIrInicio;
@@ -648,6 +670,7 @@ public class HistorialSimpeUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jblNumeroMonedero;
     private javax.swing.JLabel jblRealizadoPor;
     private javax.swing.JMenu menuBloqueoDesbloqueo;
+    private javax.swing.JMenu menuComentarios;
     private javax.swing.JMenu menuGestionUsuarios;
     private javax.swing.JMenu menuInformacionSedes;
     private javax.swing.JMenu menuInicio;

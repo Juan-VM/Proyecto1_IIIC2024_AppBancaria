@@ -93,6 +93,8 @@ public class SolicitudesDesbloqueo extends javax.swing.JFrame {
         itemSedeSanPedro = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         itemSedeCiudadColon = new javax.swing.JMenuItem();
+        menuComentarios = new javax.swing.JMenu();
+        itemComentariosUsuarios = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -194,7 +196,9 @@ public class SolicitudesDesbloqueo extends javax.swing.JFrame {
         );
         panelLibreLayout.setVerticalGroup(
             panelLibreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panelLibreLayout.createSequentialGroup()
+                .addComponent(Background, javax.swing.GroupLayout.PREFERRED_SIZE, 653, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         barraMenu.setBackground(new java.awt.Color(255, 255, 255));
@@ -317,6 +321,19 @@ public class SolicitudesDesbloqueo extends javax.swing.JFrame {
         menuInformacionSedes.add(itemSedeCiudadColon);
 
         barraMenu.add(menuInformacionSedes);
+
+        menuComentarios.setText("Comentarios");
+
+        itemComentariosUsuarios.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        itemComentariosUsuarios.setText("Comentarios usuarios");
+        itemComentariosUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemComentariosUsuariosActionPerformed(evt);
+            }
+        });
+        menuComentarios.add(itemComentariosUsuarios);
+
+        barraMenu.add(menuComentarios);
 
         setJMenuBar(barraMenu);
 
@@ -472,6 +489,12 @@ public class SolicitudesDesbloqueo extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_itemRestaurarUsuarioActionPerformed
 
+    private void itemComentariosUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemComentariosUsuariosActionPerformed
+        ComentariosUsuarios coments = new ComentariosUsuarios(this.cedula);
+        coments.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_itemComentariosUsuariosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -512,6 +535,7 @@ public class SolicitudesDesbloqueo extends javax.swing.JFrame {
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JMenuItem itemBienvenida;
     private javax.swing.JMenuItem itemBloquearCuenta;
+    private javax.swing.JMenuItem itemComentariosUsuarios;
     private javax.swing.JMenuItem itemDesbloquearCuenta;
     private javax.swing.JMenuItem itemEliminarUsuario;
     private javax.swing.JMenuItem itemIrInicio;
@@ -535,6 +559,7 @@ public class SolicitudesDesbloqueo extends javax.swing.JFrame {
     private javax.swing.JLabel jblDesbloquear;
     private javax.swing.JLabel jblSoloNumeros;
     private javax.swing.JMenu menuBloqueoDesbloqueo;
+    private javax.swing.JMenu menuComentarios;
     private javax.swing.JMenu menuGestionUsuarios;
     private javax.swing.JMenu menuInformacionSedes;
     private javax.swing.JMenu menuInicio;

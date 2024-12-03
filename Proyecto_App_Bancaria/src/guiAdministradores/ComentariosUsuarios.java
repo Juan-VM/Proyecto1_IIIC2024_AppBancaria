@@ -1,85 +1,36 @@
+
 package guiAdministradores;
 
+import Comentarios.Comentario;
 import Personas.Usuarios;
 import RegistroDatos.DatosRegistrados;
 import Sedes.SedeCentral;
-import Sedes.SedeCiudadColon;
-import Sedes.SedePuriscal;
-import Sedes.SedeSanPedro;
 import guiUsuarios.Inicio;
-import java.awt.Color;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class EliminarUsuario extends javax.swing.JFrame {
-
+public class ComentariosUsuarios extends javax.swing.JFrame {
+    
     String cedula;
     DefaultTableModel modelo = new DefaultTableModel();
-
-    public EliminarUsuario() {
+    
+    
+    public ComentariosUsuarios() {
+        initComponents();
     }
-
-    public EliminarUsuario(String cedula) {
+    public ComentariosUsuarios(String cedula) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.cedula = cedula;
-
-        modelo.addColumn("Usuario");
-        modelo.addColumn("Apellido");
+        
+        modelo.addColumn("Autor");
         modelo.addColumn("Cedula");
-        modelo.addColumn("Sede");
-        modelo.addColumn("Estado");
-
-        tablaUsuarios.setModel(modelo);
-        for (Usuarios i : SedeCentral.getListaUsers()) {
-            String estado = "";
-            String sede = "";
-            if (i.getEstadoUsuario() == true) {
-                estado = "Activo";
-            } else {
-                estado = "Bloqueado";
-            }
-
-            if (i.getSede() == 0) {
-                sede = "Puriscal";
-            } else if (i.getSede() == 1) {
-                sede = "San Pedro";
-            } else {
-                sede = "Ciudad Colon";
-            }
-            modelo.addRow(new Object[]{i.getUsuario(), i.getApellidos(), i.getCedula(), sede, estado});
-        }
-    }
-
-    public void removeUserToSede(String sede, String cedula) {
-        int indice = 0;
-        switch (sede) {
-            case "Puriscal" -> {
-                for (Usuarios i : SedePuriscal.getListaUsers()) {
-                    if (cedula.equals(i.getCedula())) {
-                        i.setEstadoCuenta(false);
-                        indice = SedePuriscal.getListaUsers().indexOf(i);
-                    }
-                }
-                SedePuriscal.getListaUsers().remove(indice);
-            }
-            case "San Pedro" -> {
-                for (Usuarios i : SedeSanPedro.getListaUsers()) {
-                    if (cedula.equals(i.getCedula())) {
-                        i.setEstadoCuenta(false);
-                        indice = SedeSanPedro.getListaUsers().indexOf(i);
-                    }
-                }
-                SedeSanPedro.getListaUsers().remove(indice);
-            }
-            case "Ciudad Colon" -> {
-                for (Usuarios i : SedeCiudadColon.getListaUsers()) {
-                    if (cedula.equals(i.getCedula())) {
-                        i.setEstadoCuenta(false);
-                        indice = SedeCiudadColon.getListaUsers().indexOf(i);
-                    }
-                }
-                SedeCiudadColon.getListaUsers().remove(indice);
+        modelo.addColumn("Fecha");
+        
+        tablaComentarios.setModel(modelo);
+        
+        for(Comentario i : DatosRegistrados.getListaComentarios()){
+            if(!i.getTexto().equals("")){
+                modelo.addRow(new Object []{i.getAutor(), i.getCeulaAutor(), i.getFecha()+" "+i.getHora()});
             }
         }
     }
@@ -94,20 +45,13 @@ public class EliminarUsuario extends javax.swing.JFrame {
     private void initComponents() {
 
         panelVisible = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        background = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaUsuarios = new javax.swing.JTable();
-        jSeparator7 = new javax.swing.JSeparator();
+        tablaComentarios = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        txtCedula = new javax.swing.JTextField();
-        panelBuscar = new javax.swing.JPanel();
-        jblBuscar = new javax.swing.JLabel();
-        jSeparator8 = new javax.swing.JSeparator();
-        jSeparator9 = new javax.swing.JSeparator();
-        panelEliminar = new javax.swing.JPanel();
-        jblEliminar = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtComentario = new javax.swing.JTextArea();
+        jblUsuario = new javax.swing.JLabel();
         barraMenu = new javax.swing.JMenuBar();
         menuInicio = new javax.swing.JMenu();
         itemBienvenida = new javax.swing.JMenuItem();
@@ -122,7 +66,7 @@ public class EliminarUsuario extends javax.swing.JFrame {
         itemDesbloquearCuenta = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         itemEliminarUsuario = new javax.swing.JMenuItem();
-        jSeparator10 = new javax.swing.JPopupMenu.Separator();
+        jSeparator7 = new javax.swing.JPopupMenu.Separator();
         itemRestaurarUsuario = new javax.swing.JMenuItem();
         menuInformacionSedes = new javax.swing.JMenu();
         itemSedePuriscal = new javax.swing.JMenuItem();
@@ -138,12 +82,11 @@ public class EliminarUsuario extends javax.swing.JFrame {
 
         panelVisible.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel1.setBackground(new java.awt.Color(252, 247, 215));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        background.setBackground(new java.awt.Color(252, 247, 215));
+        background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tablaUsuarios.setBackground(new java.awt.Color(204, 204, 204));
-        tablaUsuarios.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+        tablaComentarios.setBackground(new java.awt.Color(204, 204, 204));
+        tablaComentarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -151,98 +94,45 @@ public class EliminarUsuario extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(tablaUsuarios);
+        tablaComentarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tablaComentariosMousePressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tablaComentarios);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 520, 610));
-
-        jSeparator7.setForeground(new java.awt.Color(51, 51, 51));
-        jSeparator7.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jPanel1.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 10, 10, 690));
+        background.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 410, 570));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Busqueda en tabla");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 500, -1));
+        jLabel1.setText("Comentarios de usuarios");
+        background.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 450, -1));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Busqueda por cedula");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(542, 20, 530, -1));
+        txtComentario.setBackground(new java.awt.Color(255, 255, 255));
+        txtComentario.setColumns(20);
+        txtComentario.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        txtComentario.setForeground(new java.awt.Color(51, 51, 51));
+        txtComentario.setRows(5);
+        jScrollPane2.setViewportView(txtComentario);
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Ingrese la cedula del usuario:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 140, 340, -1));
+        background.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 200, 610, 400));
 
-        txtCedula.setBackground(new java.awt.Color(204, 204, 204));
-        txtCedula.setForeground(new java.awt.Color(51, 51, 51));
-        txtCedula.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                txtCedulaMousePressed(evt);
-            }
-        });
-        jPanel1.add(txtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 220, 350, 50));
-
-        panelBuscar.setBackground(new java.awt.Color(92, 88, 29));
-        panelBuscar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jblBuscar.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jblBuscar.setForeground(new java.awt.Color(255, 255, 255));
-        jblBuscar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jblBuscar.setText("Buscar");
-        jblBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jblBuscarMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jblBuscarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jblBuscarMouseExited(evt);
-            }
-        });
-        panelBuscar.add(jblBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 50));
-
-        jPanel1.add(panelBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 220, 120, 50));
-        jPanel1.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 270, -1, -1));
-
-        jSeparator9.setForeground(new java.awt.Color(51, 51, 51));
-        jPanel1.add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 350, 500, 10));
-
-        panelEliminar.setBackground(new java.awt.Color(92, 88, 29));
-        panelEliminar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jblEliminar.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jblEliminar.setForeground(new java.awt.Color(255, 255, 255));
-        jblEliminar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jblEliminar.setText("Eliminar");
-        jblEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jblEliminarMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jblEliminarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jblEliminarMouseExited(evt);
-            }
-        });
-        panelEliminar.add(jblEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, 70));
-
-        jPanel1.add(panelEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 470, 230, 70));
+        jblUsuario.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jblUsuario.setForeground(new java.awt.Color(51, 51, 51));
+        jblUsuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jblUsuario.setText("Usuario");
+        background.add(jblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(477, 140, 600, -1));
 
         javax.swing.GroupLayout panelVisibleLayout = new javax.swing.GroupLayout(panelVisible);
         panelVisible.setLayout(panelVisibleLayout);
         panelVisibleLayout.setHorizontalGroup(
             panelVisibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1090, Short.MAX_VALUE)
+            .addComponent(background, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1090, Short.MAX_VALUE)
         );
         panelVisibleLayout.setVerticalGroup(
             panelVisibleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE)
+            .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE)
         );
 
         barraMenu.setBackground(new java.awt.Color(255, 255, 255));
@@ -314,8 +204,13 @@ public class EliminarUsuario extends javax.swing.JFrame {
 
         itemEliminarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         itemEliminarUsuario.setText("Eliminar usuario");
+        itemEliminarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEliminarUsuarioActionPerformed(evt);
+            }
+        });
         menuGestionUsuarios.add(itemEliminarUsuario);
-        menuGestionUsuarios.add(jSeparator10);
+        menuGestionUsuarios.add(jSeparator7);
 
         itemRestaurarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         itemRestaurarUsuario.setText("Restaurar Usuario");
@@ -384,7 +279,7 @@ public class EliminarUsuario extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelVisible, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelVisible, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -418,6 +313,18 @@ public class EliminarUsuario extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_itemDesbloquearCuentaActionPerformed
 
+    private void itemEliminarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEliminarUsuarioActionPerformed
+        EliminarUsuario eliminar = new EliminarUsuario(this.cedula);
+        eliminar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_itemEliminarUsuarioActionPerformed
+
+    private void itemRestaurarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRestaurarUsuarioActionPerformed
+        RestaurarUsuario restaurar = new RestaurarUsuario(this.cedula);
+        restaurar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_itemRestaurarUsuarioActionPerformed
+
     private void itemSedePuriscalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSedePuriscalActionPerformed
         GestionSedes gestion = new GestionSedes(0, this.cedula);
         gestion.setVisible(true);
@@ -436,88 +343,21 @@ public class EliminarUsuario extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_itemSedeCiudadColonActionPerformed
 
-    private void jblBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblBuscarMouseClicked
-        if (!txtCedula.getText().trim().equals("")) {
-            String cedula = txtCedula.getText();
-
-            boolean valorEncontrado = false;
-            for (int i = 0; i < tablaUsuarios.getRowCount(); i++) {
-                if (cedula.equals(tablaUsuarios.getValueAt(i, 2))) {
-
-                    valorEncontrado = true;
-                    tablaUsuarios.setRowSelectionInterval(i, i);
+    private void tablaComentariosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaComentariosMousePressed
+        if(tablaComentarios.getRowCount() > 0){
+            int filaSeleccionada = tablaComentarios.getSelectedRow();
+            String cedulaUser = tablaComentarios.getValueAt(filaSeleccionada, 1).toString();
+            
+            for(Comentario i : DatosRegistrados.getListaComentarios()){
+                if(i.getCeulaAutor().equals(cedulaUser)){
+                    txtComentario.setText(i.getTexto());
                 }
             }
-            if (valorEncontrado == false) {
-                JOptionPane.showMessageDialog(null, "Usuario no encontrado");
-                txtCedula.setText("");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Error, ingresa una cedula");
         }
-    }//GEN-LAST:event_jblBuscarMouseClicked
-
-    private void txtCedulaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCedulaMousePressed
-        tablaUsuarios.clearSelection();
-    }//GEN-LAST:event_txtCedulaMousePressed
-
-    private void jblBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblBuscarMouseEntered
-        panelBuscar.setBackground(new Color(153, 145, 86));
-        jblBuscar.setForeground(Color.black);
-    }//GEN-LAST:event_jblBuscarMouseEntered
-
-    private void jblBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblBuscarMouseExited
-        panelBuscar.setBackground(new Color(92, 88, 29));
-        jblBuscar.setForeground(Color.white);
-    }//GEN-LAST:event_jblBuscarMouseExited
-
-    private void jblEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblEliminarMouseClicked
-
-        if (tablaUsuarios.getSelectedRow() >= 0) {
-            int eleccion = JOptionPane.showConfirmDialog(null, "Deseas eliminar este usuario?", "ELIMINAR", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-            if (eleccion == 0) {
-                int filaSeleccionada = tablaUsuarios.getSelectedRow();
-                String cedulaUser = tablaUsuarios.getValueAt(filaSeleccionada, 2).toString();
-                String sede = tablaUsuarios.getValueAt(filaSeleccionada, 3).toString();
-                int indice = 0;
-                for (Usuarios i : SedeCentral.getListaUsers()) {
-                    if (cedulaUser.equals(i.getCedula())) {
-                        i.setEstadoCuenta(false);
-                        indice = SedeCentral.getListaUsers().indexOf(i);
-                        DatosRegistrados.getListaUsuariosEliminados().add(i);
-                    }
-                }
-                SedeCentral.getListaUsers().remove(indice);
-                removeUserToSede(sede, cedulaUser);
-                modelo.removeRow(filaSeleccionada);
-                JOptionPane.showMessageDialog(null, "Usuario eliminado exitosamente");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Error, selecciona un usuario");
-        }
-
-    }//GEN-LAST:event_jblEliminarMouseClicked
-
-    private void jblEliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblEliminarMouseEntered
-        panelEliminar.setBackground(new Color(153, 145, 86));
-        jblEliminar.setForeground(Color.black);
-    }//GEN-LAST:event_jblEliminarMouseEntered
-
-    private void jblEliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblEliminarMouseExited
-        panelEliminar.setBackground(new Color(92, 88, 29));
-        jblEliminar.setForeground(Color.white);
-    }//GEN-LAST:event_jblEliminarMouseExited
-
-    private void itemRestaurarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRestaurarUsuarioActionPerformed
-        RestaurarUsuario restaurar = new RestaurarUsuario(this.cedula);
-        restaurar.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_itemRestaurarUsuarioActionPerformed
+    }//GEN-LAST:event_tablaComentariosMousePressed
 
     private void itemComentariosUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemComentariosUsuariosActionPerformed
-        ComentariosUsuarios coments = new ComentariosUsuarios(this.cedula);
-        coments.setVisible(true);
-        this.dispose();
+
     }//GEN-LAST:event_itemComentariosUsuariosActionPerformed
 
     /**
@@ -537,25 +377,26 @@ public class EliminarUsuario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EliminarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ComentariosUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EliminarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ComentariosUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EliminarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ComentariosUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EliminarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ComentariosUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EliminarUsuario().setVisible(true);
+                new ComentariosUsuarios().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel background;
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JMenuItem itemBienvenida;
     private javax.swing.JMenuItem itemBloquearCuenta;
@@ -569,31 +410,23 @@ public class EliminarUsuario extends javax.swing.JFrame {
     javax.swing.JMenuItem itemSedeSanPedro;
     private javax.swing.JMenuItem itemSolicitudesDesbloqueo;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JPopupMenu.Separator jSeparator6;
-    private javax.swing.JSeparator jSeparator7;
-    private javax.swing.JSeparator jSeparator8;
-    private javax.swing.JSeparator jSeparator9;
-    private javax.swing.JLabel jblBuscar;
-    private javax.swing.JLabel jblEliminar;
+    private javax.swing.JPopupMenu.Separator jSeparator7;
+    private javax.swing.JLabel jblUsuario;
     private javax.swing.JMenu menuBloqueoDesbloqueo;
     private javax.swing.JMenu menuComentarios;
     private javax.swing.JMenu menuGestionUsuarios;
     private javax.swing.JMenu menuInformacionSedes;
     private javax.swing.JMenu menuInicio;
-    private javax.swing.JPanel panelBuscar;
-    private javax.swing.JPanel panelEliminar;
     private javax.swing.JPanel panelVisible;
-    private javax.swing.JTable tablaUsuarios;
-    private javax.swing.JTextField txtCedula;
+    private javax.swing.JTable tablaComentarios;
+    private javax.swing.JTextArea txtComentario;
     // End of variables declaration//GEN-END:variables
 }

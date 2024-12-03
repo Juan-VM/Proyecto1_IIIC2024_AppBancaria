@@ -1,5 +1,6 @@
 package Personas;
 
+import Comentarios.Comentario;
 import Comprobantes.ComprobanteSimpeEntrada;
 import Comprobantes.ComprobanteSimpeSalida;
 import Cuentas.CuentaAhorro;
@@ -11,13 +12,15 @@ public class Usuarios extends Personas {
 
     private boolean estadoUsuario = true;
     private boolean estadoCuenta = true;
+    private Comentario comentario;
     private CuentaCorriente cuentaCorriente = new CuentaCorriente(0, true);
     private CuentaAhorro cuentaAhorro = new CuentaAhorro(0, false);
     private CuentaSimpe cuentaSimpe = new CuentaSimpe(0, false);
     private ArrayList<ComprobanteSimpeSalida> comprobantesSimpeSalida = new ArrayList<>();
     private ArrayList<ComprobanteSimpeEntrada> comprobantesSimpeEntrada = new ArrayList<>();
 
-    public Usuarios(String usuario, String apellidos, String password, String cedula, String telefono, int claveNumerica, int rol, int sede, double saldoDeLaCuenta, double saldoCuentaSimpe, double saldoCuentaAhorro) {
+    public Usuarios(String usuario, String apellidos, String password, String cedula, String telefono, int claveNumerica, int rol, int sede,
+            double saldoDeLaCuenta, double saldoCuentaSimpe, double saldoCuentaAhorro) {
 
         super(usuario, apellidos, password, cedula, telefono, claveNumerica, rol, sede);
     }
@@ -25,8 +28,7 @@ public class Usuarios extends Personas {
     public Usuarios(){
         
     }
-    
-    
+
     public CuentaCorriente getCuentaCorriente() {
         return cuentaCorriente;
     }
@@ -81,6 +83,14 @@ public class Usuarios extends Personas {
 
     public void setEstadoCuenta(boolean estadoCuenta) {
         this.estadoCuenta = estadoCuenta;
+    }
+
+    public Comentario getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(Comentario comentario) {
+        this.comentario = comentario;
     }
     
     

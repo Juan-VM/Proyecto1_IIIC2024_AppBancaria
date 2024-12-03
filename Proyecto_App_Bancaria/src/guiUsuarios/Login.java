@@ -346,7 +346,7 @@ public class Login extends javax.swing.JFrame {
 
         switch (this.rol) {
             case 0 -> {
-                if (SedeCentral.getListaUsers().size() == 0) {
+                if (SedeCentral.getListaUsers().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "No hay usuarios registrados");
                 } else {
                     for (Usuarios i : SedeCentral.getListaUsers()) {
