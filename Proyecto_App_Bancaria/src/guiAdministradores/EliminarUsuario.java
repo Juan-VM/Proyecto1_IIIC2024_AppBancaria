@@ -57,6 +57,7 @@ public class EliminarUsuario extends javax.swing.JFrame {
             case "Puriscal" -> {
                 for (Usuarios i : SedePuriscal.getListaUsers()) {
                     if (cedula.equals(i.getCedula())) {
+                        i.setEstadoCuenta(false);
                         indice = SedePuriscal.getListaUsers().indexOf(i);
                     }
                 }
@@ -65,6 +66,7 @@ public class EliminarUsuario extends javax.swing.JFrame {
             case "San Pedro" -> {
                 for (Usuarios i : SedeSanPedro.getListaUsers()) {
                     if (cedula.equals(i.getCedula())) {
+                        i.setEstadoCuenta(false);
                         indice = SedeSanPedro.getListaUsers().indexOf(i);
                     }
                 }
@@ -73,6 +75,7 @@ public class EliminarUsuario extends javax.swing.JFrame {
             case "Ciudad Colon" -> {
                 for (Usuarios i : SedeCiudadColon.getListaUsers()) {
                     if (cedula.equals(i.getCedula())) {
+                        i.setEstadoCuenta(false);
                         indice = SedeCiudadColon.getListaUsers().indexOf(i);
                     }
                 }
@@ -463,6 +466,7 @@ public class EliminarUsuario extends javax.swing.JFrame {
                 int indice = 0;
                 for (Usuarios i : SedeCentral.getListaUsers()) {
                     if (cedulaUser.equals(i.getCedula())) {
+                        i.setEstadoCuenta(false);
                         indice = SedeCentral.getListaUsers().indexOf(i);
                         DatosRegistrados.getListaUsuariosEliminados().add(i);
                     }
