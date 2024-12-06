@@ -3,10 +3,12 @@ package guiUsuarios;
 import Comprobantes.ComprobanteSimpeEntrada;
 import Comprobantes.ComprobanteSimpeSalida;
 import Personas.Usuarios;
+import RegistroDatos.BaseDatos;
 import RegistroDatos.DatosRegistrados;
 import Sedes.SedeCentral;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -204,10 +206,10 @@ public class Simpe extends javax.swing.JFrame {
         String realizadoPor = "";
         String destinatario = "";
         String detalle = comprobante.getDetalle();
-        if(detalle.equals("Ingrese el detalle"))
+        if (detalle.equals("Ingrese el detalle")) {
             detalle = "ninguno";
-        
-        
+        }
+
         for (Usuarios i : SedeCentral.getListaUsers()) {
             if (i.getTelefono().equals(comprobante.getNumeroEmisor())) {
                 realizadoPor = i.getApellidos() + " " + i.getUsuario();
@@ -227,15 +229,15 @@ public class Simpe extends javax.swing.JFrame {
         jblMontoTransferencia.setText(String.valueOf(comprobante.getMonto()) + " Colones");
         jblDetalle.setText(detalle);
     }
-    
+
     public void setTextosMuestraComprobanteEntrada(ComprobanteSimpeEntrada comprobante) {
         String realizadoPor = "";
         String destinatario = "";
         String detalle = comprobante.getDetalle();
-        if(detalle.equals("Ingrese el detalle"))
+        if (detalle.equals("Ingrese el detalle")) {
             detalle = "ninguno";
-        
-        
+        }
+
         for (Usuarios i : SedeCentral.getListaUsers()) {
             if (i.getTelefono().equals(comprobante.getNumeroEmisor())) {
                 realizadoPor = i.getApellidos() + " " + i.getUsuario();
@@ -1573,7 +1575,7 @@ public class Simpe extends javax.swing.JFrame {
 
     private void jblRealizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRealizarMouseClicked
         validarDatosSimpe();
-        
+
         if (this.numeroValido == true && this.montoValido == true && this.cuentaValida == true) {
             int eleccion = JOptionPane.showConfirmDialog(null, "Deseas realizar el simpe?", "SIMPE", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
             if (eleccion == 0) {
@@ -1628,6 +1630,11 @@ public class Simpe extends javax.swing.JFrame {
                     if (i.getTelefono().equals(txtNumeroSimpe.getText())) {
                         i.getComprobantesSimpeEntrada().add(comprobanteEntrada);
                     }
+                }
+                try {
+                    BaseDatos.actualizarBaseDatos();
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Error actualizando la base de datos");
                 }
 
                 JOptionPane.showMessageDialog(null, "Simpe Realizado con exito");
@@ -1761,7 +1768,7 @@ public class Simpe extends javax.swing.JFrame {
                     }
                 }
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "No hay simpes registrados");
         }
     }//GEN-LAST:event_jblVerComprobanteSMouseClicked
@@ -1800,7 +1807,7 @@ public class Simpe extends javax.swing.JFrame {
                     }
                 }
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "No hay simpes registrados");
         }
     }//GEN-LAST:event_jblVerComprobanteEMouseClicked

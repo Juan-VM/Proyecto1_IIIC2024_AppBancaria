@@ -1,9 +1,11 @@
 package guiUsuarios;
 
 import Personas.Usuarios;
+import RegistroDatos.BaseDatos;
 import Sedes.SedeCentral;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 
 public class Retirar extends javax.swing.JFrame {
@@ -90,12 +92,12 @@ public class Retirar extends javax.swing.JFrame {
 
         billetes1000 = (int) montoDeCambio / 1000;
         montoDeCambio %= 1000;
-        
-        lbl1000.setText(" x"+billetes1000);
-        lbl2000.setText(" x"+billetes2000);
-        lbl5000.setText(" x"+billetes5000);
-        lbl10000.setText(" x"+billetes10000);
-        lbl20000.setText(" x"+billetes20000);
+
+        lbl1000.setText(" x" + billetes1000);
+        lbl2000.setText(" x" + billetes2000);
+        lbl5000.setText(" x" + billetes5000);
+        lbl10000.setText(" x" + billetes10000);
+        lbl20000.setText(" x" + billetes20000);
         jblTotal.setText(String.valueOf(monto));
     }
 
@@ -1512,6 +1514,12 @@ public class Retirar extends javax.swing.JFrame {
                                 i.getCuentaSimpe().retirarDinero(monto);
                             }
                         }
+
+                        try {
+                            BaseDatos.actualizarBaseDatos();
+                        } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(null, "Error actualizando la base de datos");
+                        }
                         JOptionPane.showMessageDialog(null, "Retiro realizado exitosamente");
                         jblMontoRetiro.setText("");
                         pizarra.setSelectedIndex(3);
@@ -1544,7 +1552,7 @@ public class Retirar extends javax.swing.JFrame {
                     Simpe simpe = new Simpe(this.cedula, this.sede);
                     simpe.setVisible(true);
                     this.dispose();
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Cuenta simpe inactiva, debes habilitarla");
                 }
             }
