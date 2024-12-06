@@ -1,6 +1,7 @@
 package guiAdministradores;
 
 import Personas.Usuarios;
+import RegistroDatos.BaseDatos;
 import RegistroDatos.DatosRegistrados;
 import Sedes.SedeCentral;
 import Sedes.SedeCiudadColon;
@@ -8,6 +9,7 @@ import Sedes.SedePuriscal;
 import Sedes.SedeSanPedro;
 import guiUsuarios.Inicio;
 import java.awt.Color;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -490,6 +492,11 @@ public class EliminarUsuario extends javax.swing.JFrame {
                 SedeCentral.getListaUsers().remove(indice);
                 removeUserToSede(sede, cedulaUser);
                 modelo.removeRow(filaSeleccionada);
+                try {
+                    BaseDatos.actualizarBaseDatos();
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Error actualizando la base de datos");
+                }
                 JOptionPane.showMessageDialog(null, "Usuario eliminado exitosamente");
             }
         } else {

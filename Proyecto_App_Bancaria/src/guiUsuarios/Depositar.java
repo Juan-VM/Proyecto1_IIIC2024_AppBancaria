@@ -1,9 +1,11 @@
 package guiUsuarios;
 
 import Personas.Usuarios;
+import RegistroDatos.BaseDatos;
 import Sedes.SedeCentral;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 
 public class Depositar extends javax.swing.JFrame {
@@ -1350,6 +1352,11 @@ public class Depositar extends javax.swing.JFrame {
                             case "simpe" -> {
                                 i.getCuentaSimpe().depositarDinero(monto);
                             }
+                        }
+                        try {
+                            BaseDatos.actualizarBaseDatos();
+                        } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(null, "Error actualizando la base de datos");
                         }
                         JOptionPane.showMessageDialog(null, "Deposito realizado exitosamente");
                         jblMontoDeposito.setText("");

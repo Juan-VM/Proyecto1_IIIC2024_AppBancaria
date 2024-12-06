@@ -1,9 +1,11 @@
 package guiUsuarios;
 
 import Personas.Usuarios;
+import RegistroDatos.BaseDatos;
 import Sedes.SedeCentral;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 
 public class HabilitarCuentas extends javax.swing.JFrame {
@@ -524,7 +526,7 @@ public class HabilitarCuentas extends javax.swing.JFrame {
         VerSaldo ver = new VerSaldo(this.cedula, this.sede);
         ver.setVisible(true);
         panelRetirarBarra.setBackground(new Color(252, 247, 215));
-        this.dispose(); 
+        this.dispose();
     }//GEN-LAST:event_jblVerSaldoMouseClicked
 
     private void jblVerSaldoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseEntered
@@ -581,9 +583,14 @@ public class HabilitarCuentas extends javax.swing.JFrame {
             if (i.getCedula().equals(this.cedula)) {
                 if (i.getCuentaAhorro().getEstado() == false) {
                     int eleccion = JOptionPane.showConfirmDialog(null, "Deseas habilitar la cuenta de ahorro?", "HABILITAR CUENTA", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-                    if(eleccion == 0){
+                    if (eleccion == 0) {
                         i.getCuentaAhorro().setEstado(true);
-                        JOptionPane.showMessageDialog(null, "Cuenta de ahorro habilitada para: "+i.getUsuario());
+                        try {
+                            BaseDatos.actualizarBaseDatos();
+                        } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(null, "Error actualizando la base de datos");
+                        }
+                        JOptionPane.showMessageDialog(null, "Cuenta de ahorro habilitada para: " + i.getUsuario());
                         pizarra.setSelectedIndex(0);
                     }
                 } else {
@@ -608,9 +615,14 @@ public class HabilitarCuentas extends javax.swing.JFrame {
             if (i.getCedula().equals(this.cedula)) {
                 if (i.getCuentaSimpe().getEstado() == false) {
                     int eleccion = JOptionPane.showConfirmDialog(null, "Deseas habilitar la cuenta de simpe?", "HABILITAR CUENTA", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-                    if(eleccion == 0){
+                    if (eleccion == 0) {
                         i.getCuentaSimpe().setEstado(true);
-                        JOptionPane.showMessageDialog(null, "Cuenta de simpe habilitada para: "+i.getUsuario());
+                        try {
+                            BaseDatos.actualizarBaseDatos();
+                        } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(null, "Error actualizando la base de datos");
+                        }
+                        JOptionPane.showMessageDialog(null, "Cuenta de simpe habilitada para: " + i.getUsuario());
                         pizarra.setSelectedIndex(0);
                     }
                 } else {
@@ -637,7 +649,7 @@ public class HabilitarCuentas extends javax.swing.JFrame {
                     Simpe simpe = new Simpe(this.cedula, this.sede);
                     simpe.setVisible(true);
                     this.dispose();
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Cuenta simpe inactiva, debes habilitarla");
                 }
             }

@@ -4,12 +4,14 @@ import guiAdministradores.DesbloquearCuenta;
 import guiAdministradores.SolicitudesDesbloqueo;
 import guiAdministradores.PrincipalAdmins;
 import Personas.Usuarios;
+import RegistroDatos.BaseDatos;
 import Sedes.SedeCentral;
 import Sedes.SedeCiudadColon;
 import Sedes.SedePuriscal;
 import Sedes.SedeSanPedro;
 import guiUsuarios.Inicio;
 import java.awt.Color;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionListener;
@@ -82,7 +84,7 @@ public class BloquearCuenta extends javax.swing.JFrame {
                         SedeCentral.getListaCuentasBloqueadas().add(i);
                         SedePuriscal.getListaCuentasBloqueadas().add(i);
                         modeloPuriscal.removeRow(filaSeleccionada);
-                        JOptionPane.showMessageDialog(null, "Cuenta bloqueada para el usuario: "+i.getUsuario());
+                        JOptionPane.showMessageDialog(null, "Cuenta bloqueada para el usuario: " + i.getUsuario());
                     }
                 }
             }
@@ -93,7 +95,7 @@ public class BloquearCuenta extends javax.swing.JFrame {
                         SedeCentral.getListaCuentasBloqueadas().add(i);
                         SedeSanPedro.getListaCuentasBloqueadas().add(i);
                         modeloSanPedro.removeRow(filaSeleccionada);
-                        JOptionPane.showMessageDialog(null, "Cuenta bloqueada para el usuario: "+i.getUsuario());
+                        JOptionPane.showMessageDialog(null, "Cuenta bloqueada para el usuario: " + i.getUsuario());
                     }
                 }
             }
@@ -104,7 +106,7 @@ public class BloquearCuenta extends javax.swing.JFrame {
                         SedeCentral.getListaCuentasBloqueadas().add(i);
                         SedeCiudadColon.getListaCuentasBloqueadas().add(i);
                         modeloCiudadColon.removeRow(filaSeleccionada);
-                        JOptionPane.showMessageDialog(null, "Cuenta bloqueada para el usuario: "+i.getUsuario());
+                        JOptionPane.showMessageDialog(null, "Cuenta bloqueada para el usuario: " + i.getUsuario());
                     }
                 }
             }
@@ -468,13 +470,18 @@ public class BloquearCuenta extends javax.swing.JFrame {
                 if (tablaSedePuriscal.getSelectedRow() >= 0) {
                     int filaSeleccionada = tablaSedePuriscal.getSelectedRow();
                     bloquearCuenta(tablaSedePuriscal, filaSeleccionada);
-                    
+
                 } else if (tablaSedeCiudadColon.getSelectedRow() >= 0) {
                     int filaSeleccionada = tablaSedeCiudadColon.getSelectedRow();
                     bloquearCuenta(tablaSedeCiudadColon, filaSeleccionada);
                 } else {
                     int filaSeleccionada = tablaSedeSanPedro.getSelectedRow();
                     bloquearCuenta(tablaSedeSanPedro, filaSeleccionada);
+                }
+                try {
+                    BaseDatos.actualizarBaseDatos();
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Error actualizando la base de datos");
                 }
             }
         } else {
@@ -522,7 +529,7 @@ public class BloquearCuenta extends javax.swing.JFrame {
     }//GEN-LAST:event_itemEliminarUsuario2ActionPerformed
 
     private void itemRestaurarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRestaurarUsuarioActionPerformed
-        RestaurarUsuario restaurar =  new RestaurarUsuario(this.cedula);
+        RestaurarUsuario restaurar = new RestaurarUsuario(this.cedula);
         restaurar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_itemRestaurarUsuarioActionPerformed
