@@ -357,8 +357,6 @@ public class Login extends javax.swing.JFrame {
 
                                         datosIguales = validarDatos("usuarios");
                                         if (datosIguales == true) {
-                                            
-                                            
                                             PrincipalUsers users = new PrincipalUsers(this.cedula, this.sede);
                                             users.setVisible(true);
                                             this.dispose();

@@ -1,135 +1,13 @@
+
 package guiUsuarios;
 
-import Personas.Administradores;
-import Personas.Usuarios;
-import RegistroDatos.BaseDatos;
-import RegistroDatos.DatosRegistrados;
-import Sedes.SedeCentral;
-import Sedes.SedeCiudadColon;
-import Sedes.SedePuriscal;
-import Sedes.SedeSanPedro;
 import java.awt.Color;
-import java.io.BufferedReader;
-
-import java.io.FileReader;
-import javax.swing.JOptionPane;
 
 public class Inicio extends javax.swing.JFrame {
 
     public Inicio() {
         initComponents();
         this.setLocationRelativeTo(null);
-
-        try {
-            BaseDatos.verfificarExistenciaArchivo();
-            BufferedReader leer = new BufferedReader(new FileReader(BaseDatos.getArchivo()));
-            String linea;
-            int numeroLinea = 0;
-            limpiarSedes();
-            while ((linea = leer.readLine()) != null) {
-                
-                //Distribucion de la lista datos:
-                //[0] = Usuario
-                //[1] = Apellido
-                //[2] = Cedula
-                //[3] = Telefono
-                //[4] = Password
-                //[5] = Clave Num
-                //[6] = Rol
-                //[7] = Sede
-                //Si es usuario...
-                //[8] = saldo cuenta corriente
-                //[9] = saldo cuenta ahorro
-                //[10] = saldo cuenta simpe
-                //[11] = estado cuenta corriente
-                //[12] = estado cuenta ahorro
-                //[13] = estado cuenta simpe
-                //[14] = estado usuario
-                //[15] = estado cuenta
-
-                String[] datos = linea.split("\t");
-                
-                DatosRegistrados.getListaCedulas().add(datos[2]);
-                DatosRegistrados.getListaClaves().add(Integer.parseInt(datos[5]));
-                DatosRegistrados.getListaTelefonos().add(datos[3]);
-               
-                switch (Integer.parseInt(datos[6])) {
-                    case 0 -> {
-                       int n = 0;
-                        for(String i : datos){
-                            System.out.println("["+n+"] = "+i);
-                            n+=1;
-                        }
-                        
-                        Usuarios user = new Usuarios(datos[0], datos[1], datos[2], datos[3], datos[4], Integer.parseInt(datos[5]), Integer.parseInt(datos[6]), Integer.parseInt(datos[7]),
-                                0, 0, 0);
-
-                        user.getCuentaCorriente().setSaldo(Double.parseDouble(datos[8]));
-                        user.getCuentaAhorro().setSaldo(Double.parseDouble(datos[9]));
-                        user.getCuentaSimpe().setSaldo(Double.parseDouble(datos[10]));
-                        
-                        user.getCuentaCorriente().setEstado(Boolean.parseBoolean(datos[11]));
-                        user.getCuentaAhorro().setEstado(Boolean.parseBoolean(datos[12]));
-                        user.getCuentaSimpe().setEstado(Boolean.parseBoolean(datos[13]));
-
-                        user.setEstadoUsuario(Boolean.parseBoolean(datos[14]));
-                        user.setEstadoCuenta(Boolean.parseBoolean(datos[15]));
-
-                        SedeCentral.getListaUsers().add(user);
-                        agregarUserSede(Integer.parseInt(datos[7]), user);
-                        
-                        if(user.getEstadoCuenta() == false){
-                            DatosRegistrados.getListaUsuariosEliminados().add(user);
-                        }
-                    }
-                    case 1 -> {
-                        Administradores admin = new Administradores(datos[0], datos[1], datos[2], datos[3], datos[4], Integer.parseInt(datos[5]), Integer.parseInt(datos[6]), Integer.parseInt(datos[7]));
-                        SedeCentral.getListaAdmins().add(admin);
-                        agregarAdminSede(Integer.parseInt(datos[7]), admin);
-                    }
-                }
-            }
-            leer.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error");
-        }
-
-    }
-
-    public void agregarUserSede(int sede, Usuarios user) {
-
-        if (sede == 0) {
-            SedePuriscal.getListaUsers().add(user);
-        } else if (sede == 1) {
-            SedeSanPedro.getListaUsers().add(user);
-        } else {
-            SedeCiudadColon.getListaUsers().add(user);
-        }
-    }
-
-    public void agregarAdminSede(int sede, Administradores admin) {
-
-        if (sede == 0) {
-            SedePuriscal.getListaAdmins().add(admin);
-        } else if (sede == 1) {
-            SedeSanPedro.getListaAdmins().add(admin);
-        } else {
-            SedeCiudadColon.getListaAdmins().add(admin);
-        }
-    }
-
-    public void limpiarSedes() {
-        SedeCentral.getListaUsers().clear();
-        SedeCentral.getListaAdmins().clear();
-
-        SedePuriscal.getListaUsers().clear();
-        SedePuriscal.getListaAdmins().clear();
-
-        SedeSanPedro.getListaUsers().clear();
-        SedeSanPedro.getListaAdmins().clear();
-
-        SedeCiudadColon.getListaUsers().clear();
-        SedeCiudadColon.getListaAdmins().clear();
     }
 
     /**

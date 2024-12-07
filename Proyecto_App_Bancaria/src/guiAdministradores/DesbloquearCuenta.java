@@ -1,19 +1,19 @@
+
 package guiAdministradores;
 
 import guiAdministradores.SolicitudesDesbloqueo;
 import guiAdministradores.PrincipalAdmins;
 import Personas.Usuarios;
-import RegistroDatos.BaseDatos;
 import Sedes.SedeCentral;
 import Sedes.SedeCiudadColon;
 import Sedes.SedePuriscal;
 import Sedes.SedeSanPedro;
 import guiUsuarios.Inicio;
 import java.awt.Color;
-import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 
 public class DesbloquearCuenta extends javax.swing.JFrame {
 
@@ -21,11 +21,10 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
     DefaultTableModel modeloPuriscal = new DefaultTableModel();
     DefaultTableModel modeloSanPedro = new DefaultTableModel();
     DefaultTableModel modeloCiudadColon = new DefaultTableModel();
-
+    
     public DesbloquearCuenta() {
         initComponents();
     }
-
     public DesbloquearCuenta(String cedula) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -48,7 +47,7 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
         tablaSedeCiudadColon.setModel(modeloCiudadColon);
         llenarTablas();
     }
-
+    
     public void llenarTablas() {
         for (Usuarios i : SedePuriscal.getListaUsers()) {
             String sede = "Puriscal";
@@ -69,8 +68,8 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
             }
         }
     }
-
-    public void desbloquearCuenta(JTable tabla, int filaSeleccionada) {
+    
+     public void desbloquearCuenta(JTable tabla, int filaSeleccionada) {
         String cedulaUser = tabla.getValueAt(filaSeleccionada, 2).toString();
         String sede = tabla.getValueAt(filaSeleccionada, 0).toString();
 
@@ -82,7 +81,7 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
                         SedeCentral.getListaCuentasBloqueadas().remove(i);
                         SedePuriscal.getListaCuentasBloqueadas().remove(i);
                         modeloPuriscal.removeRow(filaSeleccionada);
-                        JOptionPane.showMessageDialog(null, "Cuenta bloqueada para el usuario: " + i.getUsuario());
+                        JOptionPane.showMessageDialog(null, "Cuenta bloqueada para el usuario: "+i.getUsuario());
                     }
                 }
             }
@@ -93,7 +92,7 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
                         SedeCentral.getListaCuentasBloqueadas().remove(i);
                         SedeSanPedro.getListaCuentasBloqueadas().remove(i);
                         modeloSanPedro.removeRow(filaSeleccionada);
-                        JOptionPane.showMessageDialog(null, "Cuenta bloqueada para el usuario: " + i.getUsuario());
+                        JOptionPane.showMessageDialog(null, "Cuenta bloqueada para el usuario: "+i.getUsuario());
                     }
                 }
             }
@@ -104,7 +103,7 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
                         SedeCentral.getListaCuentasBloqueadas().remove(i);
                         SedeCiudadColon.getListaCuentasBloqueadas().remove(i);
                         modeloCiudadColon.removeRow(filaSeleccionada);
-                        JOptionPane.showMessageDialog(null, "Cuenta desbloqueada para el usuario: " + i.getUsuario());
+                        JOptionPane.showMessageDialog(null, "Cuenta desbloqueada para el usuario: "+i.getUsuario());
                     }
                 }
             }
@@ -493,11 +492,6 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
                     int filaSeleccionada = tablaSedeSanPedro.getSelectedRow();
                     desbloquearCuenta(tablaSedeSanPedro, filaSeleccionada);
                 }
-                try {
-                    BaseDatos.actualizarBaseDatos();
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null, "Error actualizando la base de datos");
-                }
             }
         } else {
             JOptionPane.showMessageDialog(null, "Error selecciona un usuario de la tabla");
@@ -515,7 +509,7 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
     }//GEN-LAST:event_jblDesbloquearMouseExited
 
     private void itemDesbloquearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDesbloquearCuentaActionPerformed
-
+        
     }//GEN-LAST:event_itemDesbloquearCuentaActionPerformed
 
     private void itemEliminarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEliminarUsuarioActionPerformed
@@ -525,7 +519,7 @@ public class DesbloquearCuenta extends javax.swing.JFrame {
     }//GEN-LAST:event_itemEliminarUsuarioActionPerformed
 
     private void itemRestaurarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRestaurarUsuarioActionPerformed
-        RestaurarUsuario restaurar = new RestaurarUsuario(this.cedula);
+        RestaurarUsuario restaurar =  new RestaurarUsuario(this.cedula);
         restaurar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_itemRestaurarUsuarioActionPerformed

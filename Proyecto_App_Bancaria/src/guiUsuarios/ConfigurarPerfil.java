@@ -1,14 +1,12 @@
 package guiUsuarios;
 
 import Personas.Usuarios;
-import RegistroDatos.BaseDatos;
 import RegistroDatos.DatosRegistrados;
 import Sedes.SedeCiudadColon;
 import Sedes.SedePuriscal;
 import Sedes.SedeSanPedro;
 import Sedes.SedeCentral;
 import java.awt.Color;
-import java.io.IOException;
 import javax.swing.JOptionPane;
 
 public class ConfigurarPerfil extends javax.swing.JFrame {
@@ -789,12 +787,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
                         this.cedula = i.getCedula();
                         this.telefono = i.getTelefono();
                         actualizarDatosEnLaSede(this.sede, i.getCedula(), i);
-                        
-                        try {
-                            BaseDatos.actualizarBaseDatos();
-                        } catch (IOException ex) {
-                            JOptionPane.showMessageDialog(null, "Error actualizando la base de datos");
-                        }
+
                     }
                 }
 

@@ -2,7 +2,6 @@ package guiUsuarios;
 
 import Personas.Administradores;
 import Personas.Usuarios;
-import RegistroDatos.BaseDatos;
 import RegistroDatos.DatosRegistrados;
 import Sedes.SedeCiudadColon;
 import Sedes.SedePuriscal;
@@ -28,7 +27,7 @@ public class Registro extends javax.swing.JFrame {
         txtsRegistroPorDefecto();
         alertasPorDefecto();
     }
-    
+
     public void txtsRegistroPorDefecto() {
         txtUsuarioOF.setText("Ingrese su usuario");
         txtApellidoOF.setText("Ingrese sus apellidos");
@@ -567,11 +566,6 @@ public class Registro extends javax.swing.JFrame {
                                         SedeCiudadColon.getListaUsers().add(user);
                                     }
                                 }
-                                
-                                BaseDatos.llenarTxtUser(usuario, apellido, cedula, telefono, password, String.valueOf(claveNumerica), String.valueOf(rol), String.valueOf(sede),//datos registro
-                                        String.valueOf(user.getCuentaCorriente().getSaldo()), String.valueOf(user.getCuentaAhorro().getSaldo()), String.valueOf(user.getCuentaSimpe().getSaldo()),//saldos
-                                        String.valueOf(user.getCuentaCorriente().getEstado()), String.valueOf(user.getCuentaAhorro().getEstado()), String.valueOf(user.getCuentaSimpe().getEstado()),//estados
-                                        String.valueOf(user.getEstadoUsuario()), String.valueOf(user.getEstadoCuenta()));
                             }
                             case 1 -> {
                                 Administradores admin = new Administradores(usuario, apellido, password, cedula, telefono, claveNumerica, rol, sede);
@@ -589,11 +583,8 @@ public class Registro extends javax.swing.JFrame {
                                         SedeCiudadColon.getListaAdmins().add(admin);
                                     }
                                 }
-                                
-                                BaseDatos.llenarTxtAdmin(usuario, apellido, cedula, telefono, password, String.valueOf(claveNumerica), String.valueOf(rol), String.valueOf(sede));
                             }
                         }
-                        
                         JOptionPane.showMessageDialog(null, "Datos guardados");
                         Inicio inicio = new Inicio();
                         inicio.setVisible(true);
