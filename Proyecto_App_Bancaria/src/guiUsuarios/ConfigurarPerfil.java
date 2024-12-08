@@ -120,9 +120,6 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     }
 
     public void actalizarNumerosEmisoresYReceptoresComprobantesSalida(String telN) {
-        System.out.println("entro a salida");
-        System.out.println("numero viejo: " + this.telefonoAnterior);
-        System.out.println("numero nuevo: " + telN);
         for (Usuarios i : SedeCentral.getListaUsers()) {
 
             for (ComprobanteSimpeSalida c : i.getComprobantesSimpeSalida()) {
@@ -136,13 +133,37 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
             }
 
         }
+        
+        for(Usuarios i : DatosRegistrados.getListaUsuariosEliminados()){
+            for (ComprobanteSimpeSalida c : i.getComprobantesSimpeSalida()) {
+                if (c.getNumeroEmisor().equals(this.telefonoAnterior)) {
+                    c.setNumeroEmisor(telN);
+                }
+
+                if (c.getNumeroReceptor().equals(this.telefonoAnterior)) {
+                    c.setNumeroReceptor(telN);
+                }
+                
+            }
+        }
     }
 
     public void actalizarNumerosEmisoresYReceptoresComprobantesEntrada(String telN) {
-        System.out.println("entro a entrada");
-        System.out.println("numero viejo: " + this.telefonoAnterior);
-        System.out.println("numero nuevo: " + telN);
         for (Usuarios i : SedeCentral.getListaUsers()) {
+
+            for (ComprobanteSimpeEntrada c : i.getComprobantesSimpeEntrada()) {
+                if (c.getNumeroEmisor().equals(this.telefonoAnterior)) {
+                    c.setNumeroEmisor(telN);
+                }
+
+                if (c.getNumeroReceptor().equals(this.telefonoAnterior)) {
+                    c.setNumeroReceptor(telN);
+                }
+            }
+
+        }
+        
+        for (Usuarios i : DatosRegistrados.getListaUsuariosEliminados()) {
 
             for (ComprobanteSimpeEntrada c : i.getComprobantesSimpeEntrada()) {
                 if (c.getNumeroEmisor().equals(this.telefonoAnterior)) {

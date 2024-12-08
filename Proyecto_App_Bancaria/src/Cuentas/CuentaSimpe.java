@@ -9,7 +9,7 @@ public class CuentaSimpe extends Cuentas{
     
     private ArrayList<ComprobanteSimpeSalida> comprobantesSimpe = new ArrayList<>();
     
-    public CuentaSimpe(double saldo, boolean estado) {
-        super(saldo, estado);
+    public CuentaSimpe(boolean estado) {
+        super(estado);
     }
 }

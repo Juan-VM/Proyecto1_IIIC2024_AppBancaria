@@ -4,6 +4,7 @@ import Comprobantes.ComprobanteSimpeEntrada;
 import Comprobantes.ComprobanteSimpeSalida;
 import Personas.Administradores;
 import Personas.Usuarios;
+import RegistroDatos.DatosRegistrados;
 import Sedes.SedeCentral;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,6 +22,7 @@ public class BaseDatos {
     public static File administradoresTxt = new File("administradoresTxt.txt");
     public static File simpesSalidaTxt = new File("simpesSalidaTxt.txt");
     public static File simpesEntradaTxt = new File("simpesEntradaTxt.txt");
+    public static File usuariosEliminadosTxt = new File("usuariosEliminadosTxt.txt");
 
     public static void verfificarExistenciaUsuariosTxT() {
         try {
@@ -61,6 +63,16 @@ public class BaseDatos {
             JOptionPane.showMessageDialog(null, "A ocorrido un error");
         }
     }
+    
+    public static void verfificarExistenciaUsuariosEliminadosTxT() {
+        try {
+            if (!usuariosEliminadosTxt.exists()) {
+                usuariosEliminadosTxt.createNewFile();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "A ocorrido un error");
+        }
+    }
 
     public static void agregarUsuarioTxt(String usuario, String apellido, String cedula, String telefono, String password, String claveNum, String rol, String sede,
             String saldoC, String saldoA, String saldoS, String estadoC, String estadoA, String estadoS, String estadoUser, String estadoCuenta) throws FileNotFoundException, UnsupportedEncodingException, IOException {
@@ -82,7 +94,7 @@ public class BaseDatos {
         escribir.close();
     }
 
-    public static void agregarComprobanteSalida(String monto, String fecha, String hora, String numeroEmisor, String numeroReceptor, String cuentaUtilizada, String detalle) throws FileNotFoundException, UnsupportedEncodingException, IOException {
+    public static void agregarComprobanteSalidaTxt(String monto, String fecha, String hora, String numeroEmisor, String numeroReceptor, String cuentaUtilizada, String detalle) throws FileNotFoundException, UnsupportedEncodingException, IOException {
         BufferedWriter escribir = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(simpesSalidaTxt, true), "utf-8"));
 
         escribir.write(monto + "\t" + fecha + "\t" + hora + "\t" + numeroEmisor + "\t" + numeroReceptor + "\t" + cuentaUtilizada + "\t" + detalle + "\n");
@@ -90,10 +102,21 @@ public class BaseDatos {
         escribir.close();
     }
 
-    public static void agregarComprobanteEntrada(String monto, String fecha, String hora, String numeroEmisor, String numeroReceptor, String cuentaUtilizada, String detalle) throws FileNotFoundException, UnsupportedEncodingException, IOException {
+    public static void agregarComprobanteEntradaTxt(String monto, String fecha, String hora, String numeroEmisor, String numeroReceptor, String cuentaUtilizada, String detalle) throws FileNotFoundException, UnsupportedEncodingException, IOException {
         BufferedWriter escribir = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(simpesEntradaTxt, true), "utf-8"));
 
         escribir.write(monto + "\t" + fecha + "\t" + hora + "\t" + numeroEmisor + "\t" + numeroReceptor + "\t" + cuentaUtilizada + "\t" + detalle + "\n");
+
+        escribir.close();
+    }
+    
+    public static void agregarUsuarioEliminadoTxt(String usuario, String apellido, String cedula, String telefono, String password, String claveNum, String rol, String sede,
+            String saldoC, String saldoA, String saldoS, String estadoC, String estadoA, String estadoS, String estadoUser, String estadoCuenta) throws FileNotFoundException, UnsupportedEncodingException, IOException {
+
+        BufferedWriter escribir = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(usuariosEliminadosTxt, true), "utf-8"));
+
+        escribir.write(usuario + "\t" + apellido + "\t" + cedula + "\t" + telefono + "\t" + password + "\t" + claveNum + "\t" + rol + "\t" + sede + "\t"
+                + saldoC + "\t" + saldoA + "\t" + saldoS + "\t" + estadoC + "\t" + estadoA + "\t" + estadoS + "\t" + estadoUser + "\t" + estadoCuenta + "\n");
 
         escribir.close();
     }
@@ -121,7 +144,12 @@ public class BaseDatos {
         limpiarTxtSimpesSalida();
         for (Usuarios i : SedeCentral.getListaUsers()) {
             for (ComprobanteSimpeSalida c : i.getComprobantesSimpeSalida()) {
-                agregarComprobanteSalida(String.valueOf(c.getMonto()), c.getFecha(), c.getHora(), c.getNumeroEmisor(), c.getNumeroReceptor(), c.getCuentaUtilizada(), c.getDetalle());
+                agregarComprobanteSalidaTxt(String.valueOf(c.getMonto()), c.getFecha(), c.getHora(), c.getNumeroEmisor(), c.getNumeroReceptor(), c.getCuentaUtilizada(), c.getDetalle());
+            }
+        }
+        for (Usuarios i : DatosRegistrados.getListaUsuariosEliminados()) {
+            for (ComprobanteSimpeSalida c : i.getComprobantesSimpeSalida()) {
+                agregarComprobanteSalidaTxt(String.valueOf(c.getMonto()), c.getFecha(), c.getHora(), c.getNumeroEmisor(), c.getNumeroReceptor(), c.getCuentaUtilizada(), c.getDetalle());
             }
         }
     }
@@ -130,8 +158,24 @@ public class BaseDatos {
         limpiarTxtSimpesEntrada();
         for (Usuarios i : SedeCentral.getListaUsers()) {
             for (ComprobanteSimpeEntrada c : i.getComprobantesSimpeEntrada()) {
-                agregarComprobanteEntrada(String.valueOf(c.getMonto()), c.getFecha(), c.getHora(), c.getNumeroEmisor(), c.getNumeroReceptor(), c.getCuentaUtilizada(), c.getDetalle());
+                agregarComprobanteEntradaTxt(String.valueOf(c.getMonto()), c.getFecha(), c.getHora(), c.getNumeroEmisor(), c.getNumeroReceptor(), c.getCuentaUtilizada(), c.getDetalle());
             }
+        }
+        
+        for (Usuarios i : DatosRegistrados.getListaUsuariosEliminados()) {
+            for (ComprobanteSimpeEntrada c : i.getComprobantesSimpeEntrada()) {
+                agregarComprobanteEntradaTxt(String.valueOf(c.getMonto()), c.getFecha(), c.getHora(), c.getNumeroEmisor(), c.getNumeroReceptor(), c.getCuentaUtilizada(), c.getDetalle());
+            }
+        }
+    }
+    
+    public static void actualizarUsuariosEliminadosTxtBD() throws IOException {
+        limpiarTxtUsuariosEliminados();
+        for (Usuarios i : DatosRegistrados.getListaUsuariosEliminados()) {
+            agregarUsuarioEliminadoTxt(i.getUsuario(), i.getApellidos(), i.getCedula(), i.getTelefono(), i.getPassword(), String.valueOf(i.getClaveNumerica()), String.valueOf(i.getRol()), String.valueOf(i.getSede()),
+                    String.valueOf(i.getCuentaCorriente().getSaldo()), String.valueOf(i.getCuentaAhorro().getSaldo()), String.valueOf(i.getCuentaSimpe().getSaldo()),
+                    String.valueOf(i.getCuentaCorriente().getEstado()), String.valueOf(i.getCuentaAhorro().getEstado()), String.valueOf(i.getCuentaSimpe().getEstado()),
+                    String.valueOf(i.getEstadoUsuario()), String.valueOf(i.getEstadoCuenta()));
         }
     }
 
@@ -162,6 +206,14 @@ public class BaseDatos {
     public static void limpiarTxtSimpesSalida() throws IOException {
         if (simpesSalidaTxt.exists()) {
             FileWriter escribir = new FileWriter(simpesSalidaTxt, false);
+            escribir.write("");
+            escribir.close();
+        }
+    }
+    
+    public static void limpiarTxtUsuariosEliminados() throws IOException {
+        if (usuariosEliminadosTxt.exists()) {
+            FileWriter escribir = new FileWriter(usuariosEliminadosTxt, false);
             escribir.write("");
             escribir.close();
         }
@@ -199,4 +251,13 @@ public class BaseDatos {
         BaseDatos.simpesEntradaTxt = simpesEntradaTxt;
     }
 
+    public static File getUsuariosEliminadosTxt() {
+        return usuariosEliminadosTxt;
+    }
+
+    public static void setUsuariosEliminadosTxt(File usuariosEliminadosTxt) {
+        BaseDatos.usuariosEliminadosTxt = usuariosEliminadosTxt;
+    }
+
+    
 }

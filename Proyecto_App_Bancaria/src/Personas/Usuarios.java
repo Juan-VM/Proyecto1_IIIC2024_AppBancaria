@@ -13,9 +13,9 @@ public class Usuarios extends Personas {
     private boolean estadoUsuario = true;
     private boolean estadoCuenta = true;
     private Comentario comentario;
-    private CuentaCorriente cuentaCorriente = new CuentaCorriente(0, true);
-    private CuentaAhorro cuentaAhorro = new CuentaAhorro(0, false);
-    private CuentaSimpe cuentaSimpe = new CuentaSimpe(0, false);
+    private CuentaCorriente cuentaCorriente = new CuentaCorriente(true);
+    private CuentaAhorro cuentaAhorro = new CuentaAhorro(false);
+    private CuentaSimpe cuentaSimpe = new CuentaSimpe(false);
     private ArrayList<ComprobanteSimpeSalida> comprobantesSimpeSalida = new ArrayList<>();
     private ArrayList<ComprobanteSimpeEntrada> comprobantesSimpeEntrada = new ArrayList<>();
 
@@ -23,6 +23,9 @@ public class Usuarios extends Personas {
             double saldoDeLaCuenta, double saldoCuentaSimpe, double saldoCuentaAhorro) {
 
         super(usuario, apellidos, password, cedula, telefono, claveNumerica, rol, sede);
+        this.cuentaCorriente.setSaldo(saldoDeLaCuenta);
+        this.cuentaAhorro.setSaldo(saldoCuentaAhorro);
+        this.cuentaSimpe.setSaldo(saldoCuentaSimpe);
     }
     
     public Usuarios(){

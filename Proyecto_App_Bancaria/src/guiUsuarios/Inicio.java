@@ -32,7 +32,7 @@ public class Inicio extends javax.swing.JFrame {
             BufferedReader leerEn = new BufferedReader(new FileReader(BaseDatos.getSimpesEntradaTxt()));
             String lineaEn = null;
             while ((lineaEn = leerEn.readLine()) != null) {
-                
+
                 //Distribucion String[] datosEn:
                 //[0] monto
                 //[1] fecha
@@ -41,7 +41,6 @@ public class Inicio extends javax.swing.JFrame {
                 //[4] numeroReceptor
                 //[5] Cuenta
                 //[6] Detalle
-
                 String[] datosEn = lineaEn.split("\t");
 
                 // comEn(numeroEmisor, numeroReceptor, cuenta, monto, fecha, hora, detalle)
@@ -88,9 +87,7 @@ public class Inicio extends javax.swing.JFrame {
         try {
             BaseDatos.verfificarExistenciaUsuariosTxT();
 
-
             BufferedReader leerUs = new BufferedReader(new FileReader(BaseDatos.getUsuariosTxt()));
-
 
             String lineaUser = null;
 
@@ -126,37 +123,32 @@ public class Inicio extends javax.swing.JFrame {
                 user.setEstadoCuenta(Boolean.parseBoolean(datos[15]));
 
                 //leer txtSimpeSalida para asignarle a user los comprobantes
-                for(ComprobanteSimpeSalida i : listaComprobantesSalida){
+                for (ComprobanteSimpeSalida i : listaComprobantesSalida) {
                     String numeroEmisor = i.getNumeroEmisor();
-                    if(user.getTelefono().equals(numeroEmisor)){
+                    if (user.getTelefono().equals(numeroEmisor)) {
                         user.getComprobantesSimpeSalida().add(i);
                     }
                 }
-                
-                for(ComprobanteSimpeEntrada i : listaComprobantesEntrada){
+
+                for (ComprobanteSimpeEntrada i : listaComprobantesEntrada) {
                     String numeroReceptor = i.getNumeroReceptor();
-                    if(user.getTelefono().equals(numeroReceptor)){
+                    if (user.getTelefono().equals(numeroReceptor)) {
                         user.getComprobantesSimpeEntrada().add(i);
                     }
                 }
 
                 //Agregar el usuario final a las sedes
-                if (user.getEstadoCuenta() == true) {
-
-                    SedeCentral.getListaUsers().add(user);
-                    switch (user.getSede()) {
-                        case 0 -> {
-                            SedePuriscal.getListaUsers().add(user);
-                        }
-                        case 1 -> {
-                            SedeSanPedro.getListaUsers().add(user);
-                        }
-                        case 2 -> {
-                            SedeCiudadColon.getListaUsers().add(user);
-                        }
+                SedeCentral.getListaUsers().add(user);
+                switch (user.getSede()) {
+                    case 0 -> {
+                        SedePuriscal.getListaUsers().add(user);
                     }
-                } else {
-                    DatosRegistrados.getListaUsuariosEliminados().add(user);
+                    case 1 -> {
+                        SedeSanPedro.getListaUsers().add(user);
+                    }
+                    case 2 -> {
+                        SedeCiudadColon.getListaUsers().add(user);
+                    }
                 }
 
                 //Agregar los datos a las listas de datos usados
@@ -166,9 +158,76 @@ public class Inicio extends javax.swing.JFrame {
             }
             leerUs.close();
 
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error descargando usuarios de BaseDatos");
+        }
+    }
+
+    public static void descargarUsuariosEliminadosBaseDatos() {
+        try {
+            BaseDatos.verfificarExistenciaUsuariosEliminadosTxT();
+            BufferedReader leer = new BufferedReader(new FileReader(BaseDatos.getUsuariosEliminadosTxt()));
+            String linea;
+            
+            while((linea = leer.readLine()) != null){
+                
+                //Distribucion de la lista String[] datos:
+                //[0] = Usuario
+                //[1] = Apellido
+                //[2] = Cedula
+                //[3] = Telefono
+                //[4] = Password
+                //[5] = Clave Num
+                //[6] = Rol
+                //[7] = Sede
+                //[8] = saldo cuenta corriente
+                //[9] = saldo cuenta ahorro
+                //[10] = saldo cuenta simpe
+                //[11] = estado cuenta corriente
+                //[12] = estado cuenta ahorro
+                //[13] = estado cuenta simpe
+                //[14] = estado usuario
+                //[15] = estado cuenta
+                
+                String[] datos = linea.split("\t");
+                
+                //userEliminado = (usuario, apellidos, password, cedula, telefono, claveNumerica, rol, sede, saldoC, saldoA, saldoS)
+                Usuarios userEliminado = new Usuarios(datos[0], datos[1], datos[4], datos[2], datos[3], Integer.parseInt(datos[5]), Integer.parseInt(datos[6]), Integer.parseInt(datos[7]),
+                        Double.parseDouble(datos[8]), Double.parseDouble(datos[9]), Double.parseDouble(datos[10]));
+                
+                userEliminado.getCuentaCorriente().setEstado(Boolean.parseBoolean(datos[11]));
+                userEliminado.getCuentaAhorro().setEstado(Boolean.parseBoolean(datos[12]));
+                userEliminado.getCuentaSimpe().setEstado(Boolean.parseBoolean(datos[13]));
+
+                userEliminado.setEstadoUsuario(Boolean.parseBoolean(datos[14]));
+                userEliminado.setEstadoCuenta(Boolean.parseBoolean(datos[15]));
+                
+                //leer comprobantes para asignarle a user los comprobantes correspondientes
+                for (ComprobanteSimpeSalida i : listaComprobantesSalida) {
+                    String numeroEmisor = i.getNumeroEmisor();
+                    if (userEliminado.getTelefono().equals(numeroEmisor)) {
+                        userEliminado.getComprobantesSimpeSalida().add(i);
+                    }
+                }
+
+                for (ComprobanteSimpeEntrada i : listaComprobantesEntrada) {
+                    String numeroReceptor = i.getNumeroReceptor();
+                    if (userEliminado.getTelefono().equals(numeroReceptor)) {
+                        userEliminado.getComprobantesSimpeEntrada().add(i);
+                    }
+                }
+                
+                //Afregar al usuario a la lista de usuarios eliminados
+                DatosRegistrados.getListaUsuariosEliminados().add(userEliminado);
+                
+                //Agregar los datos del usuario a los datos registrados
+                DatosRegistrados.getListaCedulas().add(userEliminado.getCedula());
+                DatosRegistrados.getListaClaves().add(userEliminado.getClaveNumerica());
+                DatosRegistrados.getListaTelefonos().add(userEliminado.getTelefono());
+            }
+            leer.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error descargando usuariosEliminados de BaseDatos");
         }
     }
 
@@ -423,9 +482,11 @@ public class Inicio extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Inicio().setVisible(true);
+                
                 descargarComprobantesEntrada();
                 descargarComprobantesSalida();
                 descargarUsuariosBaseDatos();
+                descargarUsuariosEliminadosBaseDatos();
                 descargarAdministradoresBaseDatos();
             }
         });

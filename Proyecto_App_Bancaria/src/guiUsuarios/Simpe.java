@@ -1645,8 +1645,8 @@ public class Simpe extends javax.swing.JFrame {
                 
                 try {
                     //Agregar comprobantes base datos
-                    BaseDatos.agregarComprobanteSalida(String.valueOf(compSal.getMonto()), compSal.getFecha(), compSal.getHora(), compSal.getNumeroEmisor(), compSal.getNumeroReceptor(), compSal.getCuentaUtilizada(), compSal.getDetalle());
-                    BaseDatos.agregarComprobanteEntrada(String.valueOf(compEnt.getMonto()), compEnt.getFecha(), compEnt.getHora(), compEnt.getNumeroEmisor(), compEnt.getNumeroReceptor(), compEnt.getCuentaUtilizada(), compEnt.getDetalle());
+                    BaseDatos.agregarComprobanteSalidaTxt(String.valueOf(compSal.getMonto()), compSal.getFecha(), compSal.getHora(), compSal.getNumeroEmisor(), compSal.getNumeroReceptor(), compSal.getCuentaUtilizada(), compSal.getDetalle());
+                    BaseDatos.agregarComprobanteEntradaTxt(String.valueOf(compEnt.getMonto()), compEnt.getFecha(), compEnt.getHora(), compEnt.getNumeroEmisor(), compEnt.getNumeroReceptor(), compEnt.getCuentaUtilizada(), compEnt.getDetalle());
                     BaseDatos.actualizarUsuariosBaseDatos();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Error cargando comprobantes a base de datos");
