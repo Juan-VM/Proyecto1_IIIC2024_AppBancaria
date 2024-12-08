@@ -12,8 +12,7 @@ public class Cuentas {
         
     }
 
-    public Cuentas(double saldo, boolean estado) {
-        this.saldo = saldo;
+    public Cuentas(boolean estado) {
         this.estado = estado;
     }
 

@@ -494,6 +494,7 @@ public class EliminarUsuario extends javax.swing.JFrame {
 
                 try {
                     BaseDatos.actualizarUsuariosBaseDatos();
+                    BaseDatos.actualizarUsuariosEliminadosTxtBD();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Error actalizando la Base de datos");
                 }
