@@ -32,7 +32,7 @@ public class Inicio extends javax.swing.JFrame {
             BufferedReader leerEn = new BufferedReader(new FileReader(BaseDatos.getSimpesEntradaTxt()));
             String lineaEn = null;
             while ((lineaEn = leerEn.readLine()) != null) {
-                System.out.println("while 2");
+                
                 //Distribucion String[] datosEn:
                 //[0] monto
                 //[1] fecha
@@ -43,17 +43,11 @@ public class Inicio extends javax.swing.JFrame {
                 //[6] Detalle
 
                 String[] datosEn = lineaEn.split("\t");
-                System.out.println("datosEn");
 
                 // comEn(numeroEmisor, numeroReceptor, cuenta, monto, fecha, hora, detalle)
                 ComprobanteSimpeEntrada comEn = new ComprobanteSimpeEntrada(datosEn[3], datosEn[4], datosEn[5], Double.parseDouble(datosEn[0]), datosEn[1], datosEn[2], datosEn[6]);
-                
-                //if (user.getTelefono().equals(comEn.getNumeroEmisor())) {
-                //        user.getComprobantesSimpeEntrada().add(comEn);
-                //    }
-                
+
                 listaComprobantesEntrada.add(comEn);
-                System.out.println("ComprobanteEn agregado");
             }
             leerEn.close();
         } catch (Exception e) {
@@ -67,9 +61,8 @@ public class Inicio extends javax.swing.JFrame {
             BaseDatos.verfificarExistenciaSimpesSalidaTxt();
             BufferedReader leerSa = new BufferedReader(new FileReader(BaseDatos.getSimpesSalidaTxt()));
             String lineaSa = null;
-            System.out.println("paso la linea s");
+
             while ((lineaSa = leerSa.readLine()) != null) {
-                System.out.println("while 1");
                 //Distribucion String[] datosSa:
                 //[0] monto
                 //[1] fecha
@@ -79,16 +72,11 @@ public class Inicio extends javax.swing.JFrame {
                 //[5] Cuenta
                 //[6] Detalle
                 String[] datosSa = lineaSa.split("\t");
-                System.out.println("datosSa");
 
                 // comSa(numeroEmisor, numeroReceptor, cuenta, monto, fecha, hora, detalle)
                 ComprobanteSimpeSalida comSa = new ComprobanteSimpeSalida(datosSa[3], datosSa[4], datosSa[5], Double.parseDouble(datosSa[0]), datosSa[1], datosSa[2], datosSa[6]);
-                
-                //if (user.getTelefono().equals(comSa.getNumeroEmisor())) {
-                //        user.getComprobantesSimpeSalida().add(comSa);
-                //    }
+
                 listaComprobantesSalida.add(comSa);
-                System.out.println("ComprobanteSa agregado");
             }
             leerSa.close();
         } catch (Exception e) {
@@ -126,20 +114,17 @@ public class Inicio extends javax.swing.JFrame {
                 //[14] = estado usuario
                 //[15] = estado cuenta
                 String[] datos = lineaUser.split("\t");
-                System.out.println("datos");
 
                 //User = (usuario, apellidos, password, cedula, telefono, claveNumerica, rol, sede, saldoC, saldoA, saldoS)
                 Usuarios user = new Usuarios(datos[0], datos[1], datos[4], datos[2], datos[3], Integer.parseInt(datos[5]), Integer.parseInt(datos[6]), Integer.parseInt(datos[7]),
                         Double.parseDouble(datos[8]), Double.parseDouble(datos[9]), Double.parseDouble(datos[10]));
 
-                System.out.println("user creado");
                 user.getCuentaCorriente().setEstado(Boolean.parseBoolean(datos[11]));
                 user.getCuentaAhorro().setEstado(Boolean.parseBoolean(datos[12]));
                 user.getCuentaSimpe().setEstado(Boolean.parseBoolean(datos[13]));
 
                 user.setEstadoUsuario(Boolean.parseBoolean(datos[14]));
                 user.setEstadoCuenta(Boolean.parseBoolean(datos[15]));
-                System.out.println("user actualizado");
 
                 //leer txtSimpeSalida para asignarle a user los comprobantes
                 for(ComprobanteSimpeSalida i : listaComprobantesSalida){
@@ -160,7 +145,6 @@ public class Inicio extends javax.swing.JFrame {
                 if (user.getEstadoCuenta() == true) {
 
                     SedeCentral.getListaUsers().add(user);
-                    System.out.println("usuario agregado a sede central");
                     switch (user.getSede()) {
                         case 0 -> {
                             SedePuriscal.getListaUsers().add(user);
@@ -172,17 +156,14 @@ public class Inicio extends javax.swing.JFrame {
                             SedeCiudadColon.getListaUsers().add(user);
                         }
                     }
-                    System.out.println("usuario agregado a sedesss");
                 } else {
                     DatosRegistrados.getListaUsuariosEliminados().add(user);
-                    System.out.println("usuario agregado a eliminados");
                 }
 
                 //Agregar los datos a las listas de datos usados
                 DatosRegistrados.getListaCedulas().add(user.getCedula());
                 DatosRegistrados.getListaClaves().add(user.getClaveNumerica());
                 DatosRegistrados.getListaTelefonos().add(user.getTelefono());
-                System.out.println("usuario agregado a datos registrados");
             }
             leerUs.close();
 
@@ -447,7 +428,6 @@ public class Inicio extends javax.swing.JFrame {
                 descargarComprobantesSalida();
                 descargarUsuariosBaseDatos();
                 descargarAdministradoresBaseDatos();
-                JOptionPane.showMessageDialog(null, "Datos descargados");
             }
         });
     }
