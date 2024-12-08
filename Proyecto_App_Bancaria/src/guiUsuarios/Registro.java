@@ -1,5 +1,6 @@
 package guiUsuarios;
 
+import BaseDatos.BaseDatos;
 import Personas.Administradores;
 import Personas.Usuarios;
 import RegistroDatos.DatosRegistrados;
@@ -566,6 +567,12 @@ public class Registro extends javax.swing.JFrame {
                                         SedeCiudadColon.getListaUsers().add(user);
                                     }
                                 }
+                                
+                                BaseDatos.agregarUsuarioTxt(user.getUsuario(), user.getApellidos(), user.getCedula(), user.getTelefono(), user.getPassword(), String.valueOf(user.getClaveNumerica()),
+                                        String.valueOf(user.getRol()), String.valueOf(user.getSede()),
+                                        String.valueOf(user.getCuentaCorriente().getSaldo()), String.valueOf(user.getCuentaAhorro().getSaldo()), String.valueOf(user.getCuentaSimpe().getSaldo()),
+                                        String.valueOf(user.getCuentaCorriente().getEstado()), String.valueOf(user.getCuentaAhorro().getEstado()), String.valueOf(user.getCuentaSimpe().getEstado()),
+                                        String.valueOf(user.getEstadoUsuario()), String.valueOf(user.getEstadoCuenta()));
                             }
                             case 1 -> {
                                 Administradores admin = new Administradores(usuario, apellido, password, cedula, telefono, claveNumerica, rol, sede);
@@ -583,8 +590,11 @@ public class Registro extends javax.swing.JFrame {
                                         SedeCiudadColon.getListaAdmins().add(admin);
                                     }
                                 }
+                                BaseDatos.agregarAdminTxt(admin.getUsuario(), admin.getApellidos(), admin.getCedula(), admin.getTelefono(), admin.getPassword(), String.valueOf(admin.getClaveNumerica()),
+                                        String.valueOf(admin.getRol()), String.valueOf(admin.getSede()));
                             }
                         }
+                        
                         JOptionPane.showMessageDialog(null, "Datos guardados");
                         Inicio inicio = new Inicio();
                         inicio.setVisible(true);

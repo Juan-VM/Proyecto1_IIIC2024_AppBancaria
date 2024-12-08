@@ -1,5 +1,6 @@
 package guiUsuarios;
 
+import BaseDatos.BaseDatos;
 import Personas.Usuarios;
 import Sedes.SedeCentral;
 import java.awt.Color;
@@ -1351,6 +1352,13 @@ public class Depositar extends javax.swing.JFrame {
                                 i.getCuentaSimpe().depositarDinero(monto);
                             }
                         }
+                        
+                        try {
+                            BaseDatos.actualizarUsuariosBaseDatos();
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, "Error actualizando base de datos");
+                        }
+                        
                         JOptionPane.showMessageDialog(null, "Deposito realizado exitosamente");
                         jblMontoDeposito.setText("");
                         pizarra.setSelectedIndex(0);
