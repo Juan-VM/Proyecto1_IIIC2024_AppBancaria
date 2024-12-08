@@ -95,7 +95,6 @@ public class Inicio extends javax.swing.JFrame {
             String lineaUser = null;
 
             while ((lineaUser = leerUs.readLine()) != null) {
-                System.out.println("while 0");
                 //Distribucion de la lista String[] datos:
                 //[0] = Usuario
                 //[1] = Apellido

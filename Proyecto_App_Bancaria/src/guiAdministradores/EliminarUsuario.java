@@ -1,5 +1,6 @@
 package guiAdministradores;
 
+import BaseDatos.BaseDatos;
 import Personas.Usuarios;
 import RegistroDatos.DatosRegistrados;
 import Sedes.SedeCentral;
@@ -490,6 +491,13 @@ public class EliminarUsuario extends javax.swing.JFrame {
                 SedeCentral.getListaUsers().remove(indice);
                 removeUserToSede(sede, cedulaUser);
                 modelo.removeRow(filaSeleccionada);
+
+                try {
+                    BaseDatos.actualizarUsuariosBaseDatos();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error actalizando la Base de datos");
+                }
+                
                 JOptionPane.showMessageDialog(null, "Usuario eliminado exitosamente");
             }
         } else {

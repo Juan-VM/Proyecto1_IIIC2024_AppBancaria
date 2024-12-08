@@ -1,5 +1,7 @@
 package BaseDatos;
 
+import Comprobantes.ComprobanteSimpeEntrada;
+import Comprobantes.ComprobanteSimpeSalida;
 import Personas.Administradores;
 import Personas.Usuarios;
 import Sedes.SedeCentral;
@@ -115,6 +117,24 @@ public class BaseDatos {
         }
     }
 
+    public static void actualizarComprobantesSalidaTxtBD() throws IOException {
+        limpiarTxtSimpesSalida();
+        for (Usuarios i : SedeCentral.getListaUsers()) {
+            for (ComprobanteSimpeSalida c : i.getComprobantesSimpeSalida()) {
+                agregarComprobanteSalida(String.valueOf(c.getMonto()), c.getFecha(), c.getHora(), c.getNumeroEmisor(), c.getNumeroReceptor(), c.getCuentaUtilizada(), c.getDetalle());
+            }
+        }
+    }
+
+    public static void actualizarComprobantesEntradaTxtBD() throws IOException {
+        limpiarTxtSimpesEntrada();
+        for (Usuarios i : SedeCentral.getListaUsers()) {
+            for (ComprobanteSimpeEntrada c : i.getComprobantesSimpeEntrada()) {
+                agregarComprobanteEntrada(String.valueOf(c.getMonto()), c.getFecha(), c.getHora(), c.getNumeroEmisor(), c.getNumeroReceptor(), c.getCuentaUtilizada(), c.getDetalle());
+            }
+        }
+    }
+
     public static void limpiarTxtUsuarios() throws IOException {
         if (usuariosTxt.exists()) {
             FileWriter escribir = new FileWriter(usuariosTxt, false);
@@ -126,6 +146,22 @@ public class BaseDatos {
     public static void limpiarTxtAdministradores() throws IOException {
         if (administradoresTxt.exists()) {
             FileWriter escribir = new FileWriter(administradoresTxt, false);
+            escribir.write("");
+            escribir.close();
+        }
+    }
+
+    public static void limpiarTxtSimpesEntrada() throws IOException {
+        if (simpesEntradaTxt.exists()) {
+            FileWriter escribir = new FileWriter(simpesEntradaTxt, false);
+            escribir.write("");
+            escribir.close();
+        }
+    }
+
+    public static void limpiarTxtSimpesSalida() throws IOException {
+        if (simpesSalidaTxt.exists()) {
+            FileWriter escribir = new FileWriter(simpesSalidaTxt, false);
             escribir.write("");
             escribir.close();
         }
@@ -162,6 +198,5 @@ public class BaseDatos {
     public static void setSimpesEntradaTxt(File simpesEntradaTxt) {
         BaseDatos.simpesEntradaTxt = simpesEntradaTxt;
     }
-    
-    
+
 }

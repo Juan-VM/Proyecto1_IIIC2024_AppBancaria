@@ -1,5 +1,8 @@
 package guiUsuarios;
 
+import BaseDatos.BaseDatos;
+import Comprobantes.ComprobanteSimpeEntrada;
+import Comprobantes.ComprobanteSimpeSalida;
 import Personas.Usuarios;
 import RegistroDatos.DatosRegistrados;
 import Sedes.SedeCiudadColon;
@@ -16,6 +19,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     String cedula;
     String telefono;
     boolean BotonGuardarActivo;
+    String telefonoAnterior;
 
     public ConfigurarPerfil(String cedula, int sede) {
         initComponents();
@@ -47,6 +51,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
                         jblVentanaActual.setText("Sede Ciudad Colon");
                     }
                 }
+                this.telefonoAnterior = txtTelefono.getText();
             }
         }
     }
@@ -111,6 +116,44 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         if (!tel.equals(this.telefono)) {
             DatosRegistrados.getListaTelefonos().remove(this.telefono);
             DatosRegistrados.getListaTelefonos().add(tel);
+        }
+    }
+
+    public void actalizarNumerosEmisoresYReceptoresComprobantesSalida(String telN) {
+        System.out.println("entro a salida");
+        System.out.println("numero viejo: " + this.telefonoAnterior);
+        System.out.println("numero nuevo: " + telN);
+        for (Usuarios i : SedeCentral.getListaUsers()) {
+
+            for (ComprobanteSimpeSalida c : i.getComprobantesSimpeSalida()) {
+                if (c.getNumeroEmisor().equals(this.telefonoAnterior)) {
+                    c.setNumeroEmisor(telN);
+                }
+
+                if (c.getNumeroReceptor().equals(this.telefonoAnterior)) {
+                    c.setNumeroReceptor(telN);
+                }
+            }
+
+        }
+    }
+
+    public void actalizarNumerosEmisoresYReceptoresComprobantesEntrada(String telN) {
+        System.out.println("entro a entrada");
+        System.out.println("numero viejo: " + this.telefonoAnterior);
+        System.out.println("numero nuevo: " + telN);
+        for (Usuarios i : SedeCentral.getListaUsers()) {
+
+            for (ComprobanteSimpeEntrada c : i.getComprobantesSimpeEntrada()) {
+                if (c.getNumeroEmisor().equals(this.telefonoAnterior)) {
+                    c.setNumeroEmisor(telN);
+                }
+
+                if (c.getNumeroReceptor().equals(this.telefonoAnterior)) {
+                    c.setNumeroReceptor(telN);
+                }
+            }
+
         }
     }
 
@@ -787,8 +830,17 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
                         this.cedula = i.getCedula();
                         this.telefono = i.getTelefono();
                         actualizarDatosEnLaSede(this.sede, i.getCedula(), i);
-
                     }
+                }
+
+                try {
+                    BaseDatos.actualizarUsuariosBaseDatos();
+                    actalizarNumerosEmisoresYReceptoresComprobantesSalida(txtTelefono.getText());
+                    actalizarNumerosEmisoresYReceptoresComprobantesEntrada(txtTelefono.getText());
+                    BaseDatos.actualizarComprobantesSalidaTxtBD();
+                    BaseDatos.actualizarComprobantesEntradaTxtBD();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error, actalizando la base de datos");
                 }
 
                 txtName.setForeground(new Color(204, 204, 204));

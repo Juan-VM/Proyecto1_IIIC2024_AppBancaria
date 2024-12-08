@@ -1,5 +1,6 @@
 package guiAdministradores;
 
+import BaseDatos.BaseDatos;
 import Personas.Usuarios;
 import RegistroDatos.DatosRegistrados;
 import Sedes.SedeCentral;
@@ -51,15 +52,16 @@ public class RestaurarUsuario extends javax.swing.JFrame {
             modelo.addRow(new Object[]{i.getUsuario(), i.getApellidos(), i.getCedula(), sede, estado});
         }
     }
-    
-    public void reestablecerDatosUsuario(Usuarios user){
+
+    public void reestablecerDatosUsuario(Usuarios user) {
         user.getCuentaAhorro().setSaldo(0);
         user.getCuentaCorriente().setSaldo(0);
         user.getCuentaSimpe().setSaldo(0);
-        
+
         user.getComprobantesSimpeSalida().clear();
         user.getComprobantesSimpeEntrada().clear();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -398,20 +400,20 @@ public class RestaurarUsuario extends javax.swing.JFrame {
                 String cedulaUser = tablaEliminados.getValueAt(filaSeleccionada, 2).toString();
                 String sede = tablaEliminados.getValueAt(filaSeleccionada, 3).toString();
                 int indice = 0;
-                
-                for(Usuarios i : DatosRegistrados.getListaUsuariosEliminados()){
-                    if(i.getCedula().equals(cedulaUser)){
+
+                for (Usuarios i : DatosRegistrados.getListaUsuariosEliminados()) {
+                    if (i.getCedula().equals(cedulaUser)) {
                         i.setEstadoCuenta(true);
                         indice = DatosRegistrados.getListaUsuariosEliminados().indexOf(i);
                         SedeCentral.getListaUsers().add(i);
                         switch (sede) {
-                            case "Puriscal" ->{
+                            case "Puriscal" -> {
                                 SedePuriscal.getListaUsers().add(i);
                             }
-                            case "San Pedro" ->{
+                            case "San Pedro" -> {
                                 SedeSanPedro.getListaUsers().add(i);
                             }
-                            case "Ciudad Colon" ->{
+                            case "Ciudad Colon" -> {
                                 SedeCiudadColon.getListaUsers().add(i);
                             }
                         }
@@ -419,6 +421,13 @@ public class RestaurarUsuario extends javax.swing.JFrame {
                 }
                 DatosRegistrados.getListaUsuariosEliminados().remove(indice);
                 modelo.removeRow(filaSeleccionada);
+
+                try {
+                    BaseDatos.actualizarUsuariosBaseDatos();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error actalizando la Base de datos");
+                }
+
                 JOptionPane.showMessageDialog(null, "Usuario restaurado exitosamente");
             }
 
@@ -436,21 +445,21 @@ public class RestaurarUsuario extends javax.swing.JFrame {
                 String cedulaUser = tablaEliminados.getValueAt(filaSeleccionada, 2).toString();
                 String sede = tablaEliminados.getValueAt(filaSeleccionada, 3).toString();
                 int indice = 0;
-                
-                for(Usuarios i : DatosRegistrados.getListaUsuariosEliminados()){
-                    if(i.getCedula().equals(cedulaUser)){
+
+                for (Usuarios i : DatosRegistrados.getListaUsuariosEliminados()) {
+                    if (i.getCedula().equals(cedulaUser)) {
                         i.setEstadoCuenta(true);
                         indice = DatosRegistrados.getListaUsuariosEliminados().indexOf(i);
                         reestablecerDatosUsuario(i);
                         SedeCentral.getListaUsers().add(i);
                         switch (sede) {
-                            case "Puriscal" ->{
+                            case "Puriscal" -> {
                                 SedePuriscal.getListaUsers().add(i);
                             }
-                            case "San Pedro" ->{
+                            case "San Pedro" -> {
                                 SedeSanPedro.getListaUsers().add(i);
                             }
-                            case "Ciudad Colon" ->{
+                            case "Ciudad Colon" -> {
                                 SedeCiudadColon.getListaUsers().add(i);
                             }
                         }
@@ -458,6 +467,13 @@ public class RestaurarUsuario extends javax.swing.JFrame {
                 }
                 DatosRegistrados.getListaUsuariosEliminados().remove(indice);
                 modelo.removeRow(filaSeleccionada);
+
+                try {
+                    BaseDatos.actualizarUsuariosBaseDatos();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error actalizando la Base de datos");
+                }
+
                 JOptionPane.showMessageDialog(null, "Usuario restaurado exitosamente");
             }
 

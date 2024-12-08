@@ -1,5 +1,6 @@
 package guiAdministradores;
 
+import BaseDatos.BaseDatos;
 import guiAdministradores.DesbloquearCuenta;
 import guiAdministradores.SolicitudesDesbloqueo;
 import guiAdministradores.PrincipalAdmins;
@@ -74,6 +75,11 @@ public class BloquearCuenta extends javax.swing.JFrame {
         String cedulaUser = tabla.getValueAt(filaSeleccionada, 2).toString();
         String sede = tabla.getValueAt(filaSeleccionada, 0).toString();
 
+        for(Usuarios i : SedeCentral.getListaUsers()){
+            if(i.getCedula().equals(cedulaUser)){
+                i.setEstadoUsuario(false);
+            }
+        }
         switch (sede) {
             case "Puriscal" -> {
                 for (Usuarios i : SedePuriscal.getListaUsers()) {
@@ -109,6 +115,12 @@ public class BloquearCuenta extends javax.swing.JFrame {
                 }
             }
         }
+        try {
+            BaseDatos.actualizarUsuariosBaseDatos();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error actalizando la Base de datos");
+        }
+        
     }
 
     /**

@@ -1,5 +1,6 @@
 package guiAdministradores;
 
+import BaseDatos.BaseDatos;
 import guiAdministradores.PrincipalAdmins;
 import Personas.Administradores;
 import Personas.Usuarios;
@@ -23,7 +24,7 @@ public class SolicitudesDesbloqueo extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.cedula = cedula;
         jblSoloNumeros.setVisible(false);
-        
+
         tablaSolicitudesDesbloqueo.setModel(modelo);
         this.modelo.addColumn("Usuario");
         this.modelo.addColumn("Cedula");
@@ -31,13 +32,13 @@ public class SolicitudesDesbloqueo extends javax.swing.JFrame {
         for (Usuarios i : SedeCentral.getListaCuentasBloqueadas()) {
             String sede = "";
             switch (i.getSede()) {
-                case 0 ->{
+                case 0 -> {
                     sede = "Puriscal";
                 }
-                case 1 ->{
+                case 1 -> {
                     sede = "San Pedro";
                 }
-                case 2 ->{
+                case 2 -> {
                     sede = "Ciudad Colon";
                 }
             }
@@ -416,7 +417,7 @@ public class SolicitudesDesbloqueo extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, "Datos incorrectos");
                         }
                     }
-                    if(datosCorrectos == true){
+                    if (datosCorrectos == true) {
                         for (Usuarios u : SedeCentral.getListaUsers()) {
                             if (u.getCedula().equals(cedulaUser)) {
                                 u.setEstadoUsuario(true);
@@ -433,6 +434,13 @@ public class SolicitudesDesbloqueo extends javax.swing.JFrame {
                                         SedeCiudadColon.getListaCuentasBloqueadas().remove(u);
                                     }
                                 }
+
+                                try {
+                                    BaseDatos.actualizarUsuariosBaseDatos();
+                                } catch (Exception e) {
+                                    JOptionPane.showMessageDialog(null, "Error actalizando la Base de datos");
+                                }
+                                
                                 JOptionPane.showMessageDialog(null, "Cuenta habilitada para: " + u.getUsuario());
                                 txtClaveNum.setText("");
                                 txtCedulaUser.setText("");
@@ -484,7 +492,7 @@ public class SolicitudesDesbloqueo extends javax.swing.JFrame {
     }//GEN-LAST:event_itemEliminarUsuarioActionPerformed
 
     private void itemRestaurarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemRestaurarUsuarioActionPerformed
-        RestaurarUsuario restaurar =  new RestaurarUsuario(this.cedula);
+        RestaurarUsuario restaurar = new RestaurarUsuario(this.cedula);
         restaurar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_itemRestaurarUsuarioActionPerformed
