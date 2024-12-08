@@ -1,5 +1,6 @@
 package guiUsuarios;
 
+import BaseDatos.BaseDatos;
 import Comprobantes.ComprobanteSimpeEntrada;
 import Comprobantes.ComprobanteSimpeSalida;
 import Personas.Usuarios;
@@ -10,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -21,15 +23,22 @@ public class Simpe extends javax.swing.JFrame {
     boolean numeroValido = false;
     boolean montoValido = false;
     boolean cuentaValida = false;
-    DefaultTableModel modelo = new DefaultTableModel();
+    DefaultTableModel modeloS = new DefaultTableModel();
+    DefaultTableModel modeloE = new DefaultTableModel();
 
     public Simpe(String cedula, int sede) {
         initComponents();
-        this.tabalSalidas.setModel(modelo);
-        this.tablaEntradas.setModel(modelo);
-        this.modelo.addColumn("Fecha");
-        this.modelo.addColumn("Hora");
-        this.modelo.addColumn("Monto");
+
+        this.modeloS.addColumn("Fecha");
+        this.modeloS.addColumn("Hora");
+        this.modeloS.addColumn("Monto");
+
+        this.modeloE.addColumn("Fecha");
+        this.modeloE.addColumn("Hora");
+        this.modeloE.addColumn("Monto");
+
+        this.tabalSalidas.setModel(modeloS);
+        this.tablaEntradas.setModel(modeloE);
 
         this.setLocationRelativeTo(null);
         this.cedula = cedula;
@@ -204,10 +213,10 @@ public class Simpe extends javax.swing.JFrame {
         String realizadoPor = "";
         String destinatario = "";
         String detalle = comprobante.getDetalle();
-        if(detalle.equals("Ingrese el detalle"))
+        if (detalle.equals("Ingrese el detalle")) {
             detalle = "ninguno";
-        
-        
+        }
+
         for (Usuarios i : SedeCentral.getListaUsers()) {
             if (i.getTelefono().equals(comprobante.getNumeroEmisor())) {
                 realizadoPor = i.getApellidos() + " " + i.getUsuario();
@@ -227,15 +236,15 @@ public class Simpe extends javax.swing.JFrame {
         jblMontoTransferencia.setText(String.valueOf(comprobante.getMonto()) + " Colones");
         jblDetalle.setText(detalle);
     }
-    
+
     public void setTextosMuestraComprobanteEntrada(ComprobanteSimpeEntrada comprobante) {
         String realizadoPor = "";
         String destinatario = "";
         String detalle = comprobante.getDetalle();
-        if(detalle.equals("Ingrese el detalle"))
+        if (detalle.equals("Ingrese el detalle")) {
             detalle = "ninguno";
-        
-        
+        }
+
         for (Usuarios i : SedeCentral.getListaUsers()) {
             if (i.getTelefono().equals(comprobante.getNumeroEmisor())) {
                 realizadoPor = i.getApellidos() + " " + i.getUsuario();
@@ -258,10 +267,12 @@ public class Simpe extends javax.swing.JFrame {
 
     public void llenarTablaSalida() {
         for (Usuarios i : SedeCentral.getListaUsers()) {
-            modelo.setRowCount(0);
+
             if (i.getCedula().equals(this.cedula)) {
-                for (ComprobanteSimpeSalida c : i.getComprobantesSimpeSalida()) {
-                    modelo.addRow(new Object[]{c.getFecha(), c.getHora(), c.getMonto()});
+                ArrayList<ComprobanteSimpeSalida> listaS = i.getComprobantesSimpeSalida();
+
+                for (ComprobanteSimpeSalida c : listaS) {
+                    modeloS.addRow(new Object[]{c.getFecha(), c.getHora(), c.getMonto()});
                 }
             }
         }
@@ -269,10 +280,12 @@ public class Simpe extends javax.swing.JFrame {
 
     public void llenarTablaEntrada() {
         for (Usuarios i : SedeCentral.getListaUsers()) {
-            modelo.setRowCount(0);
+
             if (i.getCedula().equals(this.cedula)) {
-                for (ComprobanteSimpeEntrada c : i.getComprobantesSimpeEntrada()) {
-                    modelo.addRow(new Object[]{c.getFecha(), c.getHora(), c.getMonto()});
+                ArrayList<ComprobanteSimpeEntrada> listaE = i.getComprobantesSimpeEntrada();
+
+                for (ComprobanteSimpeEntrada c : listaE) {
+                    modeloE.addRow(new Object[]{c.getFecha(), c.getHora(), c.getMonto()});
                 }
             }
         }
@@ -1573,7 +1586,7 @@ public class Simpe extends javax.swing.JFrame {
 
     private void jblRealizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRealizarMouseClicked
         validarDatosSimpe();
-        
+
         if (this.numeroValido == true && this.montoValido == true && this.cuentaValida == true) {
             int eleccion = JOptionPane.showConfirmDialog(null, "Deseas realizar el simpe?", "SIMPE", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
             if (eleccion == 0) {
@@ -1617,23 +1630,31 @@ public class Simpe extends javax.swing.JFrame {
                         i.getCuentaSimpe().depositarDinero(monto);
                     }
                 }
-                ComprobanteSimpeSalida comprobanteSalida = new ComprobanteSimpeSalida(numeroEmisor, numeroReceptor, cuentaUtiizada, monto, fechaFormateada, horaFormateada, detalle);
-                ComprobanteSimpeEntrada comprobanteEntrada = new ComprobanteSimpeEntrada(numeroEmisor, numeroReceptor, cuentaUtiizada, monto, fechaFormateada, horaFormateada, detalle);
+                ComprobanteSimpeSalida compSal = new ComprobanteSimpeSalida(numeroEmisor, numeroReceptor, cuentaUtiizada, monto, fechaFormateada, horaFormateada, detalle);
+                ComprobanteSimpeEntrada compEnt = new ComprobanteSimpeEntrada(numeroEmisor, numeroReceptor, cuentaUtiizada, monto, fechaFormateada, horaFormateada, detalle);
 
                 for (Usuarios i : SedeCentral.getListaUsers()) {
                     if (i.getCedula().equals(this.cedula)) {
-                        i.getComprobantesSimpeSalida().add(comprobanteSalida);
+                        i.getComprobantesSimpeSalida().add(compSal);
                     }
 
-                    if (i.getTelefono().equals(txtNumeroSimpe.getText())) {
-                        i.getComprobantesSimpeEntrada().add(comprobanteEntrada);
+                    if (i.getTelefono().equals(compSal.getNumeroReceptor())) {
+                        i.getComprobantesSimpeEntrada().add(compEnt);
                     }
                 }
-
+                
+                try {
+                    //Agregar comprobantes base datos
+                    BaseDatos.agregarComprobanteSalida(String.valueOf(compSal.getMonto()), compSal.getFecha(), compSal.getHora(), compSal.getNumeroEmisor(), compSal.getNumeroReceptor(), compSal.getCuentaUtilizada(), compSal.getDetalle());
+                    BaseDatos.agregarComprobanteEntrada(String.valueOf(compEnt.getMonto()), compEnt.getFecha(), compEnt.getHora(), compEnt.getNumeroEmisor(), compEnt.getNumeroReceptor(), compEnt.getCuentaUtilizada(), compEnt.getDetalle());
+                    BaseDatos.actualizarUsuariosBaseDatos();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error cargando comprobantes a base de datos");
+                }
                 JOptionPane.showMessageDialog(null, "Simpe Realizado con exito");
                 pizarra.setSelectedIndex(4);
                 txtsPorDefecto();
-                setTextosMuestraComprobanteSalida(comprobanteSalida);
+                setTextosMuestraComprobanteSalida(compSal);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Error, verifica los datos ingresados");
@@ -1761,7 +1782,7 @@ public class Simpe extends javax.swing.JFrame {
                     }
                 }
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "No hay simpes registrados");
         }
     }//GEN-LAST:event_jblVerComprobanteSMouseClicked
@@ -1800,7 +1821,7 @@ public class Simpe extends javax.swing.JFrame {
                     }
                 }
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "No hay simpes registrados");
         }
     }//GEN-LAST:event_jblVerComprobanteEMouseClicked

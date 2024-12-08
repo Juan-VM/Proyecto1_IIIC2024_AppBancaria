@@ -1,0 +1,2 @@
+jose	1	1	1	1	4785	0	1	0.0	0.0	8514325.0	true	true	true	true	true
+valverde	2	2	2	2	6456	0	0	0.0	0.0	485675.0	true	false	true	true	true

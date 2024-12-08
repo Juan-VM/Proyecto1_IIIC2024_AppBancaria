@@ -1,5 +1,6 @@
 package guiUsuarios;
 
+import BaseDatos.BaseDatos;
 import Personas.Usuarios;
 import Sedes.SedeCentral;
 import java.awt.Color;
@@ -1512,6 +1513,13 @@ public class Retirar extends javax.swing.JFrame {
                                 i.getCuentaSimpe().retirarDinero(monto);
                             }
                         }
+                        
+                        try {
+                            BaseDatos.actualizarUsuariosBaseDatos();
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, "Error actualizando base de datos");
+                        }
+                        
                         JOptionPane.showMessageDialog(null, "Retiro realizado exitosamente");
                         jblMontoRetiro.setText("");
                         pizarra.setSelectedIndex(3);

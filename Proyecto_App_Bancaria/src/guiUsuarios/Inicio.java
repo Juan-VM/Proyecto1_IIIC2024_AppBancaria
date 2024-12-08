@@ -1,13 +1,243 @@
-
 package guiUsuarios;
 
+import BaseDatos.BaseDatos;
+import Comprobantes.ComprobanteSimpeEntrada;
+import Comprobantes.ComprobanteSimpeSalida;
+import Personas.Administradores;
+import Personas.Usuarios;
+import RegistroDatos.DatosRegistrados;
+import Sedes.SedeCentral;
+import Sedes.SedeCiudadColon;
+import Sedes.SedePuriscal;
+import Sedes.SedeSanPedro;
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class Inicio extends javax.swing.JFrame {
+
+    private static ArrayList<ComprobanteSimpeEntrada> listaComprobantesEntrada = new ArrayList<>();
+    private static ArrayList<ComprobanteSimpeSalida> listaComprobantesSalida = new ArrayList<>();
 
     public Inicio() {
         initComponents();
         this.setLocationRelativeTo(null);
+    }
+
+    public static void descargarComprobantesEntrada() {
+        try {
+            BaseDatos.verfificarExistenciaSimpesEntradaTxt();
+            BufferedReader leerEn = new BufferedReader(new FileReader(BaseDatos.getSimpesEntradaTxt()));
+            String lineaEn = null;
+            while ((lineaEn = leerEn.readLine()) != null) {
+                System.out.println("while 2");
+                //Distribucion String[] datosEn:
+                //[0] monto
+                //[1] fecha
+                //[2] hora
+                //[3] numeroEmisor
+                //[4] numeroReceptor
+                //[5] Cuenta
+                //[6] Detalle
+
+                String[] datosEn = lineaEn.split("\t");
+                System.out.println("datosEn");
+
+                // comEn(numeroEmisor, numeroReceptor, cuenta, monto, fecha, hora, detalle)
+                ComprobanteSimpeEntrada comEn = new ComprobanteSimpeEntrada(datosEn[3], datosEn[4], datosEn[5], Double.parseDouble(datosEn[0]), datosEn[1], datosEn[2], datosEn[6]);
+                
+                //if (user.getTelefono().equals(comEn.getNumeroEmisor())) {
+                //        user.getComprobantesSimpeEntrada().add(comEn);
+                //    }
+                
+                listaComprobantesEntrada.add(comEn);
+                System.out.println("ComprobanteEn agregado");
+            }
+            leerEn.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error descargando ComEntrada de BaseDatos");
+        }
+    }
+
+    public static void descargarComprobantesSalida() {
+        try {
+
+            BaseDatos.verfificarExistenciaSimpesSalidaTxt();
+            BufferedReader leerSa = new BufferedReader(new FileReader(BaseDatos.getSimpesSalidaTxt()));
+            String lineaSa = null;
+            System.out.println("paso la linea s");
+            while ((lineaSa = leerSa.readLine()) != null) {
+                System.out.println("while 1");
+                //Distribucion String[] datosSa:
+                //[0] monto
+                //[1] fecha
+                //[2] hora
+                //[3] numeroEmisor
+                //[4] numeroReceptor
+                //[5] Cuenta
+                //[6] Detalle
+                String[] datosSa = lineaSa.split("\t");
+                System.out.println("datosSa");
+
+                // comSa(numeroEmisor, numeroReceptor, cuenta, monto, fecha, hora, detalle)
+                ComprobanteSimpeSalida comSa = new ComprobanteSimpeSalida(datosSa[3], datosSa[4], datosSa[5], Double.parseDouble(datosSa[0]), datosSa[1], datosSa[2], datosSa[6]);
+                
+                //if (user.getTelefono().equals(comSa.getNumeroEmisor())) {
+                //        user.getComprobantesSimpeSalida().add(comSa);
+                //    }
+                listaComprobantesSalida.add(comSa);
+                System.out.println("ComprobanteSa agregado");
+            }
+            leerSa.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error descargando ComSalida de BaseDatos");
+        }
+    }
+
+    public static void descargarUsuariosBaseDatos() {
+        try {
+            BaseDatos.verfificarExistenciaUsuariosTxT();
+
+
+            BufferedReader leerUs = new BufferedReader(new FileReader(BaseDatos.getUsuariosTxt()));
+
+
+            String lineaUser = null;
+
+            while ((lineaUser = leerUs.readLine()) != null) {
+                System.out.println("while 0");
+                //Distribucion de la lista String[] datos:
+                //[0] = Usuario
+                //[1] = Apellido
+                //[2] = Cedula
+                //[3] = Telefono
+                //[4] = Password
+                //[5] = Clave Num
+                //[6] = Rol
+                //[7] = Sede
+                //[8] = saldo cuenta corriente
+                //[9] = saldo cuenta ahorro
+                //[10] = saldo cuenta simpe
+                //[11] = estado cuenta corriente
+                //[12] = estado cuenta ahorro
+                //[13] = estado cuenta simpe
+                //[14] = estado usuario
+                //[15] = estado cuenta
+                String[] datos = lineaUser.split("\t");
+                System.out.println("datos");
+
+                //User = (usuario, apellidos, password, cedula, telefono, claveNumerica, rol, sede, saldoC, saldoA, saldoS)
+                Usuarios user = new Usuarios(datos[0], datos[1], datos[4], datos[2], datos[3], Integer.parseInt(datos[5]), Integer.parseInt(datos[6]), Integer.parseInt(datos[7]),
+                        Double.parseDouble(datos[8]), Double.parseDouble(datos[9]), Double.parseDouble(datos[10]));
+
+                System.out.println("user creado");
+                user.getCuentaCorriente().setEstado(Boolean.parseBoolean(datos[11]));
+                user.getCuentaAhorro().setEstado(Boolean.parseBoolean(datos[12]));
+                user.getCuentaSimpe().setEstado(Boolean.parseBoolean(datos[13]));
+
+                user.setEstadoUsuario(Boolean.parseBoolean(datos[14]));
+                user.setEstadoCuenta(Boolean.parseBoolean(datos[15]));
+                System.out.println("user actualizado");
+
+                //leer txtSimpeSalida para asignarle a user los comprobantes
+                for(ComprobanteSimpeSalida i : listaComprobantesSalida){
+                    String numeroEmisor = i.getNumeroEmisor();
+                    if(user.getTelefono().equals(numeroEmisor)){
+                        user.getComprobantesSimpeSalida().add(i);
+                    }
+                }
+                
+                for(ComprobanteSimpeEntrada i : listaComprobantesEntrada){
+                    String numeroReceptor = i.getNumeroReceptor();
+                    if(user.getTelefono().equals(numeroReceptor)){
+                        user.getComprobantesSimpeEntrada().add(i);
+                    }
+                }
+
+                //Agregar el usuario final a las sedes
+                if (user.getEstadoCuenta() == true) {
+
+                    SedeCentral.getListaUsers().add(user);
+                    System.out.println("usuario agregado a sede central");
+                    switch (user.getSede()) {
+                        case 0 -> {
+                            SedePuriscal.getListaUsers().add(user);
+                        }
+                        case 1 -> {
+                            SedeSanPedro.getListaUsers().add(user);
+                        }
+                        case 2 -> {
+                            SedeCiudadColon.getListaUsers().add(user);
+                        }
+                    }
+                    System.out.println("usuario agregado a sedesss");
+                } else {
+                    DatosRegistrados.getListaUsuariosEliminados().add(user);
+                    System.out.println("usuario agregado a eliminados");
+                }
+
+                //Agregar los datos a las listas de datos usados
+                DatosRegistrados.getListaCedulas().add(user.getCedula());
+                DatosRegistrados.getListaClaves().add(user.getClaveNumerica());
+                DatosRegistrados.getListaTelefonos().add(user.getTelefono());
+                System.out.println("usuario agregado a datos registrados");
+            }
+            leerUs.close();
+
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error descargando usuarios de BaseDatos");
+        }
+    }
+
+    public static void descargarAdministradoresBaseDatos() {
+        try {
+            BaseDatos.verfificarExistenciaAdministradoresTxT();
+            BufferedReader leer = new BufferedReader(new FileReader(BaseDatos.getAdministradoresTxt()));
+            String linea;
+
+            while ((linea = leer.readLine()) != null) {
+
+                //Distribucion de la lista datos:
+                //[0] = Usuario
+                //[1] = Apellido
+                //[2] = Cedula
+                //[3] = Telefono
+                //[4] = Password
+                //[5] = Clave Num
+                //[6] = Rol
+                //[7] = Sede
+                String[] datos = linea.split("\t");
+
+                // admin(usuario, apellidos, password, cedula, telefono, claveNumerica,  rol, sede)
+                Administradores admin = new Administradores(datos[0], datos[1], datos[4], datos[2], datos[3], Integer.parseInt(datos[5]),
+                        Integer.parseInt(datos[6]), Integer.parseInt(datos[7]));
+
+                //agregar admin a las sedes
+                SedeCentral.getListaAdmins().add(admin);
+                switch (admin.getSede()) {
+                    case 0 -> {
+                        SedePuriscal.getListaAdmins().add(admin);
+                    }
+                    case 1 -> {
+                        SedeSanPedro.getListaAdmins().add(admin);
+                    }
+                    case 2 -> {
+                        SedeCiudadColon.getListaAdmins().add(admin);
+                    }
+                }
+
+                //Agregar los datos a las listas de datos usados
+                DatosRegistrados.getListaCedulas().add(admin.getCedula());
+                DatosRegistrados.getListaClaves().add(admin.getClaveNumerica());
+                DatosRegistrados.getListaTelefonos().add(admin.getTelefono());
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error descargando administradores de BaseDatos");
+        }
     }
 
     /**
@@ -213,6 +443,11 @@ public class Inicio extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Inicio().setVisible(true);
+                descargarComprobantesEntrada();
+                descargarComprobantesSalida();
+                descargarUsuariosBaseDatos();
+                descargarAdministradoresBaseDatos();
+                JOptionPane.showMessageDialog(null, "Datos descargados");
             }
         });
     }

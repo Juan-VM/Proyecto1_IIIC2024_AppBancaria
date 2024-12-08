@@ -1,5 +1,6 @@
 package guiUsuarios;
 
+import BaseDatos.BaseDatos;
 import Personas.Usuarios;
 import Sedes.SedeCentral;
 import java.awt.Color;
@@ -583,6 +584,13 @@ public class HabilitarCuentas extends javax.swing.JFrame {
                     int eleccion = JOptionPane.showConfirmDialog(null, "Deseas habilitar la cuenta de ahorro?", "HABILITAR CUENTA", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
                     if(eleccion == 0){
                         i.getCuentaAhorro().setEstado(true);
+                        
+                        try {
+                            BaseDatos.actualizarUsuariosBaseDatos();
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, "Error actualizando base de datos");
+                        }
+                        
                         JOptionPane.showMessageDialog(null, "Cuenta de ahorro habilitada para: "+i.getUsuario());
                         pizarra.setSelectedIndex(0);
                     }
@@ -610,6 +618,13 @@ public class HabilitarCuentas extends javax.swing.JFrame {
                     int eleccion = JOptionPane.showConfirmDialog(null, "Deseas habilitar la cuenta de simpe?", "HABILITAR CUENTA", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
                     if(eleccion == 0){
                         i.getCuentaSimpe().setEstado(true);
+                        
+                        try {
+                            BaseDatos.actualizarUsuariosBaseDatos();
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, "Error actualizando base de datos");
+                        }
+                        
                         JOptionPane.showMessageDialog(null, "Cuenta de simpe habilitada para: "+i.getUsuario());
                         pizarra.setSelectedIndex(0);
                     }
