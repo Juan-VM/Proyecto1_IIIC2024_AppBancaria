@@ -30,7 +30,7 @@ public class ComentariosUsuarios extends javax.swing.JFrame {
         
         for(Comentario i : DatosRegistrados.getListaComentarios()){
             if(!i.getTexto().equals("")){
-                modelo.addRow(new Object []{i.getAutor(), i.getCeulaAutor(), i.getFecha()+" "+i.getHora()});
+                modelo.addRow(new Object []{i.getAutor(), i.getCedulaAutor(), i.getFecha()+" "+i.getHora()});
             }
         }
     }
@@ -349,7 +349,7 @@ public class ComentariosUsuarios extends javax.swing.JFrame {
             String cedulaUser = tablaComentarios.getValueAt(filaSeleccionada, 1).toString();
             
             for(Comentario i : DatosRegistrados.getListaComentarios()){
-                if(i.getCeulaAutor().equals(cedulaUser)){
+                if(i.getCedulaAutor().equals(cedulaUser)){
                     txtComentario.setText(i.getTexto());
                 }
             }

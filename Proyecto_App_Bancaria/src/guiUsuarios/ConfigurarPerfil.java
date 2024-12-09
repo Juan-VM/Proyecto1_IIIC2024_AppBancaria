@@ -1,6 +1,7 @@
 package guiUsuarios;
 
 import BaseDatos.BaseDatos;
+import Comentarios.Comentario;
 import Comprobantes.ComprobanteSimpeEntrada;
 import Comprobantes.ComprobanteSimpeSalida;
 import Personas.Usuarios;
@@ -17,6 +18,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
     boolean verPassword = false;
     int sede;
     String cedula;
+    String cedulaVieja;
     String telefono;
     boolean BotonGuardarActivo;
     String telefonoAnterior;
@@ -25,6 +27,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.cedula = cedula;
+        this.cedulaVieja = cedula;
         this.sede = sede;
         panelConfig.setBackground(new Color(255, 255, 218));
         alertaCedula.setVisible(false);
@@ -131,10 +134,9 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
                     c.setNumeroReceptor(telN);
                 }
             }
-
         }
-        
-        for(Usuarios i : DatosRegistrados.getListaUsuariosEliminados()){
+
+        for (Usuarios i : DatosRegistrados.getListaUsuariosEliminados()) {
             for (ComprobanteSimpeSalida c : i.getComprobantesSimpeSalida()) {
                 if (c.getNumeroEmisor().equals(this.telefonoAnterior)) {
                     c.setNumeroEmisor(telN);
@@ -143,7 +145,6 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
                 if (c.getNumeroReceptor().equals(this.telefonoAnterior)) {
                     c.setNumeroReceptor(telN);
                 }
-                
             }
         }
     }
@@ -160,9 +161,8 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
                     c.setNumeroReceptor(telN);
                 }
             }
-
         }
-        
+
         for (Usuarios i : DatosRegistrados.getListaUsuariosEliminados()) {
 
             for (ComprobanteSimpeEntrada c : i.getComprobantesSimpeEntrada()) {
@@ -174,7 +174,26 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
                     c.setNumeroReceptor(telN);
                 }
             }
+        }
+    }
 
+    public void actalizarUsuarioCedulaComentarios(Usuarios u) {
+        for (Usuarios i : SedeCentral.getListaUsers()) {
+            if (i.getCedula().equals(u.getCedula())) {
+
+                i.getComentario().setAutor(i.getUsuario());
+                i.getComentario().setCedulaAutor(i.getCedula());
+
+                for (Comentario c : DatosRegistrados.getListaComentarios()) {
+                    if (c.getCedulaAutor().equals(cedulaVieja)) {
+                        c.setAutor(i.getComentario().getAutor());
+                        c.setCedulaAutor(i.getComentario().getCedulaAutor());
+                        c.setTexto(i.getComentario().getTexto());
+                        c.setFecha(i.getComentario().getFecha());
+                        c.setHora(i.getComentario().getHora());
+                    }
+                }
+            }
         }
     }
 
@@ -851,6 +870,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
                         this.cedula = i.getCedula();
                         this.telefono = i.getTelefono();
                         actualizarDatosEnLaSede(this.sede, i.getCedula(), i);
+                        actalizarUsuarioCedulaComentarios(i);
                     }
                 }
 
@@ -860,6 +880,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
                     actalizarNumerosEmisoresYReceptoresComprobantesEntrada(txtTelefono.getText());
                     BaseDatos.actualizarComprobantesSalidaTxtBD();
                     BaseDatos.actualizarComprobantesEntradaTxtBD();
+                    BaseDatos.actualizarComentariosTxtBD();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Error, actalizando la base de datos");
                 }
