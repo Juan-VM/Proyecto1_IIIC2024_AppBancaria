@@ -1,6 +1,7 @@
 package guiUsuarios;
 
 import BaseDatos.BaseDatos;
+import Comentarios.Comentario;
 import Comprobantes.ComprobanteSimpeEntrada;
 import Comprobantes.ComprobanteSimpeSalida;
 import Personas.Administradores;
@@ -20,6 +21,7 @@ public class Inicio extends javax.swing.JFrame {
 
     private static ArrayList<ComprobanteSimpeEntrada> listaComprobantesEntrada = new ArrayList<>();
     private static ArrayList<ComprobanteSimpeSalida> listaComprobantesSalida = new ArrayList<>();
+    public static ArrayList<Comentario> listaComentarios = new ArrayList<>();
 
     public Inicio() {
         initComponents();
@@ -83,6 +85,32 @@ public class Inicio extends javax.swing.JFrame {
         }
     }
 
+    public static void descargarComentarios() {
+        try {
+            BaseDatos.verfificarExistenciaComentariosTxT();
+            BufferedReader leer = new BufferedReader(new FileReader(BaseDatos.getComentariosTxt()));
+            String linea;
+
+            while ((linea = leer.readLine()) != null) {
+                //Distribucion String[] datos:
+                //[0] autor 
+                //[1] cedula
+                //[2] texto
+                //[3] fecha
+                //[4] hora
+                String[] datos = linea.split("\t");
+                
+                //coment( autor, cedulaAutor, texto, fecha, hora)
+                Comentario coment = new Comentario(datos[0], datos[1], datos[2], datos[3], datos[4]);
+                
+                listaComentarios.add(coment);
+            }
+            leer.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error descargando comentarios de BaseDatos");
+        }
+    }
+
     public static void descargarUsuariosBaseDatos() {
         try {
             BaseDatos.verfificarExistenciaUsuariosTxT();
@@ -136,6 +164,12 @@ public class Inicio extends javax.swing.JFrame {
                         user.getComprobantesSimpeEntrada().add(i);
                     }
                 }
+                
+                for(Comentario i : listaComentarios){
+                    if(user.getCedula().equals(i.getCedulaAutor())){
+                        user.setComentario(i);
+                    }
+                }
 
                 //Agregar el usuario final a las sedes
                 SedeCentral.getListaUsers().add(user);
@@ -168,9 +202,9 @@ public class Inicio extends javax.swing.JFrame {
             BaseDatos.verfificarExistenciaUsuariosEliminadosTxT();
             BufferedReader leer = new BufferedReader(new FileReader(BaseDatos.getUsuariosEliminadosTxt()));
             String linea;
-            
-            while((linea = leer.readLine()) != null){
-                
+
+            while ((linea = leer.readLine()) != null) {
+
                 //Distribucion de la lista String[] datos:
                 //[0] = Usuario
                 //[1] = Apellido
@@ -188,20 +222,19 @@ public class Inicio extends javax.swing.JFrame {
                 //[13] = estado cuenta simpe
                 //[14] = estado usuario
                 //[15] = estado cuenta
-                
                 String[] datos = linea.split("\t");
-                
+
                 //userEliminado = (usuario, apellidos, password, cedula, telefono, claveNumerica, rol, sede, saldoC, saldoA, saldoS)
                 Usuarios userEliminado = new Usuarios(datos[0], datos[1], datos[4], datos[2], datos[3], Integer.parseInt(datos[5]), Integer.parseInt(datos[6]), Integer.parseInt(datos[7]),
                         Double.parseDouble(datos[8]), Double.parseDouble(datos[9]), Double.parseDouble(datos[10]));
-                
+
                 userEliminado.getCuentaCorriente().setEstado(Boolean.parseBoolean(datos[11]));
                 userEliminado.getCuentaAhorro().setEstado(Boolean.parseBoolean(datos[12]));
                 userEliminado.getCuentaSimpe().setEstado(Boolean.parseBoolean(datos[13]));
 
                 userEliminado.setEstadoUsuario(Boolean.parseBoolean(datos[14]));
                 userEliminado.setEstadoCuenta(Boolean.parseBoolean(datos[15]));
-                
+
                 //leer comprobantes para asignarle a user los comprobantes correspondientes
                 for (ComprobanteSimpeSalida i : listaComprobantesSalida) {
                     String numeroEmisor = i.getNumeroEmisor();
@@ -217,9 +250,15 @@ public class Inicio extends javax.swing.JFrame {
                     }
                 }
                 
+                for(Comentario i : listaComentarios){
+                    if(userEliminado.getCedula().equals(i.getCedulaAutor())){
+                        userEliminado.setComentario(i);
+                    }
+                }
+
                 //Afregar al usuario a la lista de usuarios eliminados
                 DatosRegistrados.getListaUsuariosEliminados().add(userEliminado);
-                
+
                 //Agregar los datos del usuario a los datos registrados
                 DatosRegistrados.getListaCedulas().add(userEliminado.getCedula());
                 DatosRegistrados.getListaClaves().add(userEliminado.getClaveNumerica());
@@ -482,9 +521,10 @@ public class Inicio extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Inicio().setVisible(true);
-                
+
                 descargarComprobantesEntrada();
                 descargarComprobantesSalida();
+                descargarComentarios();
                 descargarUsuariosBaseDatos();
                 descargarUsuariosEliminadosBaseDatos();
                 descargarAdministradoresBaseDatos();

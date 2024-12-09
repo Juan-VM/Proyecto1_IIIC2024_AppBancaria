@@ -1,5 +1,6 @@
 package guiUsuarios;
 
+import BaseDatos.BaseDatos;
 import Comentarios.Comentario;
 import Personas.Usuarios;
 import RegistroDatos.DatosRegistrados;
@@ -29,6 +30,23 @@ public class Comentarios extends javax.swing.JFrame {
         this.cedula = cedula;
         this.sede = sede;
         txtComentario.setText("");
+
+        for (Usuarios i : SedeCentral.getListaUsers()) {
+            if (i.getCedula().equals(this.cedula)) {
+                jblNombrePerfil.setText(i.getUsuario() + " " + i.getApellidos());
+                switch (this.sede) {
+                    case 0 -> {
+                        jblVentanaActual.setText("Sede Puriscal");
+                    }
+                    case 1 -> {
+                        jblVentanaActual.setText("Sede San Pedro");
+                    }
+                    case 2 -> {
+                        jblVentanaActual.setText("Sede Ciudad Colon");
+                    }
+                }
+            }
+        }
     }
 
     public void actualizarComentarioSedes(Comentario comentario) {
@@ -55,6 +73,28 @@ public class Comentarios extends javax.swing.JFrame {
                     }
                 }
             }
+        }
+    }
+
+    public void agregarComentarioLista(Comentario comentario) {
+        if (DatosRegistrados.getListaComentarios().size() > 0) {
+            boolean encontrado = false;
+            for (Comentario i : DatosRegistrados.getListaComentarios()) {
+                if(i.getCedulaAutor().equals(comentario.getCedulaAutor())){
+                    i.setAutor(comentario.getAutor());
+                    i.setCedulaAutor(comentario.getCedulaAutor());
+                    i.setTexto(comentario.getTexto());
+                    i.setFecha(comentario.getFecha());
+                    i.setHora(comentario.getHora());
+                    encontrado = true;
+                }
+            }
+            
+            if(encontrado == false){
+                DatosRegistrados.getListaComentarios().add(comentario);
+            }
+        }else{
+            DatosRegistrados.getListaComentarios().add(comentario);
         }
     }
 
@@ -604,6 +644,7 @@ public class Comentarios extends javax.swing.JFrame {
     }//GEN-LAST:event_jblComentarios1MouseExited
 
     private void jblEnviarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblEnviarMouseClicked
+
         if (txtComentario.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(null, "Debes escibir algo para enviarlo");
             txtComentario.setText("");
@@ -611,6 +652,7 @@ public class Comentarios extends javax.swing.JFrame {
             for (Usuarios i : SedeCentral.getListaUsers()) {
                 if (i.getCedula().equals(this.cedula)) {
                     String texto = txtComentario.getText();
+                    texto = texto.replace("\n", " ");
                     String usuario = i.getUsuario();
                     String cedula = i.getCedula();
 
@@ -621,28 +663,24 @@ public class Comentarios extends javax.swing.JFrame {
                     LocalDate fecha = LocalDate.now();
                     DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                     String fechaFormateada = fecha.format(formatoFecha);
-                    
+
                     Comentario comentarioUser = new Comentario(usuario, cedula, texto, fechaFormateada, horaFormateada);
 
                     i.setComentario(comentarioUser);
                     actualizarComentarioSedes(comentarioUser);
+                    agregarComentarioLista(comentarioUser);
 
-                    boolean existe = false;
-                    for (Comentario j : DatosRegistrados.getListaComentarios()) {
-                        if (j.getCeulaAutor().equals(cedula)) {
-                            j = comentarioUser;
-                            existe = true;
-                            JOptionPane.showMessageDialog(null, "Comentario actualizado, gracias por tu opinion");
-                        }
-                    }
-                    if (existe == false) {
-                        DatosRegistrados.getListaComentarios().add(comentarioUser);
-                        JOptionPane.showMessageDialog(null, "Comentario agregado, gracias por tu opinion");
-                    }
-
-                    txtComentario.setText("");
                 }
             }
+
+            try {
+                BaseDatos.actualizarComentariosTxtBD();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error actualizando comentarios BD");
+            }
+
+            txtComentario.setText("");
+            JOptionPane.showMessageDialog(null, "Gracias por tu opinion...");
         }
     }//GEN-LAST:event_jblEnviarMouseClicked
 
@@ -657,14 +695,14 @@ public class Comentarios extends javax.swing.JFrame {
     }//GEN-LAST:event_jblEnviarMouseExited
 
     private void jblVerAnteriorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerAnteriorMouseClicked
-        for(Usuarios i : SedeCentral.getListaUsers()){
-            if(i.getCedula().equals(this.cedula)){
+        for (Usuarios i : SedeCentral.getListaUsers()) {
+            if (i.getCedula().equals(this.cedula)) {
                 try {
                     txtComentario.setText(i.getComentario().getTexto());
                 } catch (Exception e) {
-                   JOptionPane.showMessageDialog(null, "Aun no tienes comentarios"); 
+                    JOptionPane.showMessageDialog(null, "Aun no tienes comentarios");
                 }
-                
+
             }
         }
     }//GEN-LAST:event_jblVerAnteriorMouseClicked

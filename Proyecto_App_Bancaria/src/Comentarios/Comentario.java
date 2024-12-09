@@ -3,7 +3,7 @@ package Comentarios;
 public class Comentario {
 
     private String autor = "";
-    private String ceulaAutor = "";
+    private String cedulaAutor = "";
     private String texto = "";
     private String fecha = "";
     private String hora = "";
@@ -17,7 +17,7 @@ public class Comentario {
         this.texto = texto;
         this.fecha = fecha;
         this.hora = hora;
-        this.ceulaAutor = cedulaAutor;
+        this.cedulaAutor = cedulaAutor;
     }
 
     public String getAutor() {
@@ -52,12 +52,12 @@ public class Comentario {
         this.hora = hora;
     }
 
-    public String getCeulaAutor() {
-        return ceulaAutor;
+    public String getCedulaAutor() {
+        return cedulaAutor;
     }
 
-    public void setCeulaAutor(String ceulaAutor) {
-        this.ceulaAutor = ceulaAutor;
+    public void setCedulaAutor(String cedulaAutor) {
+        this.cedulaAutor = cedulaAutor;
     }
     
     
