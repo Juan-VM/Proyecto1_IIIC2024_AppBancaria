@@ -104,6 +104,7 @@ public class Inicio extends javax.swing.JFrame {
                 Comentario coment = new Comentario(datos[0], datos[1], datos[2], datos[3], datos[4]);
                 
                 listaComentarios.add(coment);
+                DatosRegistrados.getListaComentarios().add(coment);
             }
             leer.close();
         } catch (Exception e) {
