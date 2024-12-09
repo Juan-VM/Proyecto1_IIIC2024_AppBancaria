@@ -140,9 +140,9 @@ public class Inicio extends javax.swing.JFrame {
                 //[15] = estado cuenta
                 String[] datos = lineaUser.split("\t");
 
-                //User = (usuario, apellidos, password, cedula, telefono, claveNumerica, rol, sede, saldoC, saldoA, saldoS)
+                //User = (usuario, apellidos, password, cedula, telefono, claveNumerica, rol, sede, saldoCorriente, saldoSimpe, saldoAhorro)
                 Usuarios user = new Usuarios(datos[0], datos[1], datos[4], datos[2], datos[3], Integer.parseInt(datos[5]), Integer.parseInt(datos[6]), Integer.parseInt(datos[7]),
-                        Double.parseDouble(datos[8]), Double.parseDouble(datos[9]), Double.parseDouble(datos[10]));
+                        Double.parseDouble(datos[8]), Double.parseDouble(datos[10]), Double.parseDouble(datos[9]));
 
                 user.getCuentaCorriente().setEstado(Boolean.parseBoolean(datos[11]));
                 user.getCuentaAhorro().setEstado(Boolean.parseBoolean(datos[12]));
@@ -225,9 +225,9 @@ public class Inicio extends javax.swing.JFrame {
                 //[15] = estado cuenta
                 String[] datos = linea.split("\t");
 
-                //userEliminado = (usuario, apellidos, password, cedula, telefono, claveNumerica, rol, sede, saldoC, saldoA, saldoS)
+                //userEliminado = (usuario, apellidos, password, cedula, telefono, claveNumerica, rol, sede, saldoCorriente, saldoSimpe, saldoAhorro)
                 Usuarios userEliminado = new Usuarios(datos[0], datos[1], datos[4], datos[2], datos[3], Integer.parseInt(datos[5]), Integer.parseInt(datos[6]), Integer.parseInt(datos[7]),
-                        Double.parseDouble(datos[8]), Double.parseDouble(datos[9]), Double.parseDouble(datos[10]));
+                        Double.parseDouble(datos[8]), Double.parseDouble(datos[10]), Double.parseDouble(datos[9]));
 
                 userEliminado.getCuentaCorriente().setEstado(Boolean.parseBoolean(datos[11]));
                 userEliminado.getCuentaAhorro().setEstado(Boolean.parseBoolean(datos[12]));

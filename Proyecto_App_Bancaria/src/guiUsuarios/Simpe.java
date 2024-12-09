@@ -216,7 +216,7 @@ public class Simpe extends javax.swing.JFrame {
         if (detalle.equals("Ingrese el detalle")) {
             detalle = "ninguno";
         }
-
+        
         for (Usuarios i : SedeCentral.getListaUsers()) {
             if (i.getTelefono().equals(comprobante.getNumeroEmisor())) {
                 realizadoPor = i.getApellidos() + " " + i.getUsuario();
@@ -266,6 +266,7 @@ public class Simpe extends javax.swing.JFrame {
     }
 
     public void llenarTablaSalida() {
+        modeloS.setRowCount(0);
         for (Usuarios i : SedeCentral.getListaUsers()) {
 
             if (i.getCedula().equals(this.cedula)) {
@@ -279,6 +280,7 @@ public class Simpe extends javax.swing.JFrame {
     }
 
     public void llenarTablaEntrada() {
+        modeloE.setRowCount(0);
         for (Usuarios i : SedeCentral.getListaUsers()) {
 
             if (i.getCedula().equals(this.cedula)) {
