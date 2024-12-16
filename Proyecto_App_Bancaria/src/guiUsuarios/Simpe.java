@@ -1,10 +1,10 @@
 package guiUsuarios;
 
+import guiGeneral.Inicio;
 import BaseDatos.BaseDatos;
 import Comprobantes.ComprobanteSimpeEntrada;
 import Comprobantes.ComprobanteSimpeSalida;
 import Personas.Usuarios;
-import RegistroDatos.DatosRegistrados;
 import Sedes.SedeCentral;
 import java.awt.Color;
 import java.awt.event.KeyEvent;

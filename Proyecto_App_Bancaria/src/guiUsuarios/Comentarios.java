@@ -1,5 +1,6 @@
 package guiUsuarios;
 
+import guiGeneral.Inicio;
 import BaseDatos.BaseDatos;
 import Comentarios.Comentario;
 import Personas.Usuarios;

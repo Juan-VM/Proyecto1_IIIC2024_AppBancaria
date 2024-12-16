@@ -1,4 +1,4 @@
-package guiUsuarios;
+package guiGeneral;
 
 import BaseDatos.BaseDatos;
 import Personas.Administradores;

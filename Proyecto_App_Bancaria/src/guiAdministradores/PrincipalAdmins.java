@@ -1,6 +1,6 @@
 package guiAdministradores;
 
-import guiUsuarios.Inicio;
+import guiGeneral.Inicio;
 
 public class PrincipalAdmins extends javax.swing.JFrame {
 

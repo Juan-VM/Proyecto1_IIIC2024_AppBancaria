@@ -1,5 +1,6 @@
 package guiUsuarios;
 
+import guiGeneral.Inicio;
 import BaseDatos.BaseDatos;
 import Personas.Usuarios;
 import Sedes.SedeCentral;
@@ -1044,7 +1045,6 @@ public class Depositar extends javax.swing.JFrame {
     private void jblHabilitarCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseClicked
         HabilitarCuentas habilitar = new HabilitarCuentas(this.cedula, this.sede);
         habilitar.setVisible(true);
-        //panelDashboardBarra.setBackground(new Color(252, 247, 215));
         this.dispose();
     }//GEN-LAST:event_jblHabilitarCuentasMouseClicked
 
