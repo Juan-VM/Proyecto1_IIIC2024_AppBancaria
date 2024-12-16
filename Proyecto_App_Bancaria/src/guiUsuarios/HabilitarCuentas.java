@@ -1,5 +1,6 @@
 package guiUsuarios;
 
+import guiGeneral.Inicio;
 import BaseDatos.BaseDatos;
 import Personas.Usuarios;
 import Sedes.SedeCentral;

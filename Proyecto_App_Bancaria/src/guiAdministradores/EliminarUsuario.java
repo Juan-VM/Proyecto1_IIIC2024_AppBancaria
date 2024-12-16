@@ -7,7 +7,7 @@ import Sedes.SedeCentral;
 import Sedes.SedeCiudadColon;
 import Sedes.SedePuriscal;
 import Sedes.SedeSanPedro;
-import guiUsuarios.Inicio;
+import guiGeneral.Inicio;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;

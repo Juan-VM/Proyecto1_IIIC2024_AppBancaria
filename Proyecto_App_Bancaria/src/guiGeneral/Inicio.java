@@ -1,5 +1,7 @@
-package guiUsuarios;
+package guiGeneral;
 
+import guiGeneral.Registro;
+import guiGeneral.Login;
 import BaseDatos.BaseDatos;
 import Comentarios.Comentario;
 import Comprobantes.ComprobanteSimpeEntrada;

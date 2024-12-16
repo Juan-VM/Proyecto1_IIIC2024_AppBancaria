@@ -5,7 +5,7 @@ import Comentarios.Comentario;
 import Personas.Usuarios;
 import RegistroDatos.DatosRegistrados;
 import Sedes.SedeCentral;
-import guiUsuarios.Inicio;
+import guiGeneral.Inicio;
 import javax.swing.table.DefaultTableModel;
 
 public class ComentariosUsuarios extends javax.swing.JFrame {

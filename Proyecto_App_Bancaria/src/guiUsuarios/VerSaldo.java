@@ -1,5 +1,6 @@
 package guiUsuarios;
 
+import guiGeneral.Inicio;
 import Personas.Usuarios;
 import Sedes.SedeCentral;
 import java.awt.Color;

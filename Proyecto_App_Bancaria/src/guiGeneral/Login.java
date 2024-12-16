@@ -1,4 +1,4 @@
-package guiUsuarios;
+package guiGeneral;
 
 import Personas.Administradores;
 import Personas.Usuarios;
@@ -7,6 +7,7 @@ import Sedes.SedeCiudadColon;
 import Sedes.SedePuriscal;
 import Sedes.SedeSanPedro;
 import guiAdministradores.PrincipalAdmins;
+import guiUsuarios.PrincipalUsers;
 import guiUsuarios.PrincipalUsers;
 import java.awt.Color;
 import java.util.ArrayList;
