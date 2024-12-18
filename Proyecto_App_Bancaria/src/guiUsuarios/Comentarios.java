@@ -50,6 +50,7 @@ public class Comentarios extends javax.swing.JFrame {
         }
     }
 
+    //agrega los comentarios a los usuarios de las sedes
     public void actualizarComentarioSedes(Comentario comentario) {
 
         switch (this.sede) {
@@ -77,6 +78,7 @@ public class Comentarios extends javax.swing.JFrame {
         }
     }
 
+    //agrega el comentario a la lista y comentarios y si ya existe lo actualiza
     public void agregarComentarioLista(Comentario comentario) {
         if (DatosRegistrados.getListaComentarios().size() > 0) {
             boolean encontrado = false;

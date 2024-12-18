@@ -55,6 +55,8 @@ public class GestionSedes extends javax.swing.JFrame {
         }
     }
 
+    //llena las tabla segun los usuarios de la sede elegida
+    //llena cada una de las tablas segun el estado de los usuarios
     public void llenarTablas() {
         switch (sedeElegida) {
             case 0 -> {

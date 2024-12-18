@@ -32,11 +32,11 @@ public class Cuentas {
         this.estado = estado;
     }
     
-    public void depositarDinero(double cantidadDeposito) {  //Suma a saldoDeLaCuenta una cantidad ingresada.
+    public void depositarDinero(double cantidadDeposito) {  //Suma a saldoDeLaCuenta una cantidad ingresada como argumento.
         this.saldo += cantidadDeposito;
     }
     
-    public void retirarDinero(double cantidadRetiro) {  //Suma a saldoDeLaCuenta una cantidad ingresada.
+    public void retirarDinero(double cantidadRetiro) {  //Suma a saldoDeLaCuenta una cantidad ingresada como argumento.
         this.saldo -= cantidadRetiro;
     }
 }

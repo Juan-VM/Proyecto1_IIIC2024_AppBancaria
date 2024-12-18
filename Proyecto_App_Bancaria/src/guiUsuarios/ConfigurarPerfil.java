@@ -64,6 +64,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
 
     }
 
+    //actauliza los nuevos datos para que se refleje el cambio en las sedes.
     public void actualizarDatosEnLaSede(int sede, String cedula, Usuarios user) {
         switch (sede) {
             case 0 -> {
@@ -90,6 +91,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         }
     }
 
+    //valida que el datos nuevo no este en uso en caso que sea un dato de caracter unico
     public boolean validarRepetidos() {
         boolean existen = false;
         if (DatosRegistrados.getListaCedulas().contains(txtCedula.getText()) || DatosRegistrados.getListaTelefonos().contains(txtTelefono.getText())) {
@@ -111,6 +113,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         return existen;
     }
 
+    //actaliza los datos registrados con los nuevos datos, removiendo los anteriores que quedaron sin uso.
     public void actualizarDatosRegistrados(String ced, String tel) {
         if (!ced.equals(this.cedula)) {
             DatosRegistrados.getListaCedulas().remove(this.cedula);
@@ -123,6 +126,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         }
     }
 
+    //Si hubo un cambio en el numero de telefono, actualiza los comprobantes de todos los usuarios que tuvieran ese numero como receptor con el nuevo telefono.
     public void actalizarNumerosEmisoresYReceptoresComprobantesSalida(String telN) {
         for (Usuarios i : SedeCentral.getListaUsers()) {
 
@@ -150,6 +154,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         }
     }
 
+    //Si hubo un cambio en el numero de telefono, actualiza los comprobantes de todos los usuarios que tuvieran ese numero como receptor con el nuevo telefono.
     public void actalizarNumerosEmisoresYReceptoresComprobantesEntrada(String telN) {
         for (Usuarios i : SedeCentral.getListaUsers()) {
 
@@ -178,6 +183,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
         }
     }
 
+    //actaliza la cedula del auutor del comentario en caso de que ingresara una nueva cedula.
     public void actalizarUsuarioCedulaComentarios(Usuarios u) {
         for (Usuarios i : SedeCentral.getListaUsers()) {
             if (i.getCedula().equals(u.getCedula())) {
@@ -876,6 +882,7 @@ public class ConfigurarPerfil extends javax.swing.JFrame {
                 }
 
                 try {
+                    //actualiza todos los datos, incluyendo la base de datos
                     BaseDatos.actualizarUsuariosBaseDatos();
                     actalizarNumerosEmisoresYReceptoresComprobantesSalida(txtTelefono.getText());
                     actalizarNumerosEmisoresYReceptoresComprobantesEntrada(txtTelefono.getText());

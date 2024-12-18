@@ -53,6 +53,7 @@ public class Retirar extends javax.swing.JFrame {
         psdPassword.setText("Ingrese su password");
     }
 
+    //muestra un aviso de que el monto maximo fue alcanzado o va a ser superado
     public boolean MontoMaximaAlcanzado(String num) {
         boolean maximoAlcanzado = false;
         try {
@@ -65,6 +66,7 @@ public class Retirar extends javax.swing.JFrame {
         return maximoAlcanzado;
     }
 
+    // muestra un aviso de que el maximo de digitos fue alcanzado
     public boolean DigitosMaxAlcanzados(String num) {
         boolean digitosMaximos = false;
         if ((jblMontoRetiro.getText() + num).length() > 10) {
@@ -74,6 +76,8 @@ public class Retirar extends javax.swing.JFrame {
         return digitosMaximos;
     }
 
+    //Toma el monto de retiro y le asigana a cada variable de billetes, la cantidad que se va a requerir para completarel monto
+    //Los billetes mas grandes tienen prioridad.
     public void mostarTipoDeCambio(double monto) {
         int billetes20000, billetes10000, billetes5000, billetes2000, billetes1000;
         double montoDeCambio = monto;

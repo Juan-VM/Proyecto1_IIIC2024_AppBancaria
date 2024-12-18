@@ -21,6 +21,8 @@ import javax.swing.JOptionPane;
 
 public class Inicio extends javax.swing.JFrame {
 
+    //Estos arrayList seran utilizados para almacenar los objetos reconstruidos de la base de datos.
+    //Posteriormente se asignará el objeto a su respectiva lista.
     private static ArrayList<ComprobanteSimpeEntrada> listaComprobantesEntrada = new ArrayList<>();
     private static ArrayList<ComprobanteSimpeSalida> listaComprobantesSalida = new ArrayList<>();
     public static ArrayList<Comentario> listaComentarios = new ArrayList<>();
@@ -30,6 +32,9 @@ public class Inicio extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
 
+    
+    //Recorre el archivo de la base de datos que guarda a los comprobantes de entrada.
+    //Reconstruye cada comprobante y lo agrega a la lista temporal.
     public static void descargarComprobantesEntrada() {
         try {
             BaseDatos.verfificarExistenciaSimpesEntradaTxt();
@@ -58,6 +63,9 @@ public class Inicio extends javax.swing.JFrame {
         }
     }
 
+    
+    //Recorre el archivo de la base de datos que guarda a los comprobantes de salida.
+    //Reconstruye cada comprobante y lo agrega a la lista temporal.
     public static void descargarComprobantesSalida() {
         try {
 
@@ -87,6 +95,9 @@ public class Inicio extends javax.swing.JFrame {
         }
     }
 
+    
+    //Recorre el archivo de la base de datos que guarda a los comentarios.
+    //Reconstruye cada comentario y lo agrega a la lista temporal.
     public static void descargarComentarios() {
         try {
             BaseDatos.verfificarExistenciaComentariosTxT();
@@ -114,6 +125,10 @@ public class Inicio extends javax.swing.JFrame {
         }
     }
 
+    //Recorre el archivo de la base de datos que guarda a los usuarios.
+    //Reconstruye cada usuario y le asigna sus respectivos atributos.
+    //Una vez esta completamente reconstruido lo agrega a las respectivas sedes.
+    //Agrega los datos unicos en uso a la lista de datos unicos en uso.
     public static void descargarUsuariosBaseDatos() {
         try {
             BaseDatos.verfificarExistenciaUsuariosTxT();
@@ -200,6 +215,11 @@ public class Inicio extends javax.swing.JFrame {
         }
     }
 
+    
+    //Recorre el archivo de la base de datos que guarda a los usuarios eliminados.
+    //Reconstruye cada usuario eliminado y le asigna sus respectivos atributos.
+    //Una vez esta completamente reconstruido lo agrega a la lista de usuarios eliminados.
+    //Agrega los datos unicos en uso a la lista de datos unicos en uso.
     public static void descargarUsuariosEliminadosBaseDatos() {
         try {
             BaseDatos.verfificarExistenciaUsuariosEliminadosTxT();
@@ -273,6 +293,11 @@ public class Inicio extends javax.swing.JFrame {
         }
     }
 
+    
+    //Recorre el archivo de la base de datos que guarda a los administradores.
+    //Reconstruye cada administrador y le asigna sus respectivos atributos.
+    //Una vez esta completamente reconstruido lo agrega a las respectivas sedes.
+    //Agrega los datos unicos en uso a la lista de datos unicos en uso.
     public static void descargarAdministradoresBaseDatos() {
         try {
             BaseDatos.verfificarExistenciaAdministradoresTxT();
@@ -524,7 +549,8 @@ public class Inicio extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Inicio().setVisible(true);
-
+                
+                //Se ejecuta solo una vez en el main para evitar duplicar datos.
                 descargarComprobantesEntrada();
                 descargarComprobantesSalida();
                 descargarComentarios();

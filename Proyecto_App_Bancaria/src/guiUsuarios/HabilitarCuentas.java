@@ -584,6 +584,7 @@ public class HabilitarCuentas extends javax.swing.JFrame {
                 if (i.getCuentaAhorro().getEstado() == false) {
                     int eleccion = JOptionPane.showConfirmDialog(null, "Deseas habilitar la cuenta de ahorro?", "HABILITAR CUENTA", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
                     if(eleccion == 0){
+                        //si acepta, actaliza el estado de la cuenta a true, osea activa
                         i.getCuentaAhorro().setEstado(true);
                         
                         try {
@@ -618,6 +619,7 @@ public class HabilitarCuentas extends javax.swing.JFrame {
                 if (i.getCuentaSimpe().getEstado() == false) {
                     int eleccion = JOptionPane.showConfirmDialog(null, "Deseas habilitar la cuenta de simpe?", "HABILITAR CUENTA", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
                     if(eleccion == 0){
+                        //si acepta, actaliza el estado de la cuenta a true, osea activa
                         i.getCuentaSimpe().setEstado(true);
                         
                         try {

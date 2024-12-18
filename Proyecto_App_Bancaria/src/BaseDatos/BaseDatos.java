@@ -26,6 +26,7 @@ public class BaseDatos {
     public static File usuariosEliminadosTxt = new File("usuariosEliminadosTxt.txt");
     public static File comentariosTxt = new File("comentariosTxt.txt");
 
+    //Los siguientes metodos verifican si el archivo ya esta creado, y si no lo esta lo crean.
     public static void verfificarExistenciaUsuariosTxT() {
         try {
             if (!usuariosTxt.exists()) {
@@ -86,6 +87,8 @@ public class BaseDatos {
         }
     }
 
+    //Los siguientes metodos agregan una linea al archivo de text.
+    //Cada linea representa toda la informacion sobre un objeto de una clase.
     public static void agregarUsuarioTxt(String usuario, String apellido, String cedula, String telefono, String password, String claveNum, String rol, String sede,
             String saldoC, String saldoA, String saldoS, String estadoC, String estadoA, String estadoS, String estadoUser, String estadoCuenta) throws FileNotFoundException, UnsupportedEncodingException, IOException {
 
@@ -142,6 +145,8 @@ public class BaseDatos {
         escribir.close();
     }
 
+    
+    //Los siguientes metodos limpian el archivo de texto y lo rellenan con los datos actualizados segun corresponda.
     public static void actualizarUsuariosBaseDatos() throws IOException {
         limpiarTxtUsuarios();
         for (Usuarios i : SedeCentral.getListaUsers()) {
@@ -207,6 +212,8 @@ public class BaseDatos {
         }
     }
 
+    
+    //Los sigueintes metodos limpain todo lo que este escrito en el archivo y lo dejan en blanco
     public static void limpiarTxtUsuarios() throws IOException {
         if (usuariosTxt.exists()) {
             FileWriter escribir = new FileWriter(usuariosTxt, false);
@@ -255,6 +262,8 @@ public class BaseDatos {
         }
     }
 
+    
+    //Metodos getters y setters
     public static File getUsuariosTxt() {
         return usuariosTxt;
     }

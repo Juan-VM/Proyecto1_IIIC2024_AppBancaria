@@ -38,7 +38,9 @@ public class Registro extends javax.swing.JFrame {
         txtClaveNumerica.setText("Clave numerica");
     }
 
-    public void txtsSetPredeterminatedText(String is) {
+    //Si el texto esta vacio le establece el texto predeterminado
+    //Al presionar si el texto es el predeterminado lo establece vacio.
+    public void txtsSetTextoPredeterminado(String is) {
         if (!(txtUsuarioOF.getText().equals("Ingrese su usuario")) && !(txtUsuarioOF.getText().equals("")) && !is.equals("usuario")) {
             txtUsuarioOF.setForeground(new Color(153, 153, 153));
         } else {
@@ -89,6 +91,7 @@ public class Registro extends javax.swing.JFrame {
         }
     }
     
+    //Oculta los mensajes de error
     public void alertasPorDefecto(){
         alertaCedula.setVisible(false);
         alertaTelefono.setVisible(false);
@@ -477,7 +480,7 @@ public class Registro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtUsuarioOFMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUsuarioOFMousePressed
-        txtsSetPredeterminatedText("usuario");
+        txtsSetTextoPredeterminado("usuario");
         if (txtUsuarioOF.getText().equals("Ingrese su usuario")) {
             txtUsuarioOF.setText("");
         }
@@ -485,7 +488,7 @@ public class Registro extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsuarioOFMousePressed
 
     private void txtApellidoOFMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtApellidoOFMousePressed
-        txtsSetPredeterminatedText("apellidos");
+        txtsSetTextoPredeterminado("apellidos");
         if (txtApellidoOF.getText().equals("Ingrese sus apellidos")) {
             txtApellidoOF.setText("");
         }
@@ -493,7 +496,7 @@ public class Registro extends javax.swing.JFrame {
     }//GEN-LAST:event_txtApellidoOFMousePressed
 
     private void txtCedulaOFMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCedulaOFMousePressed
-        txtsSetPredeterminatedText("cedula");
+        txtsSetTextoPredeterminado("cedula");
         alertaCedula.setVisible(false);
         if (txtCedulaOF.getText().equals("Ingrese su cedula")) {
             txtCedulaOF.setText("");
@@ -502,7 +505,7 @@ public class Registro extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCedulaOFMousePressed
 
     private void txtTelefonoOFMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTelefonoOFMousePressed
-        txtsSetPredeterminatedText("telefono");
+        txtsSetTextoPredeterminado("telefono");
         alertaTelefono.setVisible(false);
         if (txtTelefonoOF.getText().equals("Ingrese su telefono")) {
             txtTelefonoOF.setText("");
@@ -511,7 +514,7 @@ public class Registro extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTelefonoOFMousePressed
 
     private void psdPasswordOFMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_psdPasswordOFMousePressed
-        txtsSetPredeterminatedText("password");
+        txtsSetTextoPredeterminado("password");
         if (String.valueOf(psdPasswordOF.getPassword()).equals("Ingrese su password")) {
             psdPasswordOF.setText("");
         }

@@ -52,6 +52,7 @@ public class EliminarUsuario extends javax.swing.JFrame {
         }
     }
 
+    //elimina al usuario de la sede correspondiente
     public void removeUserToSede(String sede, String cedula) {
         int indice = 0;
         switch (sede) {

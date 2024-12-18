@@ -53,6 +53,7 @@ public class Depositar extends javax.swing.JFrame {
         psdPassword.setText("Ingrese su password");
     }
 
+    //muestra el aviso de que el monto va a superar el monto maximo
     public boolean MontoMaximaAlcanzado(String num) {
         boolean maximoAlcanzado = false;
         try {
@@ -65,6 +66,7 @@ public class Depositar extends javax.swing.JFrame {
         return maximoAlcanzado;
     }
 
+    //muestra el aviso de que se alcanzo el maximo de digitos por transaccion.
     public boolean DigitosMaxAlcanzados(String num) {
         boolean digitosMaximos = false;
         if ((jblMontoDeposito.getText() + num).length() > 10) {
@@ -1341,6 +1343,7 @@ public class Depositar extends javax.swing.JFrame {
             if (eleccion == 0) {
                 for (Usuarios i : SedeCentral.getListaUsers()) {
                     if (i.getCedula().equals(this.cedula)) {
+                        //suma el monto de deposito a la cuenta respectiva.
                         switch (this.cuentaElegida) {
                             case "corriente" -> {
                                 i.getCuentaCorriente().depositarDinero(monto);

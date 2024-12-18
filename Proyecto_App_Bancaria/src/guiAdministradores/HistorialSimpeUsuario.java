@@ -38,6 +38,8 @@ public class HistorialSimpeUsuario extends javax.swing.JFrame {
         this.listaComprobante = llenarTabla();
     }
 
+    
+    //llena la tabla con los comprobantes de salida del usuario y retorna una lista igual a la de los comprobantes
     public ArrayList<ComprobanteSimpeSalida> llenarTabla() {
         ArrayList<ComprobanteSimpeSalida> listaComprobantes = new ArrayList<>();
         switch (this.sede) {

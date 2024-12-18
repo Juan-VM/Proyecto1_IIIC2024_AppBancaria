@@ -42,6 +42,7 @@ public class VerSaldo extends javax.swing.JFrame {
         initComponents();
     }
 
+    //muestra el saldo segun la cuenta elegida por el usuario
     public void mostarSaldo() {
         for (Usuarios i : SedeCentral.getListaUsers()) {
             if (i.getCedula().equals(this.cedula)) {

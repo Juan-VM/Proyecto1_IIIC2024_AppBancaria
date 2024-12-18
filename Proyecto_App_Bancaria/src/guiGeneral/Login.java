@@ -8,7 +8,6 @@ import Sedes.SedePuriscal;
 import Sedes.SedeSanPedro;
 import guiAdministradores.PrincipalAdmins;
 import guiUsuarios.PrincipalUsers;
-import guiUsuarios.PrincipalUsers;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -28,11 +27,13 @@ public class Login extends javax.swing.JFrame {
         this.intentosRestantes = 3;
     }
 
+    //Establece el txto predeterminado´para cada txt
     public void txtsPorDefecto() {
         txtCedula.setText("Ingrese su cedula");
         psdPassword.setText("Ingrese su password");
     }
 
+    //Valida los datos ingresados en el login y retorna un true o false.
     public boolean validarDatos(String listaRol) {
 
         ArrayList<Usuarios> listaUsers = SedeCentral.getListaUsers();
@@ -78,6 +79,7 @@ public class Login extends javax.swing.JFrame {
         return CredencialesIguales;
     }
 
+    //Le asigna al atributo rol el rol del usuario actual.
     public void getRol(ArrayList<Administradores> listaAd, ArrayList<Usuarios> listaUs) {
         for (Administradores a : listaAd) {
             if (a.getCedula().equals(txtCedula.getText()) && a.getPassword().equals(String.valueOf(psdPassword.getPassword()))) {
@@ -306,6 +308,8 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //En caso de que los textos esten en blanco establece los txt con el texto predeterminado.
+    //Y al presionar el campo de texto borra el texto si es el predeterminado.
     private void txtCedulaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCedulaMousePressed
 
         String psd = String.valueOf(psdPassword.getPassword());
@@ -336,6 +340,8 @@ public class Login extends javax.swing.JFrame {
         txtCedula.setForeground(new Color(155, 155, 155));
     }//GEN-LAST:event_psdPasswordMousePressed
 
+    //Se valida que la cuenta del usuario este activa, que exista, que los datos sean iguales.
+    //Si los datos son correctos, segun el rol de quien ingresa abre el JFrame correspondiente.
     private void jblEntrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblEntrarMouseClicked
 
         ArrayList<Usuarios> listaUsers = SedeCentral.getListaUsers();

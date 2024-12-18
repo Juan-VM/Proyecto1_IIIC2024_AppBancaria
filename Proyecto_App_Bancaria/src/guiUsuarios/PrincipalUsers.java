@@ -43,6 +43,7 @@ public class PrincipalUsers extends javax.swing.JFrame {
         initComponents();
     }
 
+    //Asigna a indice el lugar en el que se encuentra el usuario en la sede
     public void asignarIndicePersonaEnSede(String cedula) {
         switch (sede) {
             case 0 -> {

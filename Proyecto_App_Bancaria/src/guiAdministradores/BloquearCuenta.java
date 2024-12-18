@@ -50,6 +50,7 @@ public class BloquearCuenta extends javax.swing.JFrame {
         initComponents();
     }
 
+    //llena las tablas con los usuarios que tienen la cuenta desbloqueada, separandolos por sedes
     public void llenarTablas() {
         for (Usuarios i : SedePuriscal.getListaUsers()) {
             String sede = "Puriscal";
@@ -71,6 +72,8 @@ public class BloquearCuenta extends javax.swing.JFrame {
         }
     }
 
+    //bloquea la cuenta del usuario seleccionado en la tabla
+    //y actualiza las listas de datos para reflejar el cambio en el estado del usuario
     public void bloquearCuenta(JTable tabla, int filaSeleccionada) {
         String cedulaUser = tabla.getValueAt(filaSeleccionada, 2).toString();
         String sede = tabla.getValueAt(filaSeleccionada, 0).toString();

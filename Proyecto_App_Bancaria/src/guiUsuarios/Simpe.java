@@ -115,6 +115,8 @@ public class Simpe extends javax.swing.JFrame {
         }
     }
 
+    //valida que exista el numero de destino, si existe valida que tenga el simpe activo, valida que la cuenta que se va a usar este activa.
+    //valida que simpe sea menor al monto, valida que los espacios esten llenos no en blanco
     public void validarDatosSimpe() {
         try {
             String numero = txtNumeroSimpe.getText();
@@ -209,6 +211,7 @@ public class Simpe extends javax.swing.JFrame {
         }
     }
 
+    //le establece a los txt el dato que les corresponde segun el comprobante generado
     public void setTextosMuestraComprobanteSalida(ComprobanteSimpeSalida comprobante) {
         String realizadoPor = "";
         String destinatario = "";
@@ -237,6 +240,7 @@ public class Simpe extends javax.swing.JFrame {
         jblDetalle.setText(detalle);
     }
 
+    //le establece a los txt el dato que les corresponde segun el comprobante generado
     public void setTextosMuestraComprobanteEntrada(ComprobanteSimpeEntrada comprobante) {
         String realizadoPor = "";
         String destinatario = "";
@@ -265,6 +269,7 @@ public class Simpe extends javax.swing.JFrame {
         jblDetalle.setText(detalle);
     }
 
+    //llena la tabla con los comprbantes de salida del usuario
     public void llenarTablaSalida() {
         modeloS.setRowCount(0);
         for (Usuarios i : SedeCentral.getListaUsers()) {
@@ -278,7 +283,8 @@ public class Simpe extends javax.swing.JFrame {
             }
         }
     }
-
+    
+    //llena la tabla con los comprbantes de entrada del usuario
     public void llenarTablaEntrada() {
         modeloE.setRowCount(0);
         for (Usuarios i : SedeCentral.getListaUsers()) {
@@ -1632,6 +1638,7 @@ public class Simpe extends javax.swing.JFrame {
                         i.getCuentaSimpe().depositarDinero(monto);
                     }
                 }
+                //Crea los comprobantes
                 ComprobanteSimpeSalida compSal = new ComprobanteSimpeSalida(numeroEmisor, numeroReceptor, cuentaUtiizada, monto, fechaFormateada, horaFormateada, detalle);
                 ComprobanteSimpeEntrada compEnt = new ComprobanteSimpeEntrada(numeroEmisor, numeroReceptor, cuentaUtiizada, monto, fechaFormateada, horaFormateada, detalle);
 

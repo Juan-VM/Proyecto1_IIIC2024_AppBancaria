@@ -1,1 +1,0 @@
-Heilyn	Valverde Mora	115610824	60301602	heilyn	6260	0	0	1498000.0	700000.0	2000.0	true	true	true	true	true

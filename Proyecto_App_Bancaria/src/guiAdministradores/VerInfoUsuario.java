@@ -28,6 +28,7 @@ public class VerInfoUsuario extends javax.swing.JFrame {
         llenarTxtDatos();
     }
 
+    //llena los txt con los datos del usuario
     public void llenarTxtDatos() {
         ArrayList<Usuarios> listaUsuarios = new ArrayList<>();
         switch (this.sede) {

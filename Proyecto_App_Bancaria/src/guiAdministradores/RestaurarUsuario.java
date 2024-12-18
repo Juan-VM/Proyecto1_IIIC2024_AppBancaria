@@ -53,6 +53,7 @@ public class RestaurarUsuario extends javax.swing.JFrame {
         }
     }
 
+    //establece los saldos y los comprobantes en blanco
     public void reestablecerDatosUsuario(Usuarios user) {
         user.getCuentaAhorro().setSaldo(0);
         user.getCuentaCorriente().setSaldo(0);
