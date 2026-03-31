@@ -1,5 +1,6 @@
 package Personas;
 
+import Buzon.BuzonMensajes;
 import Comentarios.Comentario;
 import Comprobantes.ComprobanteSimpeEntrada;
 import Comprobantes.ComprobanteSimpeSalida;
@@ -18,6 +19,7 @@ public class Usuarios extends Personas {
     private CuentaSimpe cuentaSimpe = new CuentaSimpe(false);
     private ArrayList<ComprobanteSimpeSalida> comprobantesSimpeSalida = new ArrayList<>();
     private ArrayList<ComprobanteSimpeEntrada> comprobantesSimpeEntrada = new ArrayList<>();
+    private BuzonMensajes buzonMensajes = new BuzonMensajes();
 
     public Usuarios(String usuario, String apellidos, String password, String cedula, String telefono, int claveNumerica, int rol, int sede,
             double saldoDeLaCuenta, double saldoCuentaSimpe, double saldoCuentaAhorro) {
@@ -27,9 +29,9 @@ public class Usuarios extends Personas {
         this.cuentaAhorro.setSaldo(saldoCuentaAhorro);
         this.cuentaSimpe.setSaldo(saldoCuentaSimpe);
     }
-    
-    public Usuarios(){
-        
+
+    public Usuarios() {
+
     }
 
     public CuentaCorriente getCuentaCorriente() {
@@ -95,6 +97,13 @@ public class Usuarios extends Personas {
     public void setComentario(Comentario comentario) {
         this.comentario = comentario;
     }
-    
-    
+
+    public BuzonMensajes getBuzonMensajes() {
+        return buzonMensajes;
+    }
+
+    public void setBuzonMensajes(BuzonMensajes buzonMensajes) {
+        this.buzonMensajes = buzonMensajes;
+    }
+
 }

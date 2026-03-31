@@ -1,72 +1,49 @@
 package guiUsuarios;
 
+import Buzon.Mensaje;
 import guiGeneral.Inicio;
 import Personas.Usuarios;
 import Sedes.SedeCentral;
-import Sedes.SedeCiudadColon;
-import Sedes.SedePuriscal;
-import Sedes.SedeSanPedro;
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
-public class PrincipalUsers extends javax.swing.JFrame {
+public class BuzonMensajes extends javax.swing.JFrame {
 
-    int indice;
     int sede;
     String cedula;
+    DefaultTableModel modelo;
 
-    public PrincipalUsers(String cedula, int sede) {
+    public BuzonMensajes() {
+        initComponents();
+    }
+
+    public BuzonMensajes(int sede, String cedula) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.cedula = cedula;
         this.sede = sede;
-        asignarIndicePersonaEnSede(this.cedula);
-        panelDashboardBarra.setBackground(new Color(232, 225, 182));
+        modelo = new DefaultTableModel();
 
-        switch (this.sede) {
-            case 0 -> {
-                jblNombrePerfil.setText(SedePuriscal.getListaUsers().get(indice).getUsuario() + " " + SedePuriscal.getListaUsers().get(indice).getApellidos());
-                jblVentanaActual.setText("Sede Puriscal");
-            }
-            case 1 -> {
-                jblNombrePerfil.setText(SedeSanPedro.getListaUsers().get(indice).getUsuario() + " " + SedeSanPedro.getListaUsers().get(indice).getApellidos());
-                jblVentanaActual.setText("Sede San Pedro");
-            }
-            case 2 -> {
-                jblNombrePerfil.setText(SedePuriscal.getListaUsers().get(indice).getUsuario() + " " + SedePuriscal.getListaUsers().get(indice).getApellidos());
-                jblVentanaActual.setText("Sede Ciudad Colon");
-            }
-        }
-    }
+        modelo.addColumn("Fecha");
+        modelo.addColumn("Autor");
+        modelo.addColumn("Descrpcion");
+        modelo.addColumn("Estado");
 
-    public PrincipalUsers() {
-        initComponents();
-    }
-
-    //Asigna a indice el lugar en el que se encuentra el usuario en la sede
-    public void asignarIndicePersonaEnSede(String cedula) {
-        switch (sede) {
-            case 0 -> {
-
-                for (Usuarios u : SedePuriscal.getListaUsers()) {
-                    if (u.getCedula().equals(cedula)) {
-                        this.indice = SedePuriscal.getListaUsers().indexOf(u);
-                    }
-                }
-            }
-            case 1 -> {
-
-                for (Usuarios u : SedeSanPedro.getListaUsers()) {
-                    if (u.getCedula().equals(cedula)) {
-                        this.indice = SedeSanPedro.getListaUsers().indexOf(u);
-                    }
-                }
-            }
-            case 2 -> {
-
-                for (Usuarios u : SedeCiudadColon.getListaUsers()) {
-                    if (u.getCedula().equals(cedula)) {
-                        this.indice = SedeCiudadColon.getListaUsers().indexOf(u);
+        for (Usuarios i : SedeCentral.getListaUsers()) {
+            if (i.getCedula().equals(this.cedula)) {
+                if (i.getBuzonMensajes().getBuzonMensajes().isEmpty()) {
+                    jblTituloBuzon.setText("Buzon de mensajes vacio");
+                } else {
+                    jblTituloBuzon.setText("Buzon de mensajes");
+                    for (Mensaje m : i.getBuzonMensajes().getBuzonMensajes()) {
+                        String estadoMensaje;
+                        if (m.getEstadoMensaje() == true) {
+                            estadoMensaje = "Leido";
+                        } else {
+                            estadoMensaje = "Sin leer";
+                        }
+                        modelo.addRow(new Object[]{m.getFecha(), m.getAutor(), m.getMensaje(), estadoMensaje});
                     }
                 }
             }
@@ -113,20 +90,11 @@ public class PrincipalUsers extends javax.swing.JFrame {
         jblSimpe = new javax.swing.JLabel();
         panelComentariosBarra1 = new javax.swing.JPanel();
         jblComentarios1 = new javax.swing.JLabel();
-        tituloAnuncio1 = new javax.swing.JLabel();
-        masInfoAnuncio1 = new javax.swing.JLabel();
-        logoAnuncio1 = new javax.swing.JLabel();
-        ubicacionAnuncio1 = new javax.swing.JLabel();
-        marcoAnuncio1 = new javax.swing.JLabel();
-        titulo2 = new javax.swing.JLabel();
-        textoAnuncio2 = new javax.swing.JLabel();
-        texto2Anuncio2 = new javax.swing.JLabel();
-        texto3Titulo2 = new javax.swing.JLabel();
-        logoAnuncio2 = new javax.swing.JLabel();
-        marcoAnuncio2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaBuzonMensajes = new javax.swing.JTable();
+        jblTituloBuzon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
 
         background.setBackground(new java.awt.Color(255, 255, 255));
         background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -138,11 +106,6 @@ public class PrincipalUsers extends javax.swing.JFrame {
         jblBuzonMensajes.setForeground(new java.awt.Color(51, 51, 51));
         jblBuzonMensajes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jblBuzonMensajes.setText("Buzon");
-        jblBuzonMensajes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jblBuzonMensajesMouseClicked(evt);
-            }
-        });
         panelBuzonMensajes.add(jblBuzonMensajes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 50));
 
         background.add(panelBuzonMensajes, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 50, 50));
@@ -408,57 +371,26 @@ public class PrincipalUsers extends javax.swing.JFrame {
 
         background.add(panelOpciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 720));
 
-        tituloAnuncio1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        tituloAnuncio1.setForeground(new java.awt.Color(51, 51, 51));
-        tituloAnuncio1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tituloAnuncio1.setText("BNBUU ALAJUELA");
-        background.add(tituloAnuncio1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 200, 280, -1));
+        tablaBuzonMensajes.setBackground(new java.awt.Color(204, 204, 204));
+        tablaBuzonMensajes.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        tablaBuzonMensajes.setForeground(new java.awt.Color(51, 51, 51));
+        tablaBuzonMensajes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        masInfoAnuncio1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        masInfoAnuncio1.setForeground(new java.awt.Color(255, 102, 102));
-        masInfoAnuncio1.setText("Proximamente");
-        background.add(masInfoAnuncio1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 540, -1, -1));
+            },
+            new String [] {
 
-        logoAnuncio1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logoAnuncio1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bambuLogo128px.png"))); // NOI18N
-        background.add(logoAnuncio1, new org.netbeans.lib.awtextra.AbsoluteConstraints(398, 320, 240, -1));
+            }
+        ));
+        jScrollPane1.setViewportView(tablaBuzonMensajes);
 
-        ubicacionAnuncio1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ubicacionAnuncio1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ubicacion32px.png"))); // NOI18N
-        background.add(ubicacionAnuncio1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 250, 260, -1));
+        background.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 150, 710, 530));
 
-        marcoAnuncio1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MarcoAnunciosBorde.png"))); // NOI18N
-        background.add(marcoAnuncio1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, -1, 470));
-
-        titulo2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        titulo2.setForeground(new java.awt.Color(255, 102, 102));
-        titulo2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titulo2.setText("Crece con nosotros");
-        background.add(titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 200, 240, -1));
-
-        textoAnuncio2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        textoAnuncio2.setForeground(new java.awt.Color(51, 51, 51));
-        textoAnuncio2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        textoAnuncio2.setText("Tu aguinaldo esta seguro");
-        background.add(textoAnuncio2, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 280, -1, -1));
-
-        texto2Anuncio2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        texto2Anuncio2.setForeground(new java.awt.Color(51, 51, 51));
-        texto2Anuncio2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        texto2Anuncio2.setText("en BNBUU.");
-        background.add(texto2Anuncio2, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 320, -1, -1));
-
-        texto3Titulo2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        texto3Titulo2.setForeground(new java.awt.Color(51, 51, 51));
-        texto3Titulo2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        texto3Titulo2.setText("Deposita tu confianza.");
-        background.add(texto3Titulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(737, 390, 280, -1));
-
-        logoAnuncio2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bambuLogo64px.png"))); // NOI18N
-        background.add(logoAnuncio2, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 450, -1, -1));
-
-        marcoAnuncio2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/MarcoAnunciosBorde.png"))); // NOI18N
-        background.add(marcoAnuncio2, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 130, -1, -1));
+        jblTituloBuzon.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jblTituloBuzon.setForeground(new java.awt.Color(51, 51, 51));
+        jblTituloBuzon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jblTituloBuzon.setText("Buzon de mensajes");
+        background.add(jblTituloBuzon, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 90, 710, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -474,21 +406,11 @@ public class PrincipalUsers extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jblConfigMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblConfigMouseEntered
-        panelConfig.setBackground(new Color(255, 255, 218));
-    }//GEN-LAST:event_jblConfigMouseEntered
-
-    private void jblConfigMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblConfigMouseExited
-        panelConfig.setBackground(new Color(247, 240, 194));
-    }//GEN-LAST:event_jblConfigMouseExited
-
-    private void jblSalirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSalirMouseEntered
-        panelSalir.setBackground(new Color(255, 255, 218));
-    }//GEN-LAST:event_jblSalirMouseEntered
-
-    private void jblSalirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSalirMouseExited
-        panelSalir.setBackground(new Color(247, 240, 194));
-    }//GEN-LAST:event_jblSalirMouseExited
+    private void jblAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblAtrasMouseClicked
+        Inicio ini = new Inicio();
+        ini.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jblAtrasMouseClicked
 
     private void jblAtrasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblAtrasMouseEntered
         panelAtras.setBackground(new Color(245, 228, 120));
@@ -498,13 +420,41 @@ public class PrincipalUsers extends javax.swing.JFrame {
         panelAtras.setBackground(new Color(210, 196, 103));
     }//GEN-LAST:event_jblAtrasMouseExited
 
-    private void jblRetirarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRetirarMouseEntered
-        panelRetirarBarra.setBackground(new Color(232, 225, 182));
-    }//GEN-LAST:event_jblRetirarMouseEntered
+    private void jblSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSalirMouseClicked
+        Inicio ini = new Inicio();
+        ini.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jblSalirMouseClicked
 
-    private void jblRetirarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRetirarMouseExited
-        panelRetirarBarra.setBackground(new Color(252, 247, 215));
-    }//GEN-LAST:event_jblRetirarMouseExited
+    private void jblSalirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSalirMouseEntered
+        panelSalir.setBackground(new Color(255, 255, 218));
+    }//GEN-LAST:event_jblSalirMouseEntered
+
+    private void jblSalirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSalirMouseExited
+        panelSalir.setBackground(new Color(247, 240, 194));
+    }//GEN-LAST:event_jblSalirMouseExited
+
+    private void jblConfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblConfigMouseClicked
+        ConfigurarPerfil config = new ConfigurarPerfil(this.cedula, this.sede);
+        config.setVisible(true);
+        panelDashboardBarra.setBackground(new Color(252, 247, 215));
+        this.dispose();
+    }//GEN-LAST:event_jblConfigMouseClicked
+
+    private void jblConfigMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblConfigMouseEntered
+        panelConfig.setBackground(new Color(255, 255, 218));
+    }//GEN-LAST:event_jblConfigMouseEntered
+
+    private void jblConfigMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblConfigMouseExited
+        panelConfig.setBackground(new Color(247, 240, 194));
+    }//GEN-LAST:event_jblConfigMouseExited
+
+    private void jblDepositarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDepositarMouseClicked
+        Depositar depositar = new Depositar(this.cedula, this.sede);
+        depositar.setVisible(true);
+        panelDashboardBarra.setBackground(new Color(252, 247, 215));
+        this.dispose();
+    }//GEN-LAST:event_jblDepositarMouseClicked
 
     private void jblDepositarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDepositarMouseEntered
         panelDepositarBarra.setBackground(new Color(232, 225, 182));
@@ -514,19 +464,27 @@ public class PrincipalUsers extends javax.swing.JFrame {
         panelDepositarBarra.setBackground(new Color(252, 247, 215));
     }//GEN-LAST:event_jblDepositarMouseExited
 
-    private void jblDepositarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDepositarMouseClicked
-        Depositar depositar = new Depositar(this.cedula, this.sede);
-        depositar.setVisible(true);
-        panelDashboardBarra.setBackground(new Color(252, 247, 215));
-        this.dispose();
-    }//GEN-LAST:event_jblDepositarMouseClicked
-
     private void jblRetirarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRetirarMouseClicked
         Retirar retirar = new Retirar(this.cedula, this.sede);
         retirar.setVisible(true);
         panelDashboardBarra.setBackground(new Color(252, 247, 215));
         this.dispose();
     }//GEN-LAST:event_jblRetirarMouseClicked
+
+    private void jblRetirarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRetirarMouseEntered
+        panelRetirarBarra.setBackground(new Color(232, 225, 182));
+    }//GEN-LAST:event_jblRetirarMouseEntered
+
+    private void jblRetirarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblRetirarMouseExited
+        panelRetirarBarra.setBackground(new Color(252, 247, 215));
+    }//GEN-LAST:event_jblRetirarMouseExited
+
+    private void jblVerSaldoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseClicked
+        VerSaldo ver = new VerSaldo(this.cedula, this.sede);
+        ver.setVisible(true);
+        panelDashboardBarra.setBackground(new Color(252, 247, 215));
+        this.dispose();
+    }//GEN-LAST:event_jblVerSaldoMouseClicked
 
     private void jblVerSaldoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseEntered
         panelVerSaldoBarra.setBackground(new Color(232, 225, 182));
@@ -536,12 +494,9 @@ public class PrincipalUsers extends javax.swing.JFrame {
         panelVerSaldoBarra.setBackground(new Color(252, 247, 215));
     }//GEN-LAST:event_jblVerSaldoMouseExited
 
-    private void jblVerSaldoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblVerSaldoMouseClicked
-        VerSaldo ver = new VerSaldo(this.cedula, this.sede);
-        ver.setVisible(true);
-        panelDashboardBarra.setBackground(new Color(252, 247, 215));
-        this.dispose();
-    }//GEN-LAST:event_jblVerSaldoMouseClicked
+    private void jblDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDashboardMouseClicked
+
+    }//GEN-LAST:event_jblDashboardMouseClicked
 
     private void jblDashboardMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDashboardMouseEntered
         //panelDashboardBarra.setBackground(new Color(232, 225, 182));
@@ -551,9 +506,12 @@ public class PrincipalUsers extends javax.swing.JFrame {
         //panelDashboardBarra.setBackground(new Color(252, 247, 215));
     }//GEN-LAST:event_jblDashboardMouseExited
 
-    private void jblDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblDashboardMouseClicked
-
-    }//GEN-LAST:event_jblDashboardMouseClicked
+    private void jblHabilitarCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseClicked
+        HabilitarCuentas habilitar = new HabilitarCuentas(this.cedula, this.sede);
+        habilitar.setVisible(true);
+        //panelDashboardBarra.setBackground(new Color(252, 247, 215));
+        this.dispose();
+    }//GEN-LAST:event_jblHabilitarCuentasMouseClicked
 
     private void jblHabilitarCuentasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseEntered
         panelHabilitarCuentasBarra.setBackground(new Color(232, 225, 182));
@@ -562,21 +520,6 @@ public class PrincipalUsers extends javax.swing.JFrame {
     private void jblHabilitarCuentasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseExited
         panelHabilitarCuentasBarra.setBackground(new Color(252, 247, 215));
     }//GEN-LAST:event_jblHabilitarCuentasMouseExited
-
-    private void jblHabilitarCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblHabilitarCuentasMouseClicked
-        HabilitarCuentas habilitar = new HabilitarCuentas(this.cedula, this.sede);
-        habilitar.setVisible(true);
-        //panelDashboardBarra.setBackground(new Color(252, 247, 215));
-        this.dispose();
-    }//GEN-LAST:event_jblHabilitarCuentasMouseClicked
-
-    private void jblSimpeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseEntered
-        panelSimpeBarra.setBackground(new Color(232, 225, 182));
-    }//GEN-LAST:event_jblSimpeMouseEntered
-
-    private void jblSimpeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseExited
-        panelSimpeBarra.setBackground(new Color(252, 247, 215));
-    }//GEN-LAST:event_jblSimpeMouseExited
 
     private void jblSimpeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseClicked
         for (Usuarios i : SedeCentral.getListaUsers()) {
@@ -592,24 +535,13 @@ public class PrincipalUsers extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jblSimpeMouseClicked
 
-    private void jblConfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblConfigMouseClicked
-        ConfigurarPerfil config = new ConfigurarPerfil(this.cedula, this.sede);
-        config.setVisible(true);
-        panelDashboardBarra.setBackground(new Color(252, 247, 215));
-        this.dispose();
-    }//GEN-LAST:event_jblConfigMouseClicked
+    private void jblSimpeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseEntered
+        panelSimpeBarra.setBackground(new Color(232, 225, 182));
+    }//GEN-LAST:event_jblSimpeMouseEntered
 
-    private void jblSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSalirMouseClicked
-        Inicio ini = new Inicio();
-        ini.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jblSalirMouseClicked
-
-    private void jblAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblAtrasMouseClicked
-        Inicio ini = new Inicio();
-        ini.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jblAtrasMouseClicked
+    private void jblSimpeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblSimpeMouseExited
+        panelSimpeBarra.setBackground(new Color(252, 247, 215));
+    }//GEN-LAST:event_jblSimpeMouseExited
 
     private void jblComentarios1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblComentarios1MouseClicked
         Comentarios comentario = new Comentarios(this.cedula, this.sede);
@@ -624,12 +556,6 @@ public class PrincipalUsers extends javax.swing.JFrame {
     private void jblComentarios1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblComentarios1MouseExited
         panelComentariosBarra1.setBackground(new Color(252, 247, 215));
     }//GEN-LAST:event_jblComentarios1MouseExited
-
-    private void jblBuzonMensajesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jblBuzonMensajesMouseClicked
-        BuzonMensajes bm = new BuzonMensajes(sede, cedula);
-        bm.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jblBuzonMensajesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -648,23 +574,20 @@ public class PrincipalUsers extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PrincipalUsers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuzonMensajes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PrincipalUsers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuzonMensajes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PrincipalUsers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuzonMensajes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PrincipalUsers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuzonMensajes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PrincipalUsers().setVisible(true);
+                new BuzonMensajes().setVisible(true);
             }
         });
     }
@@ -672,6 +595,7 @@ public class PrincipalUsers extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
     private javax.swing.JLabel iconBarra;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jblAtras;
     private javax.swing.JLabel jblBarra;
     private javax.swing.JLabel jblBuzonMensajes;
@@ -687,12 +611,8 @@ public class PrincipalUsers extends javax.swing.JFrame {
     private javax.swing.JLabel jblRetirar;
     private javax.swing.JLabel jblSalir;
     private javax.swing.JLabel jblSimpe;
+    private javax.swing.JLabel jblTituloBuzon;
     private javax.swing.JLabel jblVentanaActual;
-    private javax.swing.JLabel logoAnuncio1;
-    private javax.swing.JLabel logoAnuncio2;
-    private javax.swing.JLabel marcoAnuncio1;
-    private javax.swing.JLabel marcoAnuncio2;
-    private javax.swing.JLabel masInfoAnuncio1;
     private javax.swing.JPanel panelAtras;
     private javax.swing.JPanel panelBuzonMensajes;
     private javax.swing.JPanel panelComentariosBarra1;
@@ -705,11 +625,6 @@ public class PrincipalUsers extends javax.swing.JFrame {
     private javax.swing.JPanel panelSalir;
     private javax.swing.JPanel panelSimpeBarra;
     private javax.swing.JPanel panelVerSaldoBarra;
-    private javax.swing.JLabel texto2Anuncio2;
-    private javax.swing.JLabel texto3Titulo2;
-    private javax.swing.JLabel textoAnuncio2;
-    private javax.swing.JLabel titulo2;
-    private javax.swing.JLabel tituloAnuncio1;
-    private javax.swing.JLabel ubicacionAnuncio1;
+    private javax.swing.JTable tablaBuzonMensajes;
     // End of variables declaration//GEN-END:variables
 }

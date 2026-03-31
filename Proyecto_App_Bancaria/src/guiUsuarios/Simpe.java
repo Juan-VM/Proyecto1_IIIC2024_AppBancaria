@@ -2,6 +2,7 @@ package guiUsuarios;
 
 import guiGeneral.Inicio;
 import BaseDatos.BaseDatos;
+import Buzon.Mensaje;
 import Comprobantes.ComprobanteSimpeEntrada;
 import Comprobantes.ComprobanteSimpeSalida;
 import Personas.Usuarios;
@@ -1641,8 +1642,22 @@ public class Simpe extends javax.swing.JFrame {
                 //Crea los comprobantes
                 ComprobanteSimpeSalida compSal = new ComprobanteSimpeSalida(numeroEmisor, numeroReceptor, cuentaUtiizada, monto, fechaFormateada, horaFormateada, detalle);
                 ComprobanteSimpeEntrada compEnt = new ComprobanteSimpeEntrada(numeroEmisor, numeroReceptor, cuentaUtiizada, monto, fechaFormateada, horaFormateada, detalle);
-
+                
+                //Crea el mensaje de recepcion de simpe
+                String emisor = "";
+                for(Usuarios i : SedeCentral.getListaUsers()){
+                    if(i.getTelefono().equals(numeroEmisor)){
+                        emisor = i.getUsuario();
+                    }
+                }
+                Mensaje msj = new Mensaje("Sistema", fechaFormateada + horaFormateada, "Ha recibido un simpe movil por un monto de: "+monto+" de parte de "+emisor);
+                
                 for (Usuarios i : SedeCentral.getListaUsers()) {
+                    
+                    if(i.getTelefono().equals(numeroReceptor)){
+                        i.getBuzonMensajes().agregarMensajeAlBuzon(msj);
+                    }
+                    
                     if (i.getCedula().equals(this.cedula)) {
                         i.getComprobantesSimpeSalida().add(compSal);
                     }

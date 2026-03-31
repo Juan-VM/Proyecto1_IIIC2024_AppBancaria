@@ -1,0 +1,4 @@
+Esteban	Valverde	1	1	1	9272	0	0	91000.0	0.0	1000.0	true	false	true	true	true
+Adrian	Jimenez	123456789	11111111	usuario	4389	0	0	0.0	0.0	3000.0	true	false	true	true	true
+Juan	thrh	113	2020	123	6035	0	0	0.0	0.0	0.0	true	false	false	true	true
+ytjutj	tjyt	11	0000	123	1864	0	0	0.0	0.0	0.0	true	false	true	true	true
